@@ -73,7 +73,7 @@ const InputContainer = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  width: 600px;
+  width: 50%;
   height: 35px;
   border: 1px solid #4f4c4c;
   padding: 0 10px;
@@ -82,7 +82,7 @@ const InputContainer = styled.div`
 `;
 
 const InputBox = styled.input`
-  width: 550px;
+  width: 90%;
   height: 20px;
   font-size: 12px;
   border: none;
