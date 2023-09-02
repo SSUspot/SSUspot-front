@@ -14,11 +14,11 @@ const Header: React.FC = () => {
             <Image src={logo} alt="Logo" width={120} height={22} />
           </Logo>
           <InputContainer>
-            <Image src={search} alt="Logo" width={22} height={22} />
+            <Image src={search} alt="Search" width={22} height={22} />
             <InputBox type="text" placeholder="사진 스팟을 검색하세요" />
           </InputContainer>
           <Bell>
-            <Image src={bell} alt="Logo" width={21} height={24} />
+            <Image src={bell} alt="Bell" width={16} height={18} />
           </Bell>
         </Items>
       </Container>
@@ -100,4 +100,3 @@ const Bell = styled.div`
   margin: 0;
   border-radius: 20px;
 `;
-

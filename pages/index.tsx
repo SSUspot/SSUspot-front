@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Header from "../component/layout/header";
+import Filter from "../component/layout/filter";
 
 const Home: NextPage = () => {
   return (
@@ -11,6 +12,7 @@ const Home: NextPage = () => {
       </Head>
 
       <Header />
+      <Filter />
       <br/>
       <p> index.tsx </p>
 
