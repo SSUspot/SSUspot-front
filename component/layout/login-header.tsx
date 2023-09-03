@@ -18,30 +18,18 @@ const LoginHeader: React.FC = () => {
             />
           </Logo>
           <LinkContainer>
-            <Link
+            <StyledLink
               href="/login"
-              style={{
-                fontFamily: "sans-serif",
-                textDecoration: "none",
-                color: "#000000",
-                cursor: "pointer",
-              }}
               passHref
             >
               Login
-            </Link>
-            <Link
+            </StyledLink>
+            <StyledLink
               href="/join"
-              style={{
-                fontFamily: "sans-serif",
-                textDecoration: "none",
-                color: "#000000",
-                cursor: "pointer",
-              }}
               passHref
             >
               Join
-            </Link>
+            </StyledLink>
           </LinkContainer>
         </Items>
       </Container>
@@ -101,4 +89,12 @@ const LinkContainer = styled.div`
   padding: 0px;
   margin: 0;
   gap: 20px;
+`;
+
+const StyledLink = styled(Link)`
+  font-family: "sans-serif";
+  text-decoration: none;
+  color: #000000;
+  cursor: pointer;
+  font-weight: 500;
 `;
