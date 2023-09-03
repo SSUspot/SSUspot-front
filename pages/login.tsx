@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import Link from "next/link";
 import LoginHeader from "../component/layout/login-header";
-import { FaUserCircle } from "react-icons/fa";
+import { PiUserCircleDuotone } from "react-icons/pi";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -17,9 +17,10 @@ const LoginPage: React.FC = () => {
       <LoginHeader />
       <br />
       <Container>
-        <FaUserCircle
-          size="80px"
+        <PiUserCircleDuotone
+          size="90px"
           color="#696FFD"
+          fontWeight={600}
         />
         <LoginContainer onSubmit={handleSubmit}>
           <Input
@@ -38,7 +39,14 @@ const LoginPage: React.FC = () => {
             required
           ></Input>
           <Button type="submit">로그인</Button>
-          <StyledLink href="/join">계정 만들기</StyledLink>
+          <LinkContainer>
+            <span
+              style={{ color: "#4f4c4c", fontWeight: 400, marginRight: 10 }}
+            >
+              아직 계정이 없다면?
+            </span>
+            <StyledLink href="/join">계정 만들기</StyledLink>
+          </LinkContainer>
         </LoginContainer>
       </Container>
     </>
@@ -72,7 +80,7 @@ const LoginContainer = styled.form`
   z-index: -1;
 `;
 
-const Input = styled.input`
+const Input = styled.input.attrs({ required: true })`
   width: 400px;
   height: 30px;
   padding: 10px 0 10px 10px;
@@ -103,8 +111,13 @@ const Button = styled.button`
   cursor: pointer;
 `;
 
+const LinkContainer = styled.div`
+  display: inline;
+`;
+
 const StyledLink = styled(Link)`
   color: rgba(48, 55, 205, 0.7);
   text-decoration: none;
   font-size: 16px;
+  font-weight: 600;
 `;
