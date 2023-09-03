@@ -52,7 +52,7 @@ const ItemButton = styled.button`
 
   &:hover {
     font-weight: bold;
-    color: #2146C7;
+    color: #4f4c4c;
   }
 `;
 
