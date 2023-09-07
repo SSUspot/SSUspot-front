@@ -45,7 +45,8 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-contents: flex-start;
-  padding: 30px 50px 70px 50px;
+  padding: 50px 50px 60px;
+  margin-left: 50px;
   width: 100vw;
   height: 150px;
   border-bottom: solid;
@@ -57,8 +58,7 @@ const ImageBox = styled.div`
   display: flex;
   align-items: center;
   justify-contents: center;
-
-  width: 300px;
+  width: 250px;
   height: 300px;
 `;
 
