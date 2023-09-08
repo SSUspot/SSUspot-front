@@ -59,6 +59,7 @@ const Container = styled.div`
   width: 100%;
   height: 100px;
   top: calc(100% - 100px);
+  z-index: 99;
 `;
 
 const NavigationBox = styled.div`
@@ -68,7 +69,8 @@ const NavigationBox = styled.div`
   align-items: center;
   width: 50%;
   height: 60px;
-  background: #f3f3f3;
+  /* background: #f3f3f3; */
+  background: #2f2f2f;
   border-radius: 100px;
 `;
 
@@ -81,7 +83,8 @@ const ItemButton = styled.button`
   height: 40px;
   border: none;
   font-size: 12px;
-  color: #4f4c4c;
+  /* color: #4f4c4c; */
+  color: #f3f3f3;
   background: none;
   position: relative;
 
@@ -91,7 +94,7 @@ const ItemButton = styled.button`
     top: -10px;
     height: 2px;
     width: 30%;
-    background-color: #4f4c4c33;
+    background-color: #f3f3f399;
   }
   &:hover::after {
     content: "";
@@ -99,6 +102,6 @@ const ItemButton = styled.button`
     bottom: -10px;
     height: 2px;
     width: 30%;
-    background-color: #4f4c4c33;
+    background-color: #f3f3f399;
   }
 `;

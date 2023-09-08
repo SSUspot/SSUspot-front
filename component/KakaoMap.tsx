@@ -5,7 +5,7 @@ const KakaoMap = () => {
     <>
       <Map
         center={{ lat: 37.4944064, lng: 126.9599747 }}
-        style={{ width: "100%", height: "500px" }}
+        style={{ width: "100%", height: "800px" }}
       >
         {/* <MapMarker position={{ lat: 33.55635, lng: 126.795841 }}>
           <div style={{ color: "#000" }}>Hello World!</div>
