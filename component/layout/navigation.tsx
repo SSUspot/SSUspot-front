@@ -82,7 +82,6 @@ const NavigationBox = styled.div`
   align-items: center;
   width: 50%;
   height: 60px;
-  /* background: #f3f3f3; */
   background: #2f2f2f;
   border-radius: 100px;
   opacity: 0;
@@ -102,7 +101,6 @@ const ItemButton = styled.button`
   height: 40px;
   border: none;
   font-size: 12px;
-  /* color: #4f4c4c; */
   color: #f3f3f3;
   background: none;
   position: relative;

@@ -31,7 +31,6 @@ const Container = styled.div`
   width: 100%;
   height: 55px;
   font-size: 13px;
-  /* position: relative; */
   position: sticky;
   top: 80px;
   background: #ffffff;
