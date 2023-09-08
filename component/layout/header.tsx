@@ -35,7 +35,9 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 80px;
-  position: relative;
+  position: sticky;
+  top: 0;
+  background: #ffffff;
 
   &::after {
     content: "";

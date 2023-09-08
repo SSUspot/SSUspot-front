@@ -30,8 +30,11 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 55px;
-  position: relative;
   font-size: 13px;
+  /* position: relative; */
+  position: sticky;
+  top: 80px;
+  background: #ffffff;
 
   &::after {
     content: "";

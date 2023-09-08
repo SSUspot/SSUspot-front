@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Home from "../../public/navigation/home.png";
@@ -10,9 +10,27 @@ import Chat from "../../public/navigation/chat.png";
 import Mypage from "../../public/navigation/mypage.png";
 
 const Navigation: React.FC = () => {
+  const [isScrolling, setIsScrolling] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (window.scrollY > 20) {
+      setIsScrolling(true);
+    } else {
+      setIsScrolling(false);
+    }
+  };
+
   return (
     <>
-      <Container>
+      <Container className={isScrolling ? "scrolling" : ""}>
         <NavigationBox>
           <ItemButton>
             <Image src={Home} alt="Home" width={25} height={25} />
@@ -60,6 +78,11 @@ const Container = styled.div`
   height: 100px;
   top: calc(100% - 100px);
   z-index: 99;
+
+  transition: top 0.3s ease; /* 스크롤 시 부드럽게 이동하도록 설정 */
+  &.scrolling {
+    top: 0; /* 스크롤 내릴 때 숨겨짐 */
+  }
 `;
 
 const NavigationBox = styled.div`
