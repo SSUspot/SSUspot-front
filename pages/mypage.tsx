@@ -1,12 +1,19 @@
 import Header from "../component/layout/header";
 import styled from "styled-components";
+import Image from "next/image";
 import { BiSolidUserCircle } from "react-icons/bi";
+
 const MyPage: React.FC = () => {
   const name: string = "이시현";
   const posting: number = 4;
   const follower: number = 3;
   const following: number = 3;
   const state_message: string = "상태메시지입니다";
+
+  const userPosts = Array.from({ length: posting }, (_, index) => ({
+    id: index + 1,
+  }));
+
   return (
     <>
       <Header />
@@ -31,8 +38,17 @@ const MyPage: React.FC = () => {
         </ContentContainer>
       </Container>
       <PostingContainer>
-        <Posting>one</Posting> <Posting>two</Posting> <Posting>three</Posting>{" "}
-        <Posting>four</Posting>
+        {userPosts.map((post) => (
+          <Posting key={post.id}>
+            <Image
+              src="https://picsum.photos/440/360"
+              alt={`Post ${post.id}`}
+              width={440}
+              height={360}
+              unoptimized={true}
+            ></Image>
+          </Posting>
+        ))}
       </PostingContainer>
     </>
   );
