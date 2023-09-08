@@ -10,28 +10,23 @@ import Chat from "../../public/navigation/chat.png";
 import Mypage from "../../public/navigation/mypage.png";
 
 const Navigation: React.FC = () => {
-  const [isScrolling, setIsScrolling] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
 
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const handleScroll = () => {
-    if (window.scrollY > 20) {
-      setIsScrolling(true);
-    } else {
-      setIsScrolling(false);
-    }
+  const handleMouseLeave = () => {
+    setIsHovered(false);
   };
 
   return (
     <>
-      <Container className={isScrolling ? "scrolling" : ""}>
-        <NavigationBox>
+      <Container
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <NavigationBox className={isHovered ? "hovered" : ""}>
           <ItemButton>
             <Image src={Home} alt="Home" width={25} height={25} />
             <p> 홈 </p>
@@ -73,16 +68,11 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100px;
   top: calc(100% - 100px);
   z-index: 99;
-
-  transition: top 0.3s ease; /* 스크롤 시 부드럽게 이동하도록 설정 */
-  &.scrolling {
-    top: 0; /* 스크롤 내릴 때 숨겨짐 */
-  }
 `;
 
 const NavigationBox = styled.div`
@@ -95,6 +85,12 @@ const NavigationBox = styled.div`
   /* background: #f3f3f3; */
   background: #2f2f2f;
   border-radius: 100px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
+  &.hovered {
+    opacity: 1;
+  }
 `;
 
 const ItemButton = styled.button`
