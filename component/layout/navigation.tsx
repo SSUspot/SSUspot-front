@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import Home from "../../public/navigation/home.png";
@@ -10,10 +10,23 @@ import Chat from "../../public/navigation/chat.png";
 import Mypage from "../../public/navigation/mypage.png";
 
 const Navigation: React.FC = () => {
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   return (
     <>
-      <Container>
-        <NavigationBox>
+      <Container
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <NavigationBox className={isHovered ? "hovered" : ""}>
           <ItemButton>
             <Image src={Home} alt="Home" width={25} height={25} />
             <p> 홈 </p>
@@ -55,10 +68,11 @@ const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100px;
   top: calc(100% - 100px);
+  z-index: 99;
 `;
 
 const NavigationBox = styled.div`
@@ -68,8 +82,14 @@ const NavigationBox = styled.div`
   align-items: center;
   width: 50%;
   height: 60px;
-  background: #f3f3f3;
+  background: #2f2f2f;
   border-radius: 100px;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+
+  &.hovered {
+    opacity: 1;
+  }
 `;
 
 const ItemButton = styled.button`
@@ -81,7 +101,7 @@ const ItemButton = styled.button`
   height: 40px;
   border: none;
   font-size: 12px;
-  color: #4f4c4c;
+  color: #f3f3f3;
   background: none;
   position: relative;
 
@@ -91,7 +111,7 @@ const ItemButton = styled.button`
     top: -10px;
     height: 2px;
     width: 30%;
-    background-color: #4f4c4c33;
+    background-color: #f3f3f399;
   }
   &:hover::after {
     content: "";
@@ -99,6 +119,6 @@ const ItemButton = styled.button`
     bottom: -10px;
     height: 2px;
     width: 30%;
-    background-color: #4f4c4c33;
+    background-color: #f3f3f399;
   }
 `;
