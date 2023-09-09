@@ -1,15 +1,26 @@
+import { useState } from "react";
 import Header from "../component/layout/header";
 import styled from "styled-components";
 import Image from "next/image";
-import { BiSolidUserCircle } from "react-icons/bi";
+import Modal from "../component/common/modal";
 
 const MyPage: React.FC = () => {
+  // 팔로워, 팔로잉 숫자 클릭하면 각각에 맞게 리스트 보여주는 모달
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState(""); // 팔로워 또는 팔로잉
+
+  const clickModal = (type: string) => {
+    setShowModal(!showModal);
+    setModalType(type);
+  };
+
   const name: string = "이시현";
   const posting: number = 4;
   const follower: number = 3;
   const following: number = 3;
   const state_message: string = "상태메시지입니다";
 
+  // 포스팅 개수에 따라 배열 생성
   const userPosts = Array.from({ length: posting }, (_, index) => ({
     id: index + 1,
   }));
@@ -19,11 +30,12 @@ const MyPage: React.FC = () => {
       <Header />
       <Container>
         <ImageBox>
-          <BiSolidUserCircle
-            size={150}
-            color="#4f4c4c"
-            opacity="80%"
-          />
+          <StyledImage
+            src="https://picsum.photos/150"
+            alt=""
+            width={150}
+            height={150}
+          ></StyledImage>
         </ImageBox>
         <ContentContainer>
           <Content1>
@@ -31,23 +43,31 @@ const MyPage: React.FC = () => {
           </Content1>
           <Content2>
             <p>게시물 {posting}</p>
-            <p>팔로워 {follower}</p>
-            <p>팔로잉 {following}</p>
+            <p
+              onClick={() => clickModal("팔로워")}
+              style={{ cursor: "pointer" }}
+            >
+              팔로워 {follower}
+            </p>
+            {showModal && (
+              <Modal
+                clickModal={clickModal}
+                modalType={modalType}
+              />
+            )}
+            <p
+              onClick={() => clickModal("팔로잉")}
+              style={{ cursor: "pointer" }}
+            >
+              팔로잉 {following}
+            </p>
           </Content2>
           <Content2 style={{ fontWeight: 400 }}>{state_message}</Content2>
         </ContentContainer>
       </Container>
       <PostingContainer>
         {userPosts.map((post) => (
-          <Posting key={post.id}>
-            <Image
-              src="https://picsum.photos/440/360"
-              alt={`Post ${post.id}`}
-              width={440}
-              height={360}
-              unoptimized={true}
-            ></Image>
-          </Posting>
+          <Posting key={post.id}></Posting>
         ))}
       </PostingContainer>
     </>
@@ -78,6 +98,10 @@ const ImageBox = styled.div`
   height: 300px;
 `;
 
+const StyledImage = styled.img`
+  border-radius: 75px;
+`;
+
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -93,7 +117,7 @@ const Content1 = styled.div`
   align-items: center;
   justify-content: space-start;
   font-weight: 600;
-  font-size: 18px;
+  font-size: 20px;
 `;
 
 const Content2 = styled.div`
@@ -104,6 +128,7 @@ const Content2 = styled.div`
   align-items: center;
   justify-content: space-between;
   font-weight: 600;
+  font-size: 16px;
 `;
 
 const Button = styled.button`
@@ -125,6 +150,28 @@ const PostingContainer = styled.div`
 `;
 
 const Posting = styled.div`
-  border-color: black;
-  background-color: blue;
+  border: none;
+  background-color: rgba(0, 0, 0, 0.1);
 `;
+
+export const ModalBox = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ModalContent = styled.div`
+padding: 10px 30px;
+width: 300px;
+height: 400px;
+border-radius: 10px;
+display: flex;
+flex-direction: column;
+background-color: #2f2f2f;
+}`;
