@@ -9,6 +9,11 @@ const MyPage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(""); // 팔로워 또는 팔로잉
 
+  // 프로필 편집 모드
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedNickname, setEditedNickname] = useState("");
+  const [editedStatusMessage, setEditedStatusMessage] = useState("");
+
   const clickModal = (type: string) => {
     setShowModal(!showModal);
     setModalType(type);
@@ -25,6 +30,19 @@ const MyPage: React.FC = () => {
     id: index + 1,
   }));
 
+  const handleEditClick = () => {
+    // 프로필 편집 버튼을 클릭하면 프로필 편집 모드로 전환
+    setIsEditing(true);
+    // 현재 닉네임과 상태 메시지를 input 칸에 미리 채움
+    setEditedNickname(name);
+    setEditedStatusMessage(state_message);
+  };
+
+  const handleSaveClick = () => {
+    // "프로필 편집 완료" 버튼을 클릭하면 프로필 편집 모드 종료
+    setIsEditing(false);
+    // 수정된 닉네임과 상태메시지를 저장하는 로직 추가
+  };
   return (
     <>
       <Header />
@@ -39,7 +57,18 @@ const MyPage: React.FC = () => {
         </ImageBox>
         <ContentContainer>
           <Content1>
-            {name} <Button>프로필 편집</Button>
+            {isEditing ? ( // 프로필 편집 모드인 경우 입력 필드 표시
+              <ProfileEditInput
+                type="text"
+                value={editedNickname}
+                onChange={(e) => setEditedNickname(e.target.value)}
+              />
+            ) : (
+              name // 편집 모드가 아닌 경우 기존 닉네임 표시
+            )}
+            {!isEditing && ( // 편집 모드가 아닌 경우에만 프로필 편집 버튼 표시
+              <Button onClick={handleEditClick}>프로필 편집</Button>
+            )}
           </Content1>
           <Content2>
             <p>게시물 {posting}</p>
@@ -62,7 +91,22 @@ const MyPage: React.FC = () => {
               팔로잉 {following}
             </p>
           </Content2>
-          <Content2 style={{ fontWeight: 400 }}>{state_message}</Content2>
+          <Content2 style={{ fontWeight: 400 }}>
+            {!isEditing ? (
+              // 편집 모드가 아닌 경우 기존 상태 메시지 표시
+              <p>{state_message}</p>
+            ) : (
+              // 편집 모드인 경우 상태 메시지 입력 필드 표시
+              <ProfileEditInput
+                type="text"
+                value={editedStatusMessage}
+                onChange={(e) => setEditedStatusMessage(e.target.value)}
+              />
+            )}
+            {isEditing && ( // 편집 모드일 때 "프로필 편집 완료" 버튼 표시
+              <Button onClick={handleSaveClick}>편집 완료</Button>
+            )}
+          </Content2>
         </ContentContainer>
       </Container>
       <PostingContainer>
@@ -105,8 +149,8 @@ const StyledImage = styled.img`
 const ContentContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
 `;
 
 const Content1 = styled.div`
@@ -115,7 +159,6 @@ const Content1 = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-start;
   font-weight: 600;
   font-size: 20px;
 `;
@@ -132,13 +175,19 @@ const Content2 = styled.div`
 `;
 
 const Button = styled.button`
-  width: 100px;
-  height: 30px;
+  display: inline-block;
+  width: auto;
+  padding: 10px 10px;
   border-radius: 5px;
   border: none;
   background-color: rgba(0, 0, 0, 0.1);
   font-weight: 600;
-  margin-left: 50px;
+  font-size: 14px;
+  margin-left: 30px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
 `;
 
 const PostingContainer = styled.div`
@@ -167,11 +216,21 @@ export const ModalBox = styled.div`
 `;
 
 export const ModalContent = styled.div`
-padding: 10px 30px;
-width: 300px;
-height: 400px;
-border-radius: 10px;
-display: flex;
-flex-direction: column;
-background-color: #2f2f2f;
-}`;
+  padding: 10px 30px;
+  width: 300px;
+  height: 400px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #2f2f2f;
+`;
+
+const ProfileEditInput = styled.input`
+  width: auto;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  font-size: 16px;
+  outline: none;
+`;
