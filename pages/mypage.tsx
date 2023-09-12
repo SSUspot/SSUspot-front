@@ -9,21 +9,19 @@ const MyPage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(""); // 팔로워 또는 팔로잉
 
-  // 프로필 편집 모드
+  // 프로필 편집 모드 (nickname, stateMessage의 초기값은 DB에서 가져오는 값으로 초기화함)
   const [isEditing, setIsEditing] = useState(false);
-  const [editedNickname, setEditedNickname] = useState("");
-  const [editedStatusMessage, setEditedStatusMessage] = useState("");
+  const [nickname, setNickname] = useState("이시현"); // 기존 nickname 값으로 초기화
+  const [statusMessage, setStatusMessage] = useState("상태메시지입니다"); // 기존 stateMessage 값으로 초기화
 
   const clickModal = (type: string) => {
     setShowModal(!showModal);
     setModalType(type);
   };
 
-  const name: string = "이시현";
-  const posting: number = 4;
-  const follower: number = 3;
-  const following: number = 3;
-  const state_message: string = "상태메시지입니다";
+  var posting: number = 4;
+  var follower: number = 3;
+  var following: number = 3;
 
   // 포스팅 개수에 따라 배열 생성
   const userPosts = Array.from({ length: posting }, (_, index) => ({
@@ -33,16 +31,14 @@ const MyPage: React.FC = () => {
   const handleEditClick = () => {
     // 프로필 편집 버튼을 클릭하면 프로필 편집 모드로 전환
     setIsEditing(true);
-    // 현재 닉네임과 상태 메시지를 input 칸에 미리 채움
-    setEditedNickname(name);
-    setEditedStatusMessage(state_message);
   };
 
   const handleSaveClick = () => {
     // "프로필 편집 완료" 버튼을 클릭하면 프로필 편집 모드 종료
     setIsEditing(false);
-    // 수정된 닉네임과 상태메시지를 저장하는 로직 추가
+    // DB에 새로운 nickname과 statusMessage를 저장하는 것 구현
   };
+
   return (
     <>
       <Header />
@@ -60,11 +56,13 @@ const MyPage: React.FC = () => {
             {isEditing ? ( // 프로필 편집 모드인 경우 입력 필드 표시
               <ProfileEditInput
                 type="text"
-                value={editedNickname}
-                onChange={(e) => setEditedNickname(e.target.value)}
+                value={nickname}
+                onChange={(e) => {
+                  setNickname(e.target.value);
+                }}
               />
             ) : (
-              name // 편집 모드가 아닌 경우 기존 닉네임 표시
+              nickname // 편집 모드가 아닌 경우 기존 닉네임 표시
             )}
             {!isEditing && ( // 편집 모드가 아닌 경우에만 프로필 편집 버튼 표시
               <Button onClick={handleEditClick}>프로필 편집</Button>
@@ -94,13 +92,13 @@ const MyPage: React.FC = () => {
           <Content2 style={{ fontWeight: 400 }}>
             {!isEditing ? (
               // 편집 모드가 아닌 경우 기존 상태 메시지 표시
-              <p>{state_message}</p>
+              <p>{statusMessage}</p>
             ) : (
               // 편집 모드인 경우 상태 메시지 입력 필드 표시
               <ProfileEditInput
                 type="text"
-                value={editedStatusMessage}
-                onChange={(e) => setEditedStatusMessage(e.target.value)}
+                value={statusMessage}
+                onChange={(e) => setStatusMessage(e.target.value)}
               />
             )}
             {isEditing && ( // 편집 모드일 때 "프로필 편집 완료" 버튼 표시
