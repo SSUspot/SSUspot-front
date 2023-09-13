@@ -18,10 +18,7 @@ const JoinPage: React.FC = () => {
       <LoginHeader />
       <br />
       <Container>
-        <PiUserCirclePlusDuotone
-          size="90px"
-          color="#696FFD"
-        />
+        <PiUserCirclePlusDuotone size="90px" color="#696FFD" />
         <LoginContainer onSubmit={handleSubmit}>
           <Input
             type="text"

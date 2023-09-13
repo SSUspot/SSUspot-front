@@ -77,10 +77,7 @@ const MyPage: React.FC = () => {
               팔로워 {follower}
             </p>
             {showModal && (
-              <Modal
-                clickModal={clickModal}
-                modalType={modalType}
-              />
+              <Modal clickModal={clickModal} modalType={modalType} />
             )}
             <p
               onClick={() => clickModal("팔로잉")}

@@ -10,24 +10,13 @@ const LoginHeader: React.FC = () => {
       <Container>
         <Items>
           <Logo>
-            <Image
-              src={logo}
-              alt="Logo"
-              width={120}
-              height={22}
-            />
+            <Image src={logo} alt="Logo" width={120} height={22} />
           </Logo>
           <LinkContainer>
-            <StyledLink
-              href="/login"
-              passHref
-            >
+            <StyledLink href="/login" passHref>
               Login
             </StyledLink>
-            <StyledLink
-              href="/join"
-              passHref
-            >
+            <StyledLink href="/join" passHref>
               Join
             </StyledLink>
           </LinkContainer>

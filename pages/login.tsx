@@ -17,11 +17,7 @@ const LoginPage: React.FC = () => {
       <LoginHeader />
       <br />
       <Container>
-        <PiUserCircleDuotone
-          size="90px"
-          color="#696FFD"
-          fontWeight={600}
-        />
+        <PiUserCircleDuotone size="90px" color="#696FFD" fontWeight={600} />
         <LoginContainer onSubmit={handleSubmit}>
           <Input
             type="text"

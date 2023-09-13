@@ -6,7 +6,7 @@ const ListPage: React.FC = () => {
     <>
       <Header />
       <Filter />
-      <br/>
+      <br />
       <p> List Main Page </p>
     </>
   );
