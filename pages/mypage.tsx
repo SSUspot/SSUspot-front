@@ -9,10 +9,10 @@ const MyPage: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(""); // 팔로워 또는 팔로잉
 
-  // 프로필 편집 모드 (nickname, stateMessage의 초기값은 DB에서 가져오는 값으로 초기화함)
+  // 프로필 편집 모드 (nickname, statusMessage의 초기값은 DB에서 가져오는 값으로 초기화함)
   const [isEditing, setIsEditing] = useState(false);
   const [nickname, setNickname] = useState("이시현"); // 기존 nickname 값으로 초기화
-  const [statusMessage, setStatusMessage] = useState("상태메시지입니다"); // 기존 stateMessage 값으로 초기화
+  const [statusMessage, setStatusMessage] = useState("상태메시지입니다"); // 기존 statusMessage 값으로 초기화
 
   const clickModal = (type: string) => {
     setShowModal(!showModal);
