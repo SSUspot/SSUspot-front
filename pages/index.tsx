@@ -15,12 +15,10 @@ const Home: NextPage = () => {
       <Header />
       <Filter />
       <Navigation />
-      <br/>
+      <br />
       <p> index.tsx </p>
-
     </>
   );
 };
 
 export default Home;
-
