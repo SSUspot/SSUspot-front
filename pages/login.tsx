@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import Link from "next/link";
+import axios from "axios";
 import LoginHeader from "../component/layout/login-header";
 import { PiUserCircleDuotone } from "react-icons/pi";
 
@@ -8,8 +9,21 @@ const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    try {
+      const apiUrl = "http://172.104.113.48:8080/api/user/login";
+
+      const response = await axios.post(apiUrl, {
+        email: email,
+        password: password,
+      });
+
+      console.log("응답 데이터:", response.data);
+    } catch (error) {
+      console.error("에러:", error);
+    }
   };
 
   return (
@@ -34,7 +48,10 @@ const LoginPage: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           ></Input>
-          <Button type="submit">로그인</Button>
+
+          <Button type="submit" onClick={handleSubmit}>
+            로그인
+          </Button>
           <LinkContainer>
             <span
               style={{ color: "#4f4c4c", fontWeight: 400, marginRight: 10 }}

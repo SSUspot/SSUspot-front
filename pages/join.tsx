@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState } from "react";
 import Link from "next/link";
+import axios from "axios";
 import LoginHeader from "../component/layout/login-header";
 import { PiUserCirclePlusDuotone } from "react-icons/pi";
 
@@ -12,8 +13,24 @@ const JoinPage: React.FC = () => {
   const [profileMessage, setProfileMessage] = useState("");
   const [profileImageLink, setProfileImageLink] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    try {
+      const apiUrl = "http://172.104.113.48:8080/api/user/register";
+
+      const response = await axios.post(apiUrl, {
+        email: email,
+        password: password,
+        userName: userName,
+        nickname: nickname,
+        profileMessage: profileMessage,
+        profileImageLink: profileImageLink,
+      });
+      console.log("회원가입 성공");
+    } catch (error) {
+      console.error("에러:", error);
+    }
   };
 
   return (
@@ -66,7 +83,10 @@ const JoinPage: React.FC = () => {
             onChange={(e) => setProfileImageLink(e.target.value)}
           ></Input>
 
-          <Button type="submit">회원가입</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            회원가입
+          </Button>
+
           <LinkContainer>
             <span
               style={{ color: "#4f4c4c", fontWeight: 400, marginRight: 10 }}
@@ -90,7 +110,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 200px;
+  height: 100px;
 `;
 
 const LoginContainer = styled.form`
@@ -103,7 +123,7 @@ const LoginContainer = styled.form`
   border-radius: 20px;
   top: 50%;
   width: 550px;
-  height: 450px;
+  height: 650px;
   background-color: rgba(217, 217, 217, 0.2);
   z-index: -1;
 `;
