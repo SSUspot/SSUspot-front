@@ -8,6 +8,9 @@ const JoinPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
+  const [profileMessage, setProfileMessage] = useState("");
+  const [profileImageLink, setProfileImageLink] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,6 +42,28 @@ const JoinPage: React.FC = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+          ></Input>
+
+          <Input
+            type="text"
+            placeholder="Name"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          ></Input>
+
+          <Input
+            type="text"
+            placeholder="status message"
+            value={profileMessage}
+            onChange={(e) => setProfileMessage(e.target.value)}
+          ></Input>
+
+          <Input
+            type="file"
+            placeholder="Profile Image"
+            value={profileImageLink}
+            accept="image/png, image/jpeg"
+            onChange={(e) => setProfileImageLink(e.target.value)}
           ></Input>
 
           <Button type="submit">회원가입</Button>
