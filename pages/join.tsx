@@ -1,16 +1,47 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import axios from "axios";
 import LoginHeader from "../component/layout/login-header";
 import { PiUserCirclePlusDuotone } from "react-icons/pi";
+import { useRouter } from "next/router";
 
 const JoinPage: React.FC = () => {
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
+  const [userName, setUserName] = useState("");
+  const [profileMessage, setProfileMessage] = useState("");
+  const [profileImageLink, setProfileImageLink] = useState("");
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const storedAccessToken = localStorage.getItem("accessToken");
+    if (storedAccessToken) {
+      void router.push("http://localhost:3000/");
+    }
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    try {
+      // const apiUrl = "http://172.104.113.48:8080/api/user/register";
+      const apiUrl = "http://localhost:8080/api/users/register";
+
+      const response = await axios.post(apiUrl, {
+        email: email,
+        password: password,
+        userName: userName,
+        nickname: nickname,
+        profileMessage: profileMessage,
+        profileImageLink: profileImageLink,
+      });
+      router.push("http://localhost:3000/login");
+      console.log("회원가입 성공");
+    } catch (error) {
+      console.error("에러:", error);
+    }
   };
 
   return (
@@ -41,7 +72,32 @@ const JoinPage: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
           ></Input>
 
-          <Button type="submit">회원가입</Button>
+          <Input
+            type="text"
+            placeholder="Name"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          ></Input>
+
+          <Input
+            type="text"
+            placeholder="status message"
+            value={profileMessage}
+            onChange={(e) => setProfileMessage(e.target.value)}
+          ></Input>
+
+          <Input
+            type="file"
+            placeholder="Profile Image"
+            value={profileImageLink}
+            accept="image/png, image/jpeg"
+            onChange={(e) => setProfileImageLink(e.target.value)}
+          ></Input>
+
+          <Button type="submit" onClick={handleSubmit}>
+            회원가입
+          </Button>
+
           <LinkContainer>
             <span
               style={{ color: "#4f4c4c", fontWeight: 400, marginRight: 10 }}
@@ -65,7 +121,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 200px;
+  height: 100px;
 `;
 
 const LoginContainer = styled.form`
@@ -78,7 +134,7 @@ const LoginContainer = styled.form`
   border-radius: 20px;
   top: 50%;
   width: 550px;
-  height: 450px;
+  height: 650px;
   background-color: rgba(217, 217, 217, 0.2);
   z-index: -1;
 `;

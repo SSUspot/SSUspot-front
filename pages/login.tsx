@@ -1,15 +1,47 @@
 import styled from "styled-components";
-import { useState } from "react";
-import Link from "next/link";
 import LoginHeader from "../component/layout/login-header";
+import Link from "next/link";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { useRecoilState } from "recoil";
 import { PiUserCircleDuotone } from "react-icons/pi";
+import { accessTokenState } from "../states/state";
 
 const LoginPage: React.FC = () => {
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    const storedAccessToken = localStorage.getItem("accessToken");
+    if (storedAccessToken) {
+      void router.push("http://localhost:3000/");
+    }
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    try {
+      // const apiUrl = "http://172.104.113.48:8080/api/user/login";
+      const apiUrl = "http://localhost:8080/api/users/login";
+
+      const response = await axios.post(apiUrl, {
+        email: email,
+        password: password,
+      });
+      setAccessToken({
+        accessToken: response.data?.accessToken || null,
+        accessTokenExpiredIn: response.data?.accessTokenExpiredIn || null,
+        refreshToken: response.data?.refreshToken || null,
+        refreshTokenExpiredIn: response.data?.refreshTokenExpiredIn || null,
+      });
+      localStorage.setItem("accessToken", response.data?.accessToken);
+      router.push("http://localhost:3000/");
+    } catch (error) {
+      console.error("에러:", error);
+    }
   };
 
   return (
@@ -34,7 +66,10 @@ const LoginPage: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           ></Input>
-          <Button type="submit">로그인</Button>
+
+          <Button type="submit" onClick={handleSubmit}>
+            로그인
+          </Button>
           <LinkContainer>
             <span
               style={{ color: "#4f4c4c", fontWeight: 400, marginRight: 10 }}
