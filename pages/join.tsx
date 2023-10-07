@@ -1,9 +1,10 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import LoginHeader from "../component/layout/login-header";
 import { PiUserCirclePlusDuotone } from "react-icons/pi";
+import { useRouter } from "next/router";
 
 const JoinPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -12,12 +13,21 @@ const JoinPage: React.FC = () => {
   const [userName, setUserName] = useState("");
   const [profileMessage, setProfileMessage] = useState("");
   const [profileImageLink, setProfileImageLink] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    const storedAccessToken = localStorage.getItem("accessToken");
+    if (storedAccessToken) {
+      void router.push("http://localhost:3000/");
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const apiUrl = "http://172.104.113.48:8080/api/user/register";
+      // const apiUrl = "http://172.104.113.48:8080/api/user/register";
+      const apiUrl = "http://localhost:8080/api/users/register";
 
       const response = await axios.post(apiUrl, {
         email: email,
@@ -27,6 +37,7 @@ const JoinPage: React.FC = () => {
         profileMessage: profileMessage,
         profileImageLink: profileImageLink,
       });
+      router.push("http://localhost:3000/login");
       console.log("회원가입 성공");
     } catch (error) {
       console.error("에러:", error);
