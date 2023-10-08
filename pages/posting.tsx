@@ -1,44 +1,15 @@
 import Header from "../component/layout/header";
 import styled from "styled-components";
-import { useState } from "react";
-import { ModalContent } from "./mypage";
-
+import ImageSlide from "../component/posting/image-slide";
 const Posting: React.FC = () => {
   const nickname = "이시현";
-  const [image, setImage] = useState<string | null>(null);
-
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedImage = e.target.files?.[0];
-
-    if (selectedImage) {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.result && typeof reader.result === "string") {
-          setImage(reader.result);
-        }
-      };
-      reader.readAsDataURL(selectedImage);
-    }
-  };
 
   return (
     <>
       <Header />
       <Container>
         <Column>
-          {image ? (
-            <ImagePreview src={image} alt="Uploaded" />
-          ) : (
-            <ImageBox>
-              <label htmlFor="imageInput">사진 업로드</label>
-              <ImageInput
-                id="imageInput"
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-            </ImageBox>
-          )}
+          <ImageSlide />
         </Column>
         <Column>
           <DivisionBar />
@@ -55,19 +26,19 @@ const Posting: React.FC = () => {
           </Info>
           <InputWrapper>
             <Label>제목</Label>
-            <Input type="text" required />
+            <Input type="text" placeholder="제목을 입력해주세요" required />
           </InputWrapper>
           <InputWrapper>
             <Label>내용</Label>
-            <TextArea rows={4} />
+            <TextArea placeholder="내용을 입력해주세요" rows={4} />
           </InputWrapper>
           <InputWrapper>
             <Label>태그</Label>
-            <Input type="text" required />
+            <Input type="text" placeholder="#바다 #노을" required />
           </InputWrapper>
           <InputWrapper>
             <Label>위치</Label>
-            <Input type="text" required />
+            <Input type="text" placeholder="위치를 검색하세요" required />
           </InputWrapper>
           <Button>게시하기</Button>
         </Column>
@@ -83,42 +54,13 @@ const Container = styled.div`
   grid-template-columns: 1fr 1px 1fr;
   align-items: center;
   justify-items: center;
-  padding: 100px 50px;
-`;
-
-const ImageBox = styled.div`
-  width: 600px;
-  height: 600px;
-  background-color: #ccc;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const ImageInput = styled.input`
-  display: none;
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const ImagePreview = styled.img`
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  padding-top: 50px;
 `;
 
 const DivisionBar = styled.div`
-  position: relative;
   width: 2px;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 
 const Column = styled.div`
@@ -128,8 +70,11 @@ const Column = styled.div`
   flex-direction: column;
   align-items: center;
 
+  &:nth-child(1) {
+    margin-top: 20px;
+  }
+
   &:nth-child(2) {
-    background-color: #fff;
     padding: 10px;
   }
 
@@ -172,7 +117,7 @@ const Input = styled.input`
   margin-top: 5px;
   font-size: 18px;
   color: #676767;
-  border-bottom: solid 1px #dfdfdf;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
 
   &:focus {
@@ -190,7 +135,7 @@ const TextArea = styled.textarea`
   margin-top: 5px;
   font-size: 18px;
   color: #676767;
-  border: solid 1px #dfdfdf;
+  border: solid 1px rgba(0, 0, 0, 0.2);
   border-radius: 3px;
   box-sizing: border-box;
 
@@ -222,6 +167,6 @@ const Button = styled.div`
   color: #ffffff;
 
   &:hover {
-    background-color: #0d2d91; /* 마우스 오버 시 배경색 변경 */
+    background-color: #0d2d91;
   }
 `;
