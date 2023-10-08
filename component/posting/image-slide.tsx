@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { useState } from "react";
 import Image from "next/image";
 import { BsFillCameraFill } from "react-icons/bs";
+
+const MAX_IMAGES = 10;
 
 const ImageSlide: React.FC = () => {
   const [images, setImages] = useState<string[]>([]);
@@ -13,6 +14,10 @@ const ImageSlide: React.FC = () => {
     const imageUrls: string[] = [];
 
     if (selectedImages) {
+      if (selectedImages.length + images.length > MAX_IMAGES) {
+        alert(`이미지는 최대 ${MAX_IMAGES}개까지만 업로드 가능합니다.`);
+        return;
+      }
       for (let i = 0; i < selectedImages.length; i++) {
         const reader = new FileReader();
 
@@ -20,7 +25,7 @@ const ImageSlide: React.FC = () => {
           if (reader.result && typeof reader.result === "string") {
             imageUrls.push(reader.result);
             if (imageUrls.length === selectedImages.length) {
-              setImages(imageUrls);
+              setImages([...images, ...imageUrls]);
             }
           }
         };
