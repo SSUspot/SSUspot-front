@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useState } from "react";
 import Image from "next/image";
+import { BsFillCameraFill } from "react-icons/bs";
 
 const ImageSlide: React.FC = () => {
   const [images, setImages] = useState<string[]>([]);
@@ -55,7 +56,9 @@ const ImageSlide: React.FC = () => {
     <>
       {!images.length ? (
         <ImageBox>
-          <Label htmlFor="imageInput">사진 업로드</Label>
+          <Label htmlFor="imageInput">
+            <BsFillCameraFill size={50} />
+          </Label>
           <ImageInput
             id="imageInput"
             type="file"
@@ -111,7 +114,7 @@ export default ImageSlide;
 const ImageBox = styled.div`
   width: 600px;
   height: 600px;
-  background-color: #f5f5f5;
+  background-color: #d9d9d9;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -124,6 +127,7 @@ const ImageBox = styled.div`
 `;
 
 const Label = styled.label`
+  color: white;
   cursor: pointer;
 `;
 const ImageInput = styled.input`
