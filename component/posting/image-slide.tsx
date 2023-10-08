@@ -31,7 +31,11 @@ const ImageSlide: React.FC = () => {
   const handleRemoveImage = (index: number) => {
     const updatedImages = [...images];
     updatedImages.splice(index, 1);
-    setCurrentSlide(index);
+    if (index < images.length - 1) {
+      setCurrentSlide(index);
+    } else {
+      setCurrentSlide(index - 1);
+    }
     setImages(updatedImages);
   };
 
