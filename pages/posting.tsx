@@ -65,17 +65,12 @@ const DivisionBar = styled.div`
 
 const Column = styled.div`
   height: 100%;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
 
   &:nth-child(1) {
-    margin-top: 20px;
-  }
-
-  &:nth-child(2) {
-    padding: 10px;
+    padding-top: 20px;
   }
 
   &:nth-child(3) {
