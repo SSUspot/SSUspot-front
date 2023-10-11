@@ -1,6 +1,7 @@
 import Header from "../component/layout/header";
 import styled from "styled-components";
 import ImageSlide from "../component/posting/image-slide";
+import HashTag from "../component/posting/hash-tag";
 const Posting: React.FC = () => {
   const nickname = "이시현";
 
@@ -33,8 +34,8 @@ const Posting: React.FC = () => {
             <TextArea placeholder="내용을 입력해주세요" rows={4} />
           </InputWrapper>
           <InputWrapper>
-            <Label>태그</Label>
-            <Input type="text" placeholder="#바다 #노을" required />
+            <Label>해시태그</Label>
+            <HashTag />
           </InputWrapper>
           <InputWrapper>
             <Label>위치</Label>
