@@ -79,8 +79,7 @@ export default HashTag;
 const HashTagItem = styled.div`
   display: inline-block;
   padding: 5px 7px;
-  margin-right: 5px;
-  margin-top: 5px;
+  margin: 5px 0px 0px 5px;
   background-color: #007bff;
   color: #fff;
   border-radius: 4px;
@@ -90,7 +89,7 @@ const HashTagItem = styled.div`
 
 const Input = styled.input`
   display: block;
-  width: 600px;
+  width: 550px;
   border: none;
   outline: none;
   padding: 10px;

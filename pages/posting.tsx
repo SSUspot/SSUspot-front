@@ -106,7 +106,7 @@ const InputWrapper = styled.div`
 
 const Input = styled.input`
   display: block;
-  width: 600px;
+  width: 550px;
   border: none;
   outline: none;
   padding: 10px;
@@ -124,7 +124,7 @@ const Input = styled.input`
 
 const TextArea = styled.textarea`
   display: block;
-  width: 600px;
+  width: 550px;
   border: none;
   outline: none;
   padding: 10px;
@@ -145,7 +145,7 @@ const Label = styled.label`
   display: block;
   font-size: 18px;
   font-weight: 500;
-  padding-left: 15px;
+  padding-left: 5px;
 `;
 
 const Button = styled.div`
