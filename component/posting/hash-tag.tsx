@@ -35,16 +35,6 @@ const HashTag: React.FC = () => {
     setInputHashTag("");
   };
 
-  // const keyDownHandler = (e: any) => {
-  //   if (e.code !== "Enter" && e.code !== "NumpadEnter") return;
-  //   e.preventDefault();
-
-  //   const regExp = /[\{\}\[\]\/?.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
-  //   if (!regExp.test(e.target.value)) {
-  //     setInputHashTag("");
-  //   }
-  // };
-
   const changeHashTagInput = (e: any) => {
     setInputHashTag(e.target.value);
   };
@@ -80,10 +70,10 @@ const HashTagItem = styled.div`
   display: inline-block;
   padding: 5px 7px;
   margin: 5px 0px 0px 5px;
-  background-color: #007bff;
+  background-color: rgba(48, 55, 205, 0.7);
   color: #fff;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 15px;
   cursor: pointer;
 `;
 
@@ -94,8 +84,7 @@ const Input = styled.input`
   outline: none;
   padding: 10px;
   margin-top: 5px;
-  font-size: 18px;
-  color: #676767;
+  font-size: 15px;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
 

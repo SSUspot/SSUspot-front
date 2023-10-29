@@ -2,6 +2,8 @@ import Header from "../component/layout/header";
 import styled from "styled-components";
 import ImageSlide from "../component/posting/image-slide";
 import HashTag from "../component/posting/hash-tag";
+import LocationInput from "../component/posting/location-input";
+
 const Posting: React.FC = () => {
   const nickname = "이시현";
 
@@ -39,9 +41,8 @@ const Posting: React.FC = () => {
           </InputWrapper>
           <InputWrapper>
             <Label>위치</Label>
-            <Input type="text" placeholder="위치를 검색하세요" required />
+            <LocationInput />
           </InputWrapper>
-          <Button>게시하기</Button>
         </Column>
       </Container>
     </>
@@ -111,8 +112,7 @@ const Input = styled.input`
   outline: none;
   padding: 10px;
   margin-top: 5px;
-  font-size: 18px;
-  color: #676767;
+  font-size: 16px;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
 
@@ -129,12 +129,11 @@ const TextArea = styled.textarea`
   outline: none;
   padding: 10px;
   margin-top: 5px;
-  font-size: 18px;
-  color: #676767;
+  font-size: 16px;
   border: solid 1px rgba(0, 0, 0, 0.2);
   border-radius: 3px;
   box-sizing: border-box;
-
+  resize: none;
   &:focus {
     border: solid 1px #999;
     border-radius: 3px;
@@ -153,9 +152,9 @@ const Button = styled.div`
   display: flex;
   width: 100px;
   height: 30px;
-  background-color: #2146c7;
+  background-color: rgba(50, 80, 210, 0.7);
   border-radius: 15px;
-  font-size: 15px;
+  font-size: 16px;
   border: none;
   text-align: center;
   align-items: center;
@@ -163,6 +162,6 @@ const Button = styled.div`
   color: #ffffff;
 
   &:hover {
-    background-color: #0d2d91;
+    background-color: rgba(48, 55, 205, 0.7);
   }
 `;
