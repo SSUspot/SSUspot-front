@@ -1,0 +1,167 @@
+import Header from "../component/layout/header";
+import styled from "styled-components";
+import ImageSlide from "../component/posting/image-slide";
+import HashTag from "../component/posting/hash-tag";
+import LocationInput from "../component/posting/location-input";
+
+const Posting: React.FC = () => {
+  const nickname = "이시현";
+
+  return (
+    <>
+      <Header />
+      <Container>
+        <Column>
+          <ImageSlide />
+        </Column>
+        <Column>
+          <DivisionBar />
+        </Column>
+        <Column>
+          <Info>
+            <StyledImage
+              src="https://picsum.photos/150"
+              alt=""
+              width={50}
+              height={50}
+            ></StyledImage>
+            {nickname}
+          </Info>
+          <InputWrapper>
+            <Label>제목</Label>
+            <Input type="text" placeholder="제목을 입력해주세요" required />
+          </InputWrapper>
+          <InputWrapper>
+            <Label>내용</Label>
+            <TextArea placeholder="내용을 입력해주세요" rows={4} />
+          </InputWrapper>
+          <InputWrapper>
+            <Label>해시태그</Label>
+            <HashTag />
+          </InputWrapper>
+          <InputWrapper>
+            <Label>위치</Label>
+            <LocationInput />
+          </InputWrapper>
+        </Column>
+      </Container>
+    </>
+  );
+};
+
+export default Posting;
+
+const Container = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  align-items: center;
+  justify-items: center;
+  padding-top: 50px;
+`;
+
+const DivisionBar = styled.div`
+  width: 2px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+`;
+
+const Column = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &:nth-child(1) {
+    padding-top: 20px;
+  }
+
+  &:nth-child(3) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+`;
+
+const Info = styled.div`
+  width: 600px;
+  height: 50px;
+  padding: 0px 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+`;
+
+const StyledImage = styled.img`
+  border-radius: 25px;
+`;
+
+const InputWrapper = styled.div`
+  position: relative;
+  width: 600px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+`;
+
+const Input = styled.input`
+  display: block;
+  width: 550px;
+  border: none;
+  outline: none;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
+
+  &:focus {
+    border: solid 1px #999;
+    border-radius: 3px;
+  }
+`;
+
+const TextArea = styled.textarea`
+  display: block;
+  width: 550px;
+  border: none;
+  outline: none;
+  padding: 10px;
+  margin-top: 5px;
+  font-size: 16px;
+  border: solid 1px rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  box-sizing: border-box;
+  resize: none;
+  &:focus {
+    border: solid 1px #999;
+    border-radius: 3px;
+  }
+`;
+
+const Label = styled.label`
+  display: block;
+  font-size: 18px;
+  font-weight: 500;
+  padding-left: 5px;
+`;
+
+const Button = styled.div`
+  cursor: pointer;
+  display: flex;
+  width: 100px;
+  height: 30px;
+  background-color: rgba(50, 80, 210, 0.7);
+  border-radius: 15px;
+  font-size: 16px;
+  border: none;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+
+  &:hover {
+    background-color: rgba(48, 55, 205, 0.7);
+  }
+`;
