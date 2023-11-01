@@ -1,6 +1,6 @@
 import { Map } from 'react-kakao-maps-sdk';
 import React from 'react';
-import MarkerContainer from './MarkerContainer'; // Import the new component
+import MarkerContainer from './MarkerContainer';
 
 interface Spot {
   id: number;
