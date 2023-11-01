@@ -5,7 +5,7 @@ import Head from 'next/head';
 import Header from '../../component/layout/header';
 import Filter from '../../component/layout/filter';
 import Navigation from '../../component/layout/navigation';
-import KakaoMap from '../../component/KakaoMap';
+import KakaoMap from '../../component/map/KakaoMap';
 
 const MapMain: NextPage = () => {
   const [spots, setSpots] = useState([]);
