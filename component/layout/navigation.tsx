@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from "react";
-import styled from "styled-components";
-import Image from "next/image";
-import Home from "../../public/navigation/home.png";
-import Map from "../../public/navigation/map.png";
-import Group from "../../public/navigation/group.png";
-import Like from "../../public/navigation/like.png";
-import Post from "../../public/navigation/post.png";
-import Chat from "../../public/navigation/chat.png";
-import Mypage from "../../public/navigation/mypage.png";
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import Home from '../../public/navigation/home.png';
+import Map from '../../public/navigation/map.png';
+import List from '../../public/navigation/list.png';
+import Group from '../../public/navigation/group.png';
+import Like from '../../public/navigation/like.png';
+import Post from '../../public/navigation/post.png';
+import Chat from '../../public/navigation/chat.png';
+import Mypage from '../../public/navigation/mypage.png';
 
 const Navigation: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isList, setIsList] = useState(false);
+  const [ismap, setIsMap] = useState(true);
+  const router = useRouter();
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -20,21 +25,45 @@ const Navigation: React.FC = () => {
     setIsHovered(false);
   };
 
+  useEffect(() => {
+    const currentURL = window.location.href;
+    if (currentURL.includes('/main/map')) {
+      setIsMap(false);
+      setIsList(true);
+    } else if (currentURL.includes('/main/list')) {
+      setIsMap(true);
+      setIsList(false);
+    }
+  }, []);
+
+  const handleClickMap = () => {
+    router.push('http://localhost:3000/main/map');
+  };
+
+  const handleClickList = () => {
+    router.push('http://localhost:3000/main/list');
+  };
+
   return (
     <>
-      <Container
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
-        <NavigationBox className={isHovered ? "hovered" : ""}>
+      <Container onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <NavigationBox className={isHovered ? 'hovered' : ''}>
           <ItemButton>
             <Image src={Home} alt="Home" width={25} height={25} />
             <p> 홈 </p>
           </ItemButton>
-          <ItemButton>
-            <Image src={Map} alt="Map" width={25} height={25} />
-            <p> 지도 보기 </p>
-          </ItemButton>
+          {ismap && (
+            <ItemButton onClick={handleClickMap}>
+              <Image src={Map} alt="Map" width={25} height={25} />
+              <p> 지도 보기 </p>
+            </ItemButton>
+          )}
+          {isList && (
+            <ItemButton onClick={handleClickList}>
+              <Image src={List} alt="List" width={25} height={25} />
+              <p> 리스트 보기 </p>
+            </ItemButton>
+          )}
           <ItemButton>
             <Image src={Group} alt="Group" width={25} height={25} />
             <p> 팔로잉 피드 </p>
@@ -106,7 +135,7 @@ const ItemButton = styled.button`
   position: relative;
 
   &:hover::before {
-    content: "";
+    content: '';
     position: absolute;
     top: -10px;
     height: 2px;
@@ -114,7 +143,7 @@ const ItemButton = styled.button`
     background-color: #f3f3f399;
   }
   &:hover::after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: -10px;
     height: 2px;
