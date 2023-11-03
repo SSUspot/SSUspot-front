@@ -15,8 +15,6 @@ interface Spot {
 const MarkerOverlay: React.FC<{
   spot: Spot;
 }> = ({ spot }) => {
-  const [isVisible, setIsVisible] = useState(false);
-
   return (
     <InfoWindow>
       <SpotImage src={spot.spotThumbnailImageLink} alt={spot.spotName} width={100} height={100} />

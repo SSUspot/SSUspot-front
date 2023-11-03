@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MapMarker } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 
 interface Spot {
   id: number;
@@ -15,11 +16,27 @@ interface Spot {
 const ListContainer: React.FC<{
   spots: Spot[];
 }> = ({ spots }) => {
+  const router = useRouter();
+
+  const handleSpotPage = (spot: Spot) => {
+    router.push({
+      pathname: `/main/${spot.id}`,
+      query: {
+        id: spot.id,
+        latitude: spot.latitude,
+        longitude: spot.longitude,
+        spotLevel: spot.spotLevel,
+        spotName: spot.spotName,
+        spotThumbnailImageLink: spot.spotThumbnailImageLink,
+      },
+    });
+  };
+
   return (
     <>
       <Container>
         {spots.map((spot, index) => (
-          <SpotFrame key={index}>
+          <SpotFrame key={index} onClick={() => handleSpotPage(spot)}>
             <SpotImage
               src={spot.spotThumbnailImageLink}
               alt={spot.spotName}

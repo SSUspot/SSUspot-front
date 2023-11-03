@@ -3,6 +3,7 @@ import { MapMarker, CustomOverlayMap } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 import Image from 'next/image';
 import MarkerOverlay from './MarkerOverlay';
+import { useRouter } from 'next/router';
 
 interface Spot {
   id: number;
@@ -18,6 +19,21 @@ const EventMarkerContainer: React.FC<{
   index: number;
 }> = ({ spot, index }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const router = useRouter();
+
+  const handleSpotPage = (spot: Spot) => {
+    router.push({
+      pathname: `/main/${spot.id}`,
+      query: {
+        id: spot.id,
+        latitude: spot.latitude,
+        longitude: spot.longitude,
+        spotLevel: spot.spotLevel,
+        spotName: spot.spotName,
+        spotThumbnailImageLink: spot.spotThumbnailImageLink,
+      },
+    });
+  };
 
   return (
     <>
@@ -39,6 +55,7 @@ const EventMarkerContainer: React.FC<{
         }}
         onMouseOver={() => setIsVisible(true)}
         onMouseOut={() => setIsVisible(false)}
+        onClick={() => handleSpotPage(spot)}
       />
       {isVisible && (
         <CustomOverlayMap position={{ lat: spot.latitude, lng: spot.longitude }} yAnchor={1.6}>
