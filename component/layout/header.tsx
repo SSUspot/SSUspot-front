@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "styled-components";
-import Image from "next/image";
-import logo from "../../public/logo.png";
-import bell from "../../public/bell.png";
-import search from "../../public/search.png";
+import React from 'react';
+import styled from 'styled-components';
+import Image from 'next/image';
+import logo from '../../public/logo.png';
+import bell from '../../public/bell.png';
+import search from '../../public/search.png';
 
 const Header: React.FC = () => {
   return (
@@ -38,9 +38,10 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   background: #ffffff;
+  z-index: 1;
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
