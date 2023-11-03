@@ -31,8 +31,8 @@ const MapMain: NextPage = () => {
   return (
     <>
       <Head>
-        <title>SSUpot</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>SSUspot</title>
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <Header />
