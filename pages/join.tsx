@@ -1,24 +1,27 @@
-import styled from "styled-components";
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import axios from "axios";
-import LoginHeader from "../component/layout/login-header";
-import { PiUserCirclePlusDuotone } from "react-icons/pi";
-import { useRouter } from "next/router";
+import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import axios from 'axios';
+import LoginHeader from '../component/layout/login-header';
+import { PiUserCirclePlusDuotone } from 'react-icons/pi';
+import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { userState } from '../states/state';
 
 const JoinPage: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [password, setPassword] = useState("");
-  const [userName, setUserName] = useState("");
-  const [profileMessage, setProfileMessage] = useState("");
-  const [profileImageLink, setProfileImageLink] = useState("");
+  const [user, setUser] = useRecoilState(userState);
+  const [email, setEmail] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState('');
+  const [profileMessage, setProfileMessage] = useState('');
+  const [profileImageLink, setProfileImageLink] = useState('');
   const router = useRouter();
 
   useEffect(() => {
-    const storedAccessToken = localStorage.getItem("accessToken");
+    const storedAccessToken = localStorage.getItem('accessToken');
     if (storedAccessToken) {
-      void router.push("http://localhost:3000/");
+      void router.push('http://localhost:3000/');
     }
   }, []);
 
@@ -27,7 +30,7 @@ const JoinPage: React.FC = () => {
 
     try {
       // const apiUrl = "http://172.104.113.48:8080/api/user/register";
-      const apiUrl = "http://localhost:8080/api/users/register";
+      const apiUrl = 'http://localhost:8080/api/users/register';
 
       const response = await axios.post(apiUrl, {
         email: email,
@@ -37,10 +40,13 @@ const JoinPage: React.FC = () => {
         profileMessage: profileMessage,
         profileImageLink: profileImageLink,
       });
-      router.push("http://localhost:3000/login");
-      console.log("회원가입 성공");
+
+      localStorage.setItem('user', JSON.stringify(response.data));
+      setUser(response.data);
+      router.push('http://localhost:3000/login');
+      console.log('회원가입 성공');
     } catch (error) {
-      console.error("에러:", error);
+      console.error('에러:', error);
     }
   };
 
@@ -100,7 +106,7 @@ const JoinPage: React.FC = () => {
 
           <LinkContainer>
             <span
-              style={{ color: "#4f4c4c", fontWeight: 400, marginRight: 10 }}
+              style={{ color: '#4f4c4c', fontWeight: 400, marginRight: 10 }}
             >
               계정이 있다면
             </span>
@@ -147,7 +153,7 @@ const Input = styled.input.attrs({ required: true })`
   border: none;
   border-radius: 5px;
   background-color: rgba(217, 217, 217, 0.5);
-  font-family: "serif";
+  font-family: 'serif';
   font-style: normal;
   font-weight: 400;
   font-size: 18px;

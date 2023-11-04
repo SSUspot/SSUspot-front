@@ -1,4 +1,13 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
+
+export interface UserInfo {
+  id: number | null;
+  email: string | null;
+  userName: string | null;
+  nickname: string | null;
+  profileMessage: string | null;
+  profileImageLink: string | null;
+}
 
 interface AccessTokenInfo {
   accessToken: string | null;
@@ -8,11 +17,19 @@ interface AccessTokenInfo {
 }
 
 export const accessTokenState = atom<AccessTokenInfo>({
-  key: "accessTokenState",
+  key: 'accessTokenState',
   default: {
     accessToken: null,
     accessTokenExpiredIn: null,
     refreshToken: null,
     refreshTokenExpiredIn: null,
+  },
+});
+
+export const userState = atom<UserInfo | null | any>({
+  key: 'userState',
+  default: () => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
   },
 });
