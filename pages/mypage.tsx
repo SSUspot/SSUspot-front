@@ -41,9 +41,9 @@ const MyPage: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
-
     Router.push('/login');
   };
+
   return (
     <>
       <Header />
@@ -128,7 +128,7 @@ const Container = styled.div`
   justify-contents: flex-start;
   padding: 50px 50px 60px;
   margin-left: 50px;
-  width: 100vw;
+  width: calc(100vw-50px);
   height: 150px;
   border-bottom: solid;
   border-color: rgba(0, 0, 0, 0.1);
