@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import Image from "next/image";
-import filterAlt from "../../public/filter_alt.png";
+import React from 'react';
+import styled from 'styled-components';
+import Image from 'next/image';
+import filterAlt from '../../public/filter_alt.png';
 
 const Filter: React.FC = () => {
   return (
@@ -34,9 +34,10 @@ const Container = styled.div`
   position: sticky;
   top: 80px;
   background: #ffffff;
+  z-index: 1;
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
