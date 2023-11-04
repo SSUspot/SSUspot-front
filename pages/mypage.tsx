@@ -1,18 +1,18 @@
-import { useState } from "react";
-import Header from "../component/layout/header";
-import styled from "styled-components";
-import Image from "next/image";
-import Modal from "../component/common/modal";
+import { useState } from 'react';
+import Header from '../component/layout/header';
+import styled from 'styled-components';
+import Modal from '../component/common/modal';
+import Router from 'next/router';
 
 const MyPage: React.FC = () => {
   // 팔로워, 팔로잉 숫자 클릭하면 각각에 맞게 리스트 보여주는 모달
   const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState(""); // 팔로워 또는 팔로잉
+  const [modalType, setModalType] = useState(''); // 팔로워 또는 팔로잉
 
   // 프로필 편집 모드 (nickname, statusMessage의 초기값은 DB에서 가져오는 값으로 초기화함)
   const [isEditing, setIsEditing] = useState(false);
-  const [nickname, setNickname] = useState("이시현"); // 기존 nickname 값으로 초기화
-  const [statusMessage, setStatusMessage] = useState("상태메시지입니다"); // 기존 statusMessage 값으로 초기화
+  const [nickname, setNickname] = useState('이시현'); // 기존 nickname 값으로 초기화
+  const [statusMessage, setStatusMessage] = useState('상태메시지입니다'); // 기존 statusMessage 값으로 초기화
 
   const clickModal = (type: string) => {
     setShowModal(!showModal);
@@ -39,6 +39,11 @@ const MyPage: React.FC = () => {
     // DB에 새로운 nickname과 statusMessage를 저장하는 것 구현
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+
+    Router.push('/login');
+  };
   return (
     <>
       <Header />
@@ -67,12 +72,13 @@ const MyPage: React.FC = () => {
             {!isEditing && ( // 편집 모드가 아닌 경우에만 프로필 편집 버튼 표시
               <Button onClick={handleEditClick}>프로필 편집</Button>
             )}
+            <Button onClick={handleLogout}>로그아웃</Button>
           </Content1>
           <Content2>
             <p>게시물 {posting}</p>
             <p
-              onClick={() => clickModal("팔로워")}
-              style={{ cursor: "pointer" }}
+              onClick={() => clickModal('팔로워')}
+              style={{ cursor: 'pointer' }}
             >
               팔로워 {follower}
             </p>
@@ -80,8 +86,8 @@ const MyPage: React.FC = () => {
               <Modal clickModal={clickModal} modalType={modalType} />
             )}
             <p
-              onClick={() => clickModal("팔로잉")}
-              style={{ cursor: "pointer" }}
+              onClick={() => clickModal('팔로잉')}
+              style={{ cursor: 'pointer' }}
             >
               팔로잉 {following}
             </p>
