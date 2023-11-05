@@ -25,6 +25,8 @@ const JoinPage: React.FC = () => {
     }
   }, []);
 
+  // profileImageLink 서버에 업로드 & 서버에서 url 및 경로 반환하는 로직 추가
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 

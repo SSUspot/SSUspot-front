@@ -1,18 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { UserInfo } from '../states/state';
 import Header from '../component/layout/header';
 import styled from 'styled-components';
 import Modal from '../component/common/modal';
 import Router from 'next/router';
 
 const MyPage: React.FC = () => {
+  const [user, setUser] = useState<UserInfo | null>(null);
+
   // 팔로워, 팔로잉 숫자 클릭하면 각각에 맞게 리스트 보여주는 모달
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState(''); // 팔로워 또는 팔로잉
 
   // 프로필 편집 모드 (nickname, statusMessage의 초기값은 DB에서 가져오는 값으로 초기화함)
   const [isEditing, setIsEditing] = useState(false);
-  const [nickname, setNickname] = useState('이시현'); // 기존 nickname 값으로 초기화
-  const [statusMessage, setStatusMessage] = useState('상태메시지입니다'); // 기존 statusMessage 값으로 초기화
+  const [nickname, setNickname] = useState('');
+  const [statusMessage, setStatusMessage] = useState('');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        setNickname(parsedUser.nickname);
+        setStatusMessage(parsedUser.profileMessage);
+      }
+    }
+  }, []);
 
   const clickModal = (type: string) => {
     setShowModal(!showModal);
@@ -156,7 +171,7 @@ const ContentContainer = styled.div`
 `;
 
 const Content1 = styled.div`
-  width: 300px;
+  width: auto;
   height: 50px;
   display: flex;
   flex-direction: row;
@@ -186,6 +201,7 @@ const Button = styled.button`
   font-weight: 600;
   font-size: 14px;
   margin-left: 30px;
+  margin-top: 5px;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.3);
