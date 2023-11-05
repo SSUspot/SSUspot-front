@@ -41,6 +41,7 @@ const MyPage: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken');
+    localStorage.removeItem('user');
     Router.push('/login');
   };
 

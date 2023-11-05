@@ -95,8 +95,8 @@ const JoinPage: React.FC = () => {
           <Input
             type="file"
             placeholder="Profile Image"
-            value={profileImageLink}
             accept="image/png, image/jpeg"
+            value={profileImageLink}
             onChange={(e) => setProfileImageLink(e.target.value)}
           ></Input>
 
