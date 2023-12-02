@@ -94,7 +94,6 @@ const SpotImage = styled(Image)`
   object-position: center center;
   top: 0;
   left: 0;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
 `;
 
 const SpotInfo = styled.div`
