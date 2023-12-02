@@ -19,7 +19,7 @@ const MapMain: NextPage = () => {
 
   const handleGetSopts = async () => {
     try {
-      const apiUrl = 'http://localhost:8080/api/spots';
+      const apiUrl = 'http://ssuspot.online/api/spots';
       const response = await axios.get(apiUrl);
       console.log(response);
       setSpots(response.data);
@@ -32,7 +32,7 @@ const MapMain: NextPage = () => {
     <>
       <Head>
         <title>SSUspot</title>
-        <link rel="icon" href="/favicon.png" />
+        <link rel='icon' href='/favicon.png' />
       </Head>
 
       <Header />

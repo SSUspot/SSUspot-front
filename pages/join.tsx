@@ -21,7 +21,7 @@ const JoinPage: React.FC = () => {
   useEffect(() => {
     const storedAccessToken = localStorage.getItem('accessToken');
     if (storedAccessToken) {
-      void router.push('http://localhost:3000/');
+      void router.push('/');
     }
   }, []);
 
@@ -31,8 +31,7 @@ const JoinPage: React.FC = () => {
     e.preventDefault();
 
     try {
-      // const apiUrl = "http://172.104.113.48:8080/api/user/register";
-      const apiUrl = 'http://localhost:8080/api/users/register';
+      const apiUrl = 'http://ssuspot.online/api/users/register';
 
       const response = await axios.post(apiUrl, {
         email: email,
@@ -42,10 +41,7 @@ const JoinPage: React.FC = () => {
         profileMessage: profileMessage,
         profileImageLink: profileImageLink,
       });
-
-      localStorage.setItem('user', JSON.stringify(response.data));
-      setUser(response.data);
-      router.push('http://localhost:3000/login');
+      router.push('/login');
       console.log('회원가입 성공');
     } catch (error) {
       console.error('에러:', error);

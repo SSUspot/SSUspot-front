@@ -17,15 +17,14 @@ const LoginPage: React.FC = () => {
   useEffect(() => {
     const storedAccessToken = localStorage.getItem("accessToken");
     if (storedAccessToken) {
-      void router.push("http://localhost:3000/");
+      void router.push("/");
     }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      // const apiUrl = "http://172.104.113.48:8080/api/user/login";
-      const apiUrl = "http://localhost:8080/api/users/login";
+      const apiUrl = "http://ssuspot.online/api/users/login";
 
       const response = await axios.post(apiUrl, {
         email: email,
@@ -38,7 +37,7 @@ const LoginPage: React.FC = () => {
         refreshTokenExpiredIn: response.data?.refreshTokenExpiredIn || null,
       });
       localStorage.setItem("accessToken", response.data?.accessToken);
-      router.push("http://localhost:3000/");
+      router.push("/");
     } catch (error) {
       console.error("에러:", error);
     }
