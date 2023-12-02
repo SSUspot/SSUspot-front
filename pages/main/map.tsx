@@ -7,27 +7,9 @@ import Filter from '../../component/layout/filter';
 import Navigation from '../../component/layout/navigation';
 import KakaoMap from '../../component/map/KakaoMap';
 
+import spots from '../../component/spot/spots';
+
 const MapMain: NextPage = () => {
-  const [spots, setSpots] = useState([]);
-
-  useEffect(() => {
-    if (spots.length === 0) {
-      handleGetSopts();
-    }
-    console.log(spots);
-  });
-
-  const handleGetSopts = async () => {
-    try {
-      const apiUrl = 'http://ssuspot.online/api/spots';
-      const response = await axios.get(apiUrl);
-      console.log(response);
-      setSpots(response.data);
-    } catch (error) {
-      console.error('에러:', error);
-    }
-  };
-
   return (
     <>
       <Head>
