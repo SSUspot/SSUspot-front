@@ -6,26 +6,10 @@ import Filter from '../../component/layout/filter';
 import Navigation from '../../component/layout/navigation';
 import ListContainer from '../../component/list/listContainer';
 
+import Spot from '../../type/spot';
+import spots from '../../component/spot/spots';
+
 const ListPage: React.FC = () => {
-  const [spots, setSpots] = useState([]);
-
-  useEffect(() => {
-    if (spots.length === 0) {
-      handleGetSopts();
-    }
-    console.log(spots);
-  });
-
-  const handleGetSopts = async () => {
-    try {
-      const apiUrl = 'http://ssuspot.online/api/spots';
-      const response = await axios.get(apiUrl);
-      console.log(response);
-      setSpots(response.data);
-    } catch (error) {
-      console.error('에러:', error);
-    }
-  };
 
   return (
     <>

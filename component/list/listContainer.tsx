@@ -4,14 +4,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-interface Spot {
-  id: number;
-  latitude: number;
-  longitude: number;
-  spotLevel: number;
-  spotName: string;
-  spotThumbnailImageLink: string;
-}
+import Spot from '../../type/spot';
 
 const ListContainer: React.FC<{
   spots: Spot[];
@@ -19,17 +12,7 @@ const ListContainer: React.FC<{
   const router = useRouter();
 
   const handleSpotPage = (spot: Spot) => {
-    router.push({
-      pathname: `/main/${spot.id}`,
-      query: {
-        id: spot.id,
-        latitude: spot.latitude,
-        longitude: spot.longitude,
-        spotLevel: spot.spotLevel,
-        spotName: spot.spotName,
-        spotThumbnailImageLink: spot.spotThumbnailImageLink,
-      },
-    });
+    router.push(`/main/${spot.id}`);
   };
 
   return (
@@ -37,15 +20,14 @@ const ListContainer: React.FC<{
       <Container>
         {spots.map((spot, index) => (
           <SpotFrame key={index} onClick={() => handleSpotPage(spot)}>
-            <SpotImage
-              src={spot.spotThumbnailImageLink}
-              alt={spot.spotName}
-              width={100}
-              height={100}
-            />
+            <SpotImage src={spot.spotImage} alt={spot.spotName} />
             <SpotInfoFrame>
               <SpotName>{spot.spotName}, </SpotName>
-              <SpotTag> #해시태그 #해시태그 #해시태그 </SpotTag>
+              <SpotTag>
+                {spot.spotTag.map((tag, index) => (
+                  <span key={index}> #{tag} </span>
+                ))}
+              </SpotTag>
             </SpotInfoFrame>
           </SpotFrame>
         ))}
