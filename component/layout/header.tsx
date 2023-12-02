@@ -4,21 +4,28 @@ import Image from 'next/image';
 import logo from '../../public/logo.png';
 import bell from '../../public/bell.png';
 import search from '../../public/search.png';
+import { useRouter } from 'next/router';
 
 const Header: React.FC = () => {
+  const router = useRouter();
+
+  const handleMain = () => {
+    router.push('/');
+  };
+
   return (
     <>
       <Container>
         <Items>
-          <Logo>
-            <Image src={logo} alt="Logo" width={120} height={22} />
+          <Logo onClick={handleMain}>
+            <Image src={logo} alt='Logo' width={120} height={22} />
           </Logo>
           <InputContainer>
-            <Image src={search} alt="Search" width={22} height={22} />
-            <InputBox type="text" placeholder="사진 스팟을 검색하세요" />
+            <Image src={search} alt='Search' width={22} height={22} />
+            <InputBox type='text' placeholder='사진 스팟을 검색하세요' />
           </InputContainer>
           <Bell>
-            <Image src={bell} alt="Bell" width={16} height={18} />
+            <Image src={bell} alt='Bell' width={16} height={18} />
           </Bell>
         </Items>
       </Container>
@@ -69,6 +76,7 @@ const Logo = styled.div`
   height: 35px;
   padding: 0;
   margin: 0;
+  cursor: pointer;
 `;
 
 const InputContainer = styled.div`
