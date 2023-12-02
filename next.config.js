@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ['picsum.photos', 'upload.wikimedia.org', 'www.visitbusan.net'],
+    domains: ['ibb.co', 'i.ibb.co'],
   },
   reactStrictMode: true,
   swcMinify: true,
