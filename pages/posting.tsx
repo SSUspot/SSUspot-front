@@ -1,11 +1,61 @@
-import Header from "../component/layout/header";
-import styled from "styled-components";
-import ImageSlide from "../component/posting/image-slide";
-import HashTag from "../component/posting/hash-tag";
-import LocationInput from "../component/posting/location-input";
+import { useEffect, useState } from 'react';
+import { UserInfo } from '../states/state';
+import axios from 'axios';
+import Header from '../component/layout/header';
+import styled from 'styled-components';
+import ImageSlide from '../component/posting/image-slide';
+import HashTag from '../component/posting/hash-tag';
 
 const Posting: React.FC = () => {
-  const nickname = "이시현";
+  const [user, setUser] = useState<UserInfo | null>(null);
+  const [title, setTitle] = useState<string>('');
+  const [content, setContent] = useState<string>('');
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [spotId, setSpotId] = useState<number>(1);
+  const [selectedPlace, setSelectedPlace] = useState('');
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [places, setPlaces] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/api/spots');
+        setPlaces(response.data);
+        console.log(places);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchPlaces();
+  }, []);
+
+  const handlePlaceClick = (place: string) => {
+    setSelectedPlace(place);
+    setShowDropdown(false);
+  };
+  console.log({ title, content, imageUrls, spotId });
+
+  const handleSubmit = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/posts', {
+        title,
+        content,
+        imageUrls,
+        spotId,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -19,21 +69,37 @@ const Posting: React.FC = () => {
         </Column>
         <Column>
           <Info>
-            <StyledImage
-              src="https://picsum.photos/150"
-              alt=""
-              width={50}
-              height={50}
-            ></StyledImage>
-            {nickname}
+            {user?.profileImageLink && (
+              <StyledImage
+                src={user.profileImageLink}
+                alt=""
+                width={50}
+                height={50}
+              ></StyledImage>
+            )}
+            {user?.nickname}
           </Info>
           <InputWrapper>
             <Label>제목</Label>
-            <Input type="text" placeholder="제목을 입력해주세요" required />
+            <Input
+              type="text"
+              placeholder="제목을 입력해주세요"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+            />
           </InputWrapper>
           <InputWrapper>
             <Label>내용</Label>
-            <TextArea placeholder="내용을 입력해주세요" rows={4} />
+            <TextArea
+              placeholder="내용을 입력해주세요"
+              rows={4}
+              value={content}
+              onChange={(e) => {
+                setContent(e.target.value);
+              }}
+              required
+            />
           </InputWrapper>
           <InputWrapper>
             <Label>해시태그</Label>
@@ -41,8 +107,32 @@ const Posting: React.FC = () => {
           </InputWrapper>
           <InputWrapper>
             <Label>위치</Label>
-            <LocationInput />
+            <Input
+              type="text"
+              value={selectedPlace}
+              placeholder="위치를 검색하세요"
+              onClick={() => setShowDropdown(!showDropdown)}
+              readOnly
+            />
+            {showDropdown && (
+              <Dropdown>
+                <PlaceItem
+                //onClick={() => handleAddPlace(prompt("새로운 장소를 입력하세요:"))}
+                >
+                  장소 추가하기
+                </PlaceItem>
+                {places.map((place) => (
+                  <PlaceItem
+                    key={place}
+                    onClick={() => handlePlaceClick(place)}
+                  >
+                    {place}
+                  </PlaceItem>
+                ))}
+              </Dropdown>
+            )}
           </InputWrapper>
+          {!showDropdown && <Button onClick={handleSubmit}>게시하기</Button>}
         </Column>
       </Container>
     </>
@@ -98,13 +188,6 @@ const StyledImage = styled.img`
   border-radius: 25px;
 `;
 
-const InputWrapper = styled.div`
-  position: relative;
-  width: 600px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-`;
-
 const Input = styled.input`
   display: block;
   width: 550px;
@@ -119,6 +202,33 @@ const Input = styled.input`
   &:focus {
     border: solid 1px #999;
     border-radius: 3px;
+  }
+`;
+
+const Button = styled.div`
+  cursor: pointer;
+  display: flex;
+  width: 100px;
+  height: 30px;
+  background-color: rgba(50, 80, 210, 0.7);
+  border-radius: 15px;
+  font-size: 16px;
+  border: none;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+
+  &:hover {
+    background-color: rgba(48, 55, 205, 0.7);
+  }
+`;
+
+const InputWrapper = styled.div`
+  position: relative;
+  width: 600px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   }
 `;
 
@@ -147,21 +257,19 @@ const Label = styled.label`
   padding-left: 5px;
 `;
 
-const Button = styled.div`
-  cursor: pointer;
-  display: flex;
-  width: 100px;
-  height: 30px;
-  background-color: rgba(50, 80, 210, 0.7);
-  border-radius: 15px;
-  font-size: 16px;
-  border: none;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  color: #ffffff;
+const Dropdown = styled.div`
+  position: relative;
+  width: 550px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  max-height: 100px;
+  overflow-y: auto;
+`;
 
+const PlaceItem = styled.div`
+  padding: 10px;
+  cursor: pointer;
   &:hover {
-    background-color: rgba(48, 55, 205, 0.7);
+    background-color: #f5f5f5;
   }
 `;

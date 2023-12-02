@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import Image from "next/image";
-import { BsFillCameraFill } from "react-icons/bs";
+import React, { useState } from 'react';
+import styled from 'styled-components';
+import Image from 'next/image';
+import { BsFillCameraFill } from 'react-icons/bs';
+import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 const MAX_IMAGES = 10;
 
 const ImageSlide: React.FC = () => {
   const [images, setImages] = useState<string[]>([]);
   const [currentSlide, setCurrentSlide] = useState(0);
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedImages = e.target.files;
     const imageUrls: string[] = [];
@@ -22,7 +22,7 @@ const ImageSlide: React.FC = () => {
         const reader = new FileReader();
 
         reader.onload = () => {
-          if (reader.result && typeof reader.result === "string") {
+          if (reader.result && typeof reader.result === 'string') {
             imageUrls.push(reader.result);
             if (imageUrls.length === selectedImages.length) {
               setImages([...images, ...imageUrls]);
@@ -87,18 +87,29 @@ const ImageSlide: React.FC = () => {
             }}
           >
             {images.map((imageUrl, index) => (
-              <ImagePreview key={index}>
-                <Image
-                  src={imageUrl}
-                  alt={`Uploaded ${index + 1}`}
-                  width={600}
-                  height={600}
-                  layout="responsive"
-                />
-                <RemoveButton onClick={() => handleRemoveImage(index)}>
-                  X
-                </RemoveButton>
-              </ImagePreview>
+              <TransformWrapper
+                key={index}
+                limitToBounds={true}
+                panning={{ disabled: false }}
+              >
+                {({ zoomIn, zoomOut, resetTransform }) => (
+                  <React.Fragment>
+                    <TransformComponent>
+                      <ImageWrapper>
+                        <Image
+                          src={imageUrl}
+                          alt={`Uploaded ${index + 1}`}
+                          layout="fill"
+                          objectFit="cover"
+                        />
+                        <RemoveButton onClick={() => handleRemoveImage(index)}>
+                          X
+                        </RemoveButton>
+                      </ImageWrapper>
+                    </TransformComponent>
+                  </React.Fragment>
+                )}
+              </TransformWrapper>
             ))}
           </SlideshowWrapper>
           <ArrowButton
@@ -125,7 +136,7 @@ const ImageBox = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 24px;
-  border: 2px solid #ccc;
+
   &:hover {
     border-color: #2146c7;
   }
@@ -135,18 +146,20 @@ const Label = styled.label`
   color: white;
   cursor: pointer;
 `;
+
 const ImageInput = styled.input`
   display: none;
   cursor: pointer;
 `;
 
 const ImagesContainer = styled.div`
+  width: 600px;
+  height: 600px;
   position: relative;
   display: flex;
   align-items: center;
-  width: 600px;
-  height: 600px;
   overflow: hidden;
+  border: 2px solid #ccc;
 `;
 
 const SlideshowWrapper = styled.div`
@@ -179,11 +192,13 @@ const ArrowButton = styled.button`
   }
 `;
 
-const ImagePreview = styled.div`
-  position: relative;
-  overflow: hidden;
+const ImageWrapper = styled.div`
   width: 600px;
   height: 600px;
+  min-width: 600px;
+  min-height: 600px;
+  position: relative;
+  overflow: hidden;
 `;
 
 const RemoveButton = styled.button`
