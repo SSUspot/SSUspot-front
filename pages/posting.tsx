@@ -5,16 +5,25 @@ import Header from '../component/layout/header';
 import styled from 'styled-components';
 import ImageSlide from '../component/posting/image-slide';
 import HashTag from '../component/posting/hash-tag';
+interface Place {
+  id: number;
+  spotName: string;
+  spotThumbnailImageLink: string;
+  spotLevel: number;
+  latitude: number;
+  longitude: number;
+}
 
 const Posting: React.FC = () => {
   const [user, setUser] = useState<UserInfo | null>(null);
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
-  const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [spotId, setSpotId] = useState<number>(1);
   const [selectedPlace, setSelectedPlace] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
-  const [places, setPlaces] = useState<string[]>([]);
+  const [places, setPlaces] = useState<Place[]>([]);
+  const [images, setImages] = useState<string[]>([]);
+  const [hashTags, setHashTags] = useState<string[]>([]);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -28,32 +37,45 @@ const Posting: React.FC = () => {
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/spots');
-        setPlaces(response.data);
-        console.log(places);
+        const response = await axios.get<Place[]>(
+          'http://ssuspot.online/api/spots'
+        );
+        if (response && response.data) {
+          setPlaces(response.data);
+        }
+        console.log(response);
       } catch (error) {
-        console.error(error);
+        console.error('Error fetching places:', error);
       }
     };
     fetchPlaces();
   }, []);
 
-  const handlePlaceClick = (place: string) => {
-    setSelectedPlace(place);
+  const handlePlaceClick = (place: { id: number; spotName: string }) => {
+    setSpotId(place.id);
+    setSelectedPlace(place.spotName);
     setShowDropdown(false);
   };
-  console.log({ title, content, imageUrls, spotId });
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://localhost:8080/api/posts', {
-        title,
-        content,
-        imageUrls,
-        spotId,
-      });
+      const postData = {
+        title: title,
+        content: content,
+        tags: hashTags,
+        imageUrl: images,
+        spotId: spotId,
+      };
+
+      const response = await axios.post(
+        'http://ssuspot.online/api/posts',
+        postData
+      );
+      if (response.status === 200) {
+        console.log(response);
+      }
     } catch (error) {
-      console.error(error);
+      console.error('Error posting data:', error);
     }
   };
 
@@ -62,7 +84,7 @@ const Posting: React.FC = () => {
       <Header />
       <Container>
         <Column>
-          <ImageSlide />
+          <ImageSlide images={images} setImages={setImages} />
         </Column>
         <Column>
           <DivisionBar />
@@ -103,7 +125,7 @@ const Posting: React.FC = () => {
           </InputWrapper>
           <InputWrapper>
             <Label>해시태그</Label>
-            <HashTag />
+            <HashTag hashTags={hashTags} setHashTags={setHashTags} />
           </InputWrapper>
           <InputWrapper>
             <Label>위치</Label>
@@ -116,17 +138,12 @@ const Posting: React.FC = () => {
             />
             {showDropdown && (
               <Dropdown>
-                <PlaceItem
-                //onClick={() => handleAddPlace(prompt("새로운 장소를 입력하세요:"))}
-                >
-                  장소 추가하기
-                </PlaceItem>
                 {places.map((place) => (
                   <PlaceItem
-                    key={place}
+                    key={place.id}
                     onClick={() => handlePlaceClick(place)}
                   >
-                    {place}
+                    {place.spotName}
                   </PlaceItem>
                 ))}
               </Dropdown>

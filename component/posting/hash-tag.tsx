@@ -1,24 +1,29 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-const HashTag: React.FC = () => {
-  const [inputHashTag, setInputHashTag] = useState("");
-  const [hashTags, setHashTags] = useState([]);
+import React, { useState } from 'react';
+import styled from 'styled-components';
+
+interface HashTagProps {
+  hashTags: string[];
+  setHashTags: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+const HashTag: React.FC<HashTagProps> = ({ hashTags, setHashTags }) => {
+  const [inputHashTag, setInputHashTag] = useState('');
 
   const addHashTag = (e: any) => {
-    const allowedCommand = ["Comma", "Enter", "space", "NumpadEnter"];
+    const allowedCommand = ['Comma', 'Enter', 'space', 'NumpadEnter'];
     if (!allowedCommand.includes(e.code)) return;
 
     if (!e.target.value.trim().length) {
-      return setInputHashTag("");
+      return setInputHashTag('');
     }
 
     let newHashTag = e.target.value.trim();
     const regExp = /[\{\}\[\]\/?.;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/g;
     if (regExp.test(newHashTag)) {
-      newHashTag = newHashTag.replace(regExp, "");
+      newHashTag = newHashTag.replace(regExp, '');
     }
-    if (newHashTag.includes(",")) {
-      newHashTag = newHashTag.split(",").join("");
+    if (newHashTag.includes(',')) {
+      newHashTag = newHashTag.split(',').join('');
     }
 
     if (!newHashTag.length) return;
@@ -32,7 +37,7 @@ const HashTag: React.FC = () => {
       return prevHashTags;
     });
 
-    setInputHashTag("");
+    setInputHashTag('');
   };
 
   const changeHashTagInput = (e: any) => {
@@ -43,7 +48,7 @@ const HashTag: React.FC = () => {
     <>
       <div className="hashTags">
         {hashTags.length > 0 &&
-          hashTags.map((hashTag) => {
+          hashTags.map((hashTag: string) => {
             return (
               <HashTagItem key={hashTag} className="tag">
                 {`#${hashTag}`}

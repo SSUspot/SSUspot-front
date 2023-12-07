@@ -5,9 +5,12 @@ import { BsFillCameraFill } from 'react-icons/bs';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 const MAX_IMAGES = 10;
+interface ImageSlideProps {
+  images: string[];
+  setImages: React.Dispatch<React.SetStateAction<string[]>>;
+}
 
-const ImageSlide: React.FC = () => {
-  const [images, setImages] = useState<string[]>([]);
+const ImageSlide: React.FC<ImageSlideProps> = ({ images, setImages }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedImages = e.target.files;
