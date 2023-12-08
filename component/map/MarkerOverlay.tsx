@@ -10,7 +10,7 @@ const MarkerOverlay: React.FC<{
 }> = ({ spot }) => {
   return (
     <InfoWindow>
-      <SpotImage src={spot.spotImage} alt={spot.spotName} width={500} height={500} />
+      <SpotImage src={spot.spotThumbnailImageLink} alt={spot.spotName} width={500} height={500} />
     </InfoWindow>
   );
 };

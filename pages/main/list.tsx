@@ -5,11 +5,24 @@ import Header from '../../component/layout/header';
 import Filter from '../../component/layout/filter';
 import Navigation from '../../component/layout/navigation';
 import ListContainer from '../../component/list/listContainer';
+import axiosInstance from '../../utils/axiosInstance';
 
 import Spot from '../../type/spot';
-import spots from '../../component/spot/spots';
 
 const ListPage: React.FC = () => {
+  const [spots, setSopts] = useState<Spot[]>([]);
+
+  useEffect(() => {
+    axiosInstance
+      .get('/api/spots')
+      .then((response) => {
+        console.log('/api/spots', response.data);
+        setSopts(response.data);
+      })
+      .catch((error) => {
+        console.log('/api/spots error', error);
+      });
+  }, []);
 
   return (
     <>

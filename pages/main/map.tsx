@@ -6,10 +6,26 @@ import Header from '../../component/layout/header';
 import Filter from '../../component/layout/filter';
 import Navigation from '../../component/layout/navigation';
 import KakaoMap from '../../component/map/KakaoMap';
+import axiosInstance from '../../utils/axiosInstance';
 
-import spots from '../../component/spot/spots';
+import Spot from '../../type/spot';
+
 
 const MapMain: NextPage = () => {
+  const [spots, setSopts] = useState<Spot[]>([]);
+
+  useEffect(() => {
+    axiosInstance
+      .get('/api/spots')
+      .then((response) => {
+        console.log('/api/spots', response.data);
+        setSopts(response.data);
+      })
+      .catch((error) => {
+        console.log('/api/spots error', error);
+      });
+  }, []);
+
   return (
     <>
       <Head>
