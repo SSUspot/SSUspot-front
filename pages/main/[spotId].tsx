@@ -1,17 +1,32 @@
-import React, { useEffect, useState } from 'react';
 import Head from 'next/head';
-import axios from 'axios';
+import Image from 'next/image';
+import styled from 'styled-components';
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Header from '../../component/layout/header';
 import Filter from '../../component/layout/filter';
 import Navigation from '../../component/layout/navigation';
+import axiosInstance from '../../utils/axiosInstance';
 
-import { useRouter } from 'next/router';
-import styled from 'styled-components';
-import Image from 'next/image';
+import Spot from '../../type/spot';
 
 const SpotPage = () => {
   const router = useRouter();
   const { spotId } = router.query;
+  const [spots, setSopts] = useState<Spot[]>([]);
+  const selectedSpot = spots.find((spot) => spot.id === Number(spotId));
+
+  useEffect(() => {
+    axiosInstance
+      .get('/api/spots')
+      .then((response) => {
+        console.log('/api/spots', response.data);
+        setSopts(response.data);
+      })
+      .catch((error) => {
+        console.log('/api/spots error', error);
+      });
+  }, []);
 
   return (
     <>
@@ -25,11 +40,18 @@ const SpotPage = () => {
       <Navigation />
 
       <Container>
-        {/* <SpotFrame>
-          <SpotName> {spots[Number(spotId)-1].spotName} </SpotName>
-          <SpotInfo>{spots[Number(spotId)-1].spotInfo}</SpotInfo>
-          <SpotImage src={spots[Number(spotId)-1].spotImage} alt={spots[Number(spotId)-1].spotName} />
-        </SpotFrame> */}
+        {selectedSpot && (
+          <SpotFrame>
+            <SpotName> [ {selectedSpot.spotName} ]</SpotName>
+            <SpotInfo>{selectedSpot.spotInfo}</SpotInfo>
+            <SpotImage
+              src={selectedSpot.spotThumbnailImageLink}
+              alt={selectedSpot.spotName}
+              width={1600}
+              height={1200}
+            />
+          </SpotFrame>
+        )}
       </Container>
     </>
   );
@@ -55,12 +77,22 @@ const SpotFrame = styled.div`
   justify-content: center;
   margin-top: 5vh;
   gap: 2vh;
+
+  @media (max-width: 735px) {
+    margin-top: 3vh;
+    gap: 1vh;
+  }
 `;
 
 const SpotName = styled.div`
-  font-family: 'Giants';
+  font-family: 'GmarketSansBold';
   font-size: 6vh;
   margin-bottom: 2vh;
+
+  @media (max-width: 735px) {
+    font-size: 3vh;
+    margin-bottom: 1vh;
+  }
 `;
 
 const SpotImage = styled(Image)`
@@ -70,12 +102,21 @@ const SpotImage = styled(Image)`
   object-position: center center;
   top: 0;
   left: 0;
+
+  @media (max-width: 735px) {
+    width: 80%;
+  }
 `;
 
 const SpotInfo = styled.div`
   width: 60%;
   display: flex;
-  font-family: 'GiantsLight';
+  font-family: 'GmarketSansMedium';
   font-size: 2vh;
   line-height: 200%;
+
+  @media (max-width: 735px) {
+    width: 80%;
+    font-size: 1vh;
+  }
 `;
