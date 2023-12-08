@@ -39,7 +39,21 @@ export const GlobalStyle = createGlobalStyle`
     font-style: normal;
  }
 
+ @font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'GmarketSansBold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+
   body {
-    font-family: 'GiantsLight', 'GiantsBold', 'Giants', 'BMHANNAAir', 'BMHANNAPro', ;
+    font-family: 'GiantsLight', 'GiantsBold', 'Giants', 'BMHANNAAir', 'BMHANNAPro', 'GmarketSansMedium', 'GmarketSansBold' ;
   }
 `;
