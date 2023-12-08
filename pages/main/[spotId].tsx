@@ -9,8 +9,6 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Image from 'next/image';
 
-import spots from '../../component/spot/spots';
-
 const SpotPage = () => {
   const router = useRouter();
   const { spotId } = router.query;
@@ -27,11 +25,11 @@ const SpotPage = () => {
       <Navigation />
 
       <Container>
-        <SpotFrame>
+        {/* <SpotFrame>
           <SpotName> {spots[Number(spotId)-1].spotName} </SpotName>
           <SpotInfo>{spots[Number(spotId)-1].spotInfo}</SpotInfo>
           <SpotImage src={spots[Number(spotId)-1].spotImage} alt={spots[Number(spotId)-1].spotName} />
-        </SpotFrame>
+        </SpotFrame> */}
       </Container>
     </>
   );

@@ -4,9 +4,8 @@ interface Spot {
   longitude: number;
   spotLevel: number;
   spotName: string;
-  spotImage: string;
+  spotThumbnailImageLink: string;
   spotAddress: string;
-  spotTag: string[];
   spotInfo: string;
 }
 
