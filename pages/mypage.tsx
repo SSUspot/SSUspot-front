@@ -1,9 +1,9 @@
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Modal from '../component/common/modal';
 import Navigation from '../component/layout/navigation';
-import Router from 'next/router';
 import axiosInstance from '../utils/axiosInstance';
 import Header from '../component/layout/header';
 import MyPageHeader from '../component/mypage/header';
@@ -46,6 +46,11 @@ const MyPage: React.FC = () => {
 
   return (
     <>
+      <Head>
+        <title>SSUspot</title>
+        <link rel='icon' href='/favicon.png' />
+      </Head>
+
       <Header />
       <Navigation />
       <Container>
