@@ -5,41 +5,27 @@ import { BsFillCameraFill } from 'react-icons/bs';
 import { TransformWrapper, TransformComponent } from 'react-zoom-pan-pinch';
 
 const MAX_IMAGES = 10;
+
 interface ImageSlideProps {
-  images: string[];
-  setImages: React.Dispatch<React.SetStateAction<string[]>>;
+  images: File[];
+  setImages: React.Dispatch<React.SetStateAction<File[]>>;
 }
 
 const ImageSlide: React.FC<ImageSlideProps> = ({ images, setImages }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedImages = e.target.files;
-    const imageUrls: string[] = [];
-
     if (selectedImages) {
       if (selectedImages.length + images.length > MAX_IMAGES) {
         alert(`이미지는 최대 ${MAX_IMAGES}개까지만 업로드 가능합니다.`);
         return;
       }
-      for (let i = 0; i < selectedImages.length; i++) {
-        const reader = new FileReader();
-
-        reader.onload = () => {
-          if (reader.result && typeof reader.result === 'string') {
-            imageUrls.push(reader.result);
-            if (imageUrls.length === selectedImages.length) {
-              setImages([...images, ...imageUrls]);
-            }
-          }
-        };
-        reader.readAsDataURL(selectedImages[i]);
-      }
+      setImages([...images, ...Array.from(selectedImages)]);
     }
   };
 
   const handleRemoveImage = (index: number) => {
     const updatedImages = [...images];
-    updatedImages.splice(index, 1);
     if (index < images.length - 1) {
       setCurrentSlide(index);
     } else {
@@ -89,29 +75,27 @@ const ImageSlide: React.FC<ImageSlideProps> = ({ images, setImages }) => {
               transform: `translateX(-${currentSlide * 600}px)`,
             }}
           >
-            {images.map((imageUrl, index) => (
+            {images.map((file, index) => (
               <TransformWrapper
                 key={index}
                 limitToBounds={true}
                 panning={{ disabled: false }}
               >
-                {({ zoomIn, zoomOut, resetTransform }) => (
-                  <React.Fragment>
-                    <TransformComponent>
-                      <ImageWrapper>
-                        <Image
-                          src={imageUrl}
-                          alt={`Uploaded ${index + 1}`}
-                          layout="fill"
-                          objectFit="cover"
-                        />
-                        <RemoveButton onClick={() => handleRemoveImage(index)}>
-                          X
-                        </RemoveButton>
-                      </ImageWrapper>
-                    </TransformComponent>
-                  </React.Fragment>
-                )}
+                <React.Fragment>
+                  <TransformComponent>
+                    <ImageWrapper>
+                      <Image
+                        src={URL.createObjectURL(file)}
+                        alt={`Uploaded ${index + 1}`}
+                        layout="fill"
+                        objectFit="cover"
+                      />
+                      <RemoveButton onClick={() => handleRemoveImage(index)}>
+                        X
+                      </RemoveButton>
+                    </ImageWrapper>
+                  </TransformComponent>
+                </React.Fragment>
               </TransformWrapper>
             ))}
           </SlideshowWrapper>

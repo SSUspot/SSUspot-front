@@ -22,7 +22,8 @@ const Posting: React.FC = () => {
   const [selectedPlace, setSelectedPlace] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [places, setPlaces] = useState<Place[]>([]);
-  const [images, setImages] = useState<string[]>([]);
+  const [images, setImages] = useState<File[]>([]);
+  const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   const [hashTags, setHashTags] = useState<string[]>([]);
 
   useEffect(() => {
@@ -70,20 +71,55 @@ const Posting: React.FC = () => {
     setShowDropdown(false);
   };
 
+  const uploadImages = async () => {
+    try {
+      const urls = await Promise.all(
+        images.map(async (image) => {
+          const formData = new FormData();
+          formData.append('image', image);
+
+          const accessToken = localStorage.getItem('accessToken');
+          const response = await axios.post(
+            'http://ssuspot.online/api/images',
+            formData,
+            {
+              headers: {
+                'Content-Type': 'multipart/form-data',
+                Authorization: `Bearer ${accessToken}`,
+              },
+            }
+          );
+          return response.data.imageUrl;
+        })
+      );
+      setUploadedImageUrls(urls);
+    } catch (error) {
+      console.error('Error uploading images:', error);
+    }
+  };
+
   const handleSubmit = async () => {
     try {
+      await uploadImages();
       const postData = {
-        title: title,
-        content: content,
+        title,
+        content,
         tags: hashTags,
-        imageUrl: images,
-        spotId: spotId,
+        imageUrls: uploadedImageUrls,
+        spotId,
       };
+      const accessToken = localStorage.getItem('accessToken');
 
       const response = await axios.post(
         'http://ssuspot.online/api/posts',
-        postData
+        postData,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        }
       );
+
       if (response.status === 200) {
         console.log(response);
       }
