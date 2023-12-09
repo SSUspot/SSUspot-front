@@ -70,9 +70,9 @@ const Container = styled.div`
 const DivisionBar = styled.div`
   width: 85%;
   border: 0.5px solid rgba(79, 76, 76, 0.4);
-  margin-bottom: 3vh;
+  margin-bottom: 5vh;
 
   @media (max-width: 735px) {
-    margin-bottom: 2vh;
+    margin-bottom: 3vh;
   }
 `;

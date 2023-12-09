@@ -50,11 +50,15 @@ const Container = styled.div`
 `;
 
 const PostGrid = styled.div`
-  width: 85%;
+  width: 80%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
-  gap: 0.5vw;
+  gap: 1vw;
   margin: 0 auto;
+
+  @media (max-width: 735px) {
+    width: 85%;
+  }
 `;
 
 const PostImageWrapper = styled.div`

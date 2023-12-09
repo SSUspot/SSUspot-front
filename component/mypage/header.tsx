@@ -60,9 +60,18 @@ const MyPageHeader: React.FC<{ userInfo: User; postLength: number }> = ({
         </ProfileInfo>
       </ProfileContainer>
       <FollowContainer>
-        <Content> 게시물 : {postLength} </Content>
-        <Content> 팔로워 : {follower.length} </Content>
-        <Content> 팔로잉 : {following.length} </Content>
+        <Content>
+          <div>{postLength}</div>
+          <div>Posts</div>
+        </Content>
+        <Content>
+          <div>{follower.length}</div>
+          <div>Followers</div>{' '}
+        </Content>
+        <Content>
+          <div>{following.length} </div>
+          <div>Followings</div>
+        </Content>
       </FollowContainer>
     </Container>
   );
@@ -100,12 +109,11 @@ const ProfileImage = styled(Image)`
   width: 15vh;
   height: 15vh;
   border-radius: 50%;
-  margin-right: 7vh;
+  margin-right: 5vh;
 
   @media (max-width: 735px) {
     width: 10vh;
     height: 10vh;
-    margin-right: 5vh;
   }
 `;
 
@@ -128,6 +136,7 @@ const Email = styled.div`
   font-family: 'GmarketSansMedium';
   font-size: 2vh;
   margin-bottom: 3vh;
+  color: #90959f;
 
   @media (max-width: 735px) {
     font-size: 1.5vh;
@@ -156,9 +165,22 @@ const FollowContainer = styled.div`
 `;
 
 const Content = styled.div`
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   font-family: 'GmarketSansBold';
   font-size: 2vh;
   padding: 2vh;
+  box-sizing: border-box;
+  gap: 1vh;
+
+  div:last-child {
+    font-family: 'GmarketSansMedium';
+    color: #90959f;
+    gap: 1vw;
+  }
 
   @media (max-width: 735px) {
     font-size: 1.5vh;

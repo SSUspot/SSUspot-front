@@ -137,6 +137,7 @@ const Content = styled.div`
   @media (max-width: 735px) {
     width: 80%;
     margin-top: 8%;
+    padding: 5%;
   }
 `;
 
