@@ -57,15 +57,22 @@ const ArrowButton = styled.button`
 
   @media (max-width: 735px) {
     padding: 3%;
+    font-size: 15px;
   }
 `;
 
 const LeftArrowButton = styled(ArrowButton)`
   left: 10px;
+  @media (max-width: 735px) {
+    left: 5px;
+  }
 `;
 
 const RightArrowButton = styled(ArrowButton)`
   right: 10px;
+  @media (max-width: 735px) {
+    right: 5px;
+  }
 `;
 
 const PostImage = styled.img`

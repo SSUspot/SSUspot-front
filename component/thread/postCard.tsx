@@ -64,6 +64,11 @@ const PostGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(25%, 1fr));
   gap: 0.5vw;
   margin: 0 auto;
+
+  @media (max-width: 735px) {
+    grid-template-columns: repeat(auto-fill, minmax(40%, 1fr));
+    width: 90%;
+  }
 `;
 
 const PostFrame = styled.div`
@@ -93,6 +98,7 @@ const PostFrame = styled.div`
 
 const PostInfoFrame = styled.div`
   width: 100%;
+  height: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -103,7 +109,9 @@ const PostInfoFrame = styled.div`
   gap: 1vw;
 
   @media (max-width: 735px) {
-    font-size: 1.5vw;
+    font-size: 2vw;
+    margin-bottom: 1vh;
+    gap: 2vw;
   }
 `;
 
@@ -125,6 +133,12 @@ const PostIconFrame = styled.div`
   align-items: center;
   justify-content: flex-start;
   gap: 1vh;
+  font-size: 1vw;
+
+  @media (max-width: 735px) {
+    font-size: 2vw;
+    gap: 1vw;
+  }
 `;
 
 const PostIcon = styled(Image)`
@@ -133,23 +147,33 @@ const PostIcon = styled(Image)`
   padding: 10px 0;
 
   @media (max-width: 735px) {
-    width: 20%;
+    width: 10px;
+    height: 10px;
+    padding: 5px 0;
   }
 `;
 
 const PostTtile = styled.div`
+  width: 100%;
   font-family: 'GmarketSansBold';
   font-size: 1.5vw;
   margin: 1vw 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   @media (max-width: 735px) {
-    font-size: 4vw;
+    font-size: 3vw;
   }
 `;
 
 const PostContent = styled.div`
+  width: 100%;
   font-family: 'GmarketSansMedium';
   font-size: 0.8vw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   @media (max-width: 735px) {
     font-size: 2vw;

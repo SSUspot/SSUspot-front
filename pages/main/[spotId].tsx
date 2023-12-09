@@ -60,10 +60,7 @@ const SpotPage = () => {
       <Container>
         {selectedSpot && (
           <SpotFrame>
-            <SpotImage
-              src={selectedSpot.spotThumbnailImageLink}
-              alt={selectedSpot.spotName}
-            />
+            <SpotImage src={selectedSpot.spotThumbnailImageLink} alt={selectedSpot.spotName} />
             <SpotInfoFrame>
               <SpotName> {selectedSpot.spotName}</SpotName>
               <SpotInfo>{selectedSpot.spotInfo}</SpotInfo>
@@ -102,6 +99,7 @@ const SpotFrame = styled.div`
 
   @media (max-width: 735px) {
     margin-top: 3vh;
+    flex-direction: column;
   }
 `;
 
@@ -111,6 +109,11 @@ const SpotInfoFrame = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 735px) {
+    width: 80%;
+    margin-top: 2vh;
+  }
 `;
 
 const SpotName = styled.div`
@@ -120,8 +123,11 @@ const SpotName = styled.div`
   margin-bottom: 2vh;
 
   @media (max-width: 735px) {
+    width: 100%;
     font-size: 3vh;
     margin-bottom: 1vh;
+    display: flex;
+    justify-content: center;
   }
 `;
 
@@ -133,7 +139,7 @@ const SpotImage = styled.img`
   border-radius: 10px;
 
   @media (max-width: 735px) {
-    width: 70%;
+    width: 80%;
   }
 `;
 
@@ -145,20 +151,20 @@ const SpotInfo = styled.div`
   line-height: 200%;
 
   @media (max-width: 735px) {
-    width: 70%;
-    font-size: 1vh;
+    width: 100%;
+    font-size: 1.4vh;
+    line-height: 150%;
   }
 `;
 
 const DivisionBar = styled.div`
   width: 80%;
   border: 4px solid rgba(194, 186, 186, 0.4);
-  margin-top: 5vh;
-  margin-bottom: 5vh;
+  margin: 8vh;
 
   @media (max-width: 735px) {
-    margin-top: 3vh;
-    margin-bottom: 0;
+    width: 90%;
+    margin: 5vh;
   }
 `;
 
@@ -172,8 +178,7 @@ const PostsInfo = styled.div`
   margin-bottom: 2vh;
 
   @media (max-width: 735px) {
-    width: 70%;
-    font-size: 1vh;
+    font-size: 1.9vh;
   }
 `;
 
@@ -188,6 +193,6 @@ const PostsSubInfo = styled.div`
 
   @media (max-width: 735px) {
     width: 70%;
-    font-size: 1vh;
+    font-size: 1.2vh;
   }
 `;
