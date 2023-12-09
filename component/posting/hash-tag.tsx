@@ -44,6 +44,10 @@ const HashTag: React.FC<HashTagProps> = ({ hashTags, setHashTags }) => {
     setInputHashTag(e.target.value);
   };
 
+  const deleteHashTag = (hashTagToDelete: string) => {
+    setHashTags(hashTags.filter((hashTag) => hashTag !== hashTagToDelete));
+  };
+
   return (
     <>
       <div className="hashTags">
@@ -52,6 +56,9 @@ const HashTag: React.FC<HashTagProps> = ({ hashTags, setHashTags }) => {
             return (
               <HashTagItem key={hashTag} className="tag">
                 {`#${hashTag}`}
+                <DeleteButton onClick={() => deleteHashTag(hashTag)}>
+                  ✕
+                </DeleteButton>
               </HashTagItem>
             );
           })}
@@ -73,28 +80,39 @@ export default HashTag;
 
 const HashTagItem = styled.div`
   display: inline-block;
-  padding: 5px 7px;
-  margin: 5px 0px 0px 5px;
+  padding: 0.7vh;
+  margin: 1vh 0 0 1vh;
   background-color: rgba(48, 55, 205, 0.7);
   color: #fff;
   border-radius: 4px;
-  font-size: 15px;
+  font-size: 2vh;
   cursor: pointer;
+`;
+
+const DeleteButton = styled.span`
+  margin-left: 1vh;
+  cursor: pointer;
+  color: red;
 `;
 
 const Input = styled.input`
   display: block;
-  width: 550px;
+  width: 40vw;
   border: none;
   outline: none;
-  padding: 10px;
-  margin-top: 5px;
-  font-size: 15px;
+  padding: 1.5vh;
+  margin-top: 1vh;
+  font-size: 2vh;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
 
   &:focus {
     border: solid 1px #999;
     border-radius: 3px;
+  }
+
+  @media (max-width: 735px) {
+    font-size: 0.9rem;
+    padding: 0.5rem;
   }
 `;
