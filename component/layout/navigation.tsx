@@ -33,6 +33,9 @@ const Navigation: React.FC = () => {
     } else if (currentURL.includes('/main/list')) {
       setIsMap(true);
       setIsList(false);
+    } else {
+      setIsMap(false);
+      setIsList(true);
     }
   }, []);
 
@@ -72,7 +75,7 @@ const Navigation: React.FC = () => {
             <Image src={Post} alt='Post' width={25} height={25} />
             <p> 글 작성 </p>
           </ItemButton>
-          <ItemButton>
+          <ItemButton onClick={() => handleRoute('/setting')}>
             <Image src={Setting} alt='Setting' width={25} height={25} />
             <p> 설정 </p>
           </ItemButton>

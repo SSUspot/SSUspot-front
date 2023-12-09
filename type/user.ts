@@ -4,7 +4,7 @@ interface User {
   nickname: string;
   profileMessage: string;
   profileImageLink: string;
-  username: string;
+  userName: string;
 }
 
 export default User;
