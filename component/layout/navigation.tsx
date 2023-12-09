@@ -36,12 +36,8 @@ const Navigation: React.FC = () => {
     }
   }, []);
 
-  const handleClickMap = () => {
-    router.push('http://localhost:3000/main/map');
-  };
-
-  const handleClickList = () => {
-    router.push('http://localhost:3000/main/list');
+  const handleRoute = (route: string) => {
+    router.push(route);
   };
 
   return (
@@ -49,39 +45,39 @@ const Navigation: React.FC = () => {
       <Container onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <NavigationBox className={isHovered ? 'hovered' : ''}>
           <ItemButton>
-            <Image src={Home} alt="Home" width={25} height={25} />
+            <Image src={Home} alt='Home' width={25} height={25} />
             <p> 홈 </p>
           </ItemButton>
           {ismap && (
-            <ItemButton onClick={handleClickMap}>
-              <Image src={Map} alt="Map" width={25} height={25} />
+            <ItemButton onClick={() => handleRoute('/main/map')}>
+              <Image src={Map} alt='Map' width={25} height={25} />
               <p> 지도 보기 </p>
             </ItemButton>
           )}
           {isList && (
-            <ItemButton onClick={handleClickList}>
-              <Image src={List} alt="List" width={25} height={25} />
+            <ItemButton onClick={() => handleRoute('/main/list')}>
+              <Image src={List} alt='List' width={25} height={25} />
               <p> 리스트 보기 </p>
             </ItemButton>
           )}
           <ItemButton>
-            <Image src={Group} alt="Group" width={25} height={25} />
+            <Image src={Group} alt='Group' width={25} height={25} />
             <p> 팔로잉 피드 </p>
           </ItemButton>
           <ItemButton>
-            <Image src={Like} alt="Like" width={25} height={25} />
+            <Image src={Like} alt='Like' width={25} height={25} />
             <p> 좋아요한 스팟 </p>
           </ItemButton>
           <ItemButton>
-            <Image src={Post} alt="Post" width={25} height={25} />
+            <Image src={Post} alt='Post' width={25} height={25} />
             <p> 글 작성 </p>
           </ItemButton>
           <ItemButton>
-            <Image src={Chat} alt="Chat" width={25} height={25} />
+            <Image src={Chat} alt='Chat' width={25} height={25} />
             <p> 채팅 </p>
           </ItemButton>
-          <ItemButton>
-            <Image src={Mypage} alt="Mypage" width={25} height={25} />
+          <ItemButton onClick={() => handleRoute('/mypage')}>
+            <Image src={Mypage} alt='Mypage' width={25} height={25} />
             <p> 마이페이지 </p>
           </ItemButton>
         </NavigationBox>

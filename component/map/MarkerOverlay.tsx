@@ -3,21 +3,14 @@ import { MapMarker } from 'react-kakao-maps-sdk';
 import styled from 'styled-components';
 import Image from 'next/image';
 
-interface Spot {
-  id: number;
-  latitude: number;
-  longitude: number;
-  spotLevel: number;
-  spotName: string;
-  spotThumbnailImageLink: string;
-}
+import Spot from '../../type/spot';
 
 const MarkerOverlay: React.FC<{
   spot: Spot;
 }> = ({ spot }) => {
   return (
     <InfoWindow>
-      <SpotImage src={spot.spotThumbnailImageLink} alt={spot.spotName} width={100} height={100} />
+      <SpotImage src={spot.spotThumbnailImageLink} alt={spot.spotName} width={500} height={500} />
     </InfoWindow>
   );
 };

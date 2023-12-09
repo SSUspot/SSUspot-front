@@ -1,9 +1,18 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  images: {
-    domains: ['ibb.co', 'i.ibb.co'],
+  compiler: {
+    styledComponents: true,
   },
-  reactStrictMode: true,
+  images: {
+    domains: [
+      'ibb.co',
+      'i.ibb.co',
+      'velog.velcdn.com',
+      'ssuspot.s3.ap-northeast-2.amazonaws.com',
+      'upload.wikimedia.org',
+    ],
+  },
+  reactStrictMode: false,
   swcMinify: true,
 };
 

@@ -6,27 +6,25 @@ import Header from '../../component/layout/header';
 import Filter from '../../component/layout/filter';
 import Navigation from '../../component/layout/navigation';
 import KakaoMap from '../../component/map/KakaoMap';
+import axiosInstance from '../../utils/axiosInstance';
+
+import Spot from '../../type/spot';
+
 
 const MapMain: NextPage = () => {
-  const [spots, setSpots] = useState([]);
+  const [spots, setSopts] = useState<Spot[]>([]);
 
   useEffect(() => {
-    if (spots.length === 0) {
-      handleGetSopts();
-    }
-    console.log(spots);
-  });
-
-  const handleGetSopts = async () => {
-    try {
-      const apiUrl = 'http://ssuspot.online/api/spots';
-      const response = await axios.get(apiUrl);
-      console.log(response);
-      setSpots(response.data);
-    } catch (error) {
-      console.error('에러:', error);
-    }
-  };
+    axiosInstance
+      .get('/api/spots')
+      .then((response) => {
+        console.log('/api/spots', response.data);
+        setSopts(response.data);
+      })
+      .catch((error) => {
+        console.log('/api/spots error', error);
+      });
+  }, []);
 
   return (
     <>

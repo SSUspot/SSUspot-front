@@ -4,14 +4,7 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 
-interface Spot {
-  id: number;
-  latitude: number;
-  longitude: number;
-  spotLevel: number;
-  spotName: string;
-  spotThumbnailImageLink: string;
-}
+import Spot from '../../type/spot';
 
 const ListContainer: React.FC<{
   spots: Spot[];
@@ -19,17 +12,7 @@ const ListContainer: React.FC<{
   const router = useRouter();
 
   const handleSpotPage = (spot: Spot) => {
-    router.push({
-      pathname: `/main/${spot.id}`,
-      query: {
-        id: spot.id,
-        latitude: spot.latitude,
-        longitude: spot.longitude,
-        spotLevel: spot.spotLevel,
-        spotName: spot.spotName,
-        spotThumbnailImageLink: spot.spotThumbnailImageLink,
-      },
-    });
+    router.push(`/main/${spot.id}`);
   };
 
   return (
@@ -40,12 +23,12 @@ const ListContainer: React.FC<{
             <SpotImage
               src={spot.spotThumbnailImageLink}
               alt={spot.spotName}
-              width={100}
-              height={100}
+              width={300}
+              height={300}
             />
             <SpotInfoFrame>
-              <SpotName>{spot.spotName}, </SpotName>
-              <SpotTag> #해시태그 #해시태그 #해시태그 </SpotTag>
+              <SpotName>{spot.spotName} </SpotName>
+              <SpotAddress>{spot.spotAddress} </SpotAddress>
             </SpotInfoFrame>
           </SpotFrame>
         ))}
@@ -57,36 +40,54 @@ const ListContainer: React.FC<{
 export default ListContainer;
 
 const Container = styled.div`
-  width: 95%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: flex-start;
-  padding: 0 2vw;
+  padding: 1vh 4vh;
   overflow-x: hidden;
   overflow-y: auto;
+  box-sizing: border-box;
+
+  @media (max-width: 735px) {
+    padding: 1vh;
+  }
 `;
 
 const SpotFrame = styled.div`
-  width: 18vw;
-  height: auto;
-  padding-top: 2vw;
-  padding-bottom: 2vw;
-  padding-left: 0.5vw;
-  padding-right: 0.5vw;
+  width: 25%;
+  aspect-ratio: 1;
+  padding-top: 2vh;
+  padding-bottom: 2vh;
+  padding-left: 0.5vh;
+  padding-right: 0.5vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  &:hover {
+    color: rgba(33, 70, 199, 0.7);
+    transition: 0.3s;
+  }
+
+  @media (max-width: 735px) {
+    width: 50%;
+    height: 50%;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+  }
 `;
 
 const SpotImage = styled(Image)`
-  width: 100%;
-  height: 15vw;
+  width: 90%;
+  height: 90%;
   object-fit: cover;
   object-position: center center;
-  border-radius: 15px;
+  border-radius: 5%;
   top: 0;
   left: 0;
 `;
@@ -94,19 +95,31 @@ const SpotImage = styled(Image)`
 const SpotInfoFrame = styled.div`
   width: 90%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 10px;
-  padding: 10px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5vh 1vh;
+  box-sizing: border-box;
+
+  @media (max-width: 735px) {
+    padding: 1vh 0.5vh;
+  }
 `;
 
 const SpotName = styled.div`
-  font-family: 'BMHANNAPro';
-  font-size: 1vw;
+  font-family: 'GmarketSansBold';
+  font-size: 2vh;
+
+  @media (max-width: 735px) {
+    font-size: 1.5vh;
+  }
 `;
 
-const SpotTag = styled.div`
-  font-family: 'BMHANNAAir';
-  font-size: 0.8vw;
+const SpotAddress = styled.div`
+  font-family: 'GmarketSansMedium';
+  font-size: 1.5vh;
+
+  @media (max-width: 735px) {
+    font-size: 0.8vh;
+  }
 `;

@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const storedAccessToken = localStorage.getItem("accessToken");
     if (!storedAccessToken) {
-      void router.push("http://localhost:3000/login");
+      void router.push("/login");
     }
   }, []);
 

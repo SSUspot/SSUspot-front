@@ -2,14 +2,7 @@ import { Map } from 'react-kakao-maps-sdk';
 import React from 'react';
 import MarkerContainer from './MarkerContainer';
 
-interface Spot {
-  id: number;
-  latitude: number;
-  longitude: number;
-  spotLevel: number;
-  spotName: string;
-  spotThumbnailImageLink: string;
-}
+import Spot from '../../type/spot';
 
 const KakaoMap: React.FC<{
   spots: Spot[];
