@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import axios from 'axios';
 import Header from '../component/layout/header';
 import styled from 'styled-components';
@@ -7,6 +8,7 @@ import ImageSlide from '../component/posting/image-slide';
 import HashTag from '../component/posting/hash-tag';
 
 import User from '../type/user';
+
 interface Place {
   id: number;
   spotName: string;
@@ -27,7 +29,7 @@ const Posting: React.FC = () => {
   const [images, setImages] = useState<File[]>([]);
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   const [hashTags, setHashTags] = useState<string[]>([]);
-
+  const router = useRouter();
   useEffect(() => {
     // User;
     axiosInstance
@@ -90,6 +92,7 @@ const Posting: React.FC = () => {
 
       if (response.status === 200) {
         console.log(response);
+        router.push('/main/list');
       }
     } catch (error) {
       console.error('Error posting data:', error);
