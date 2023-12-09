@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import LoginHeader from '../component/layout/login-header';
+import LoginHeader from '../component/layout/loginHeader';
 import Link from 'next/link';
 import axios from 'axios';
 import { useState, useEffect } from 'react';

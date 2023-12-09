@@ -4,8 +4,8 @@ import axios from 'axios';
 import Header from '../component/layout/header';
 import styled from 'styled-components';
 import axiosInstance from '../utils/axiosInstance';
-import ImageSlide from '../component/posting/image-slide';
-import HashTag from '../component/posting/hash-tag';
+import ImageSlide from '../component/posting/imageSlide';
+import HashTag from '../component/posting/hashTag';
 
 import User from '../type/user';
 
