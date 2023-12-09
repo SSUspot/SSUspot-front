@@ -30,71 +30,76 @@ const ImageSlide: React.FC<ImageSlideProps> = ({ images, setImages }) => {
   };
 
   const changeSlide = (direction: 'next' | 'prev') => {
-    setCurrentSlide((prev) =>
-      direction === 'next'
-        ? Math.min(prev + 1, images.length - 1)
-        : Math.max(prev - 1, 0)
-    );
+    setCurrentSlide((prev) => {
+      const maxSlideIndex =
+        images.length < MAX_IMAGES ? images.length : images.length - 1;
+      return direction === 'next'
+        ? Math.min(prev + 1, maxSlideIndex)
+        : Math.max(prev - 1, 0);
+    });
   };
 
   return (
     <>
-      {!images.length ? (
-        <ImageBox>
-          <Label htmlFor="imageInput">
-            <BsFillCameraFill size={50} />
-          </Label>
-          <ImageInput
-            id="imageInput"
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            multiple
-          />
-        </ImageBox>
-      ) : (
-        <ImagesContainer>
-          <ArrowButton
-            className="prev"
-            onClick={() => changeSlide('prev')}
-            disabled={currentSlide === 0}
-          >
-            &#10094; {/* Left arrow */}
-          </ArrowButton>
-          <SlideshowWrapper
-            style={{ transform: `translateX(-${currentSlide * 600}px)` }}
-          >
-            {images.map((file, index) => (
-              <TransformWrapper
-                key={index}
-                limitToBounds={true}
-                panning={{ disabled: false }}
-              >
-                <TransformComponent>
-                  <ImageWrapper>
-                    <Image
-                      src={URL.createObjectURL(file)}
-                      alt={`Uploaded ${index + 1}`}
-                      width={600}
-                      height={600}
-                    />
-                    <RemoveButton onClick={() => handleRemoveImage(index)}>
-                      X
-                    </RemoveButton>
-                  </ImageWrapper>
-                </TransformComponent>
-              </TransformWrapper>
-            ))}
-          </SlideshowWrapper>
-          <ArrowButton
-            className="next"
-            onClick={() => changeSlide('next')}
-            disabled={currentSlide === images.length - 1}
-          >
-            &#10095; {/* Right arrow */}
-          </ArrowButton>
-        </ImagesContainer>
-      )}
+      <ImagesContainer>
+        <ArrowButton
+          className="prev"
+          onClick={() => changeSlide('prev')}
+          disabled={currentSlide === 0}
+        >
+          &#10094; {/* Left arrow */}
+        </ArrowButton>
+        <SlideshowWrapper
+          style={{ transform: `translateX(-${currentSlide * 600}px)` }}
+        >
+          {images.map((file, index) => (
+            <TransformWrapper
+              key={index}
+              limitToBounds={true}
+              panning={{ disabled: false }}
+            >
+              <TransformComponent>
+                <ImageWrapper>
+                  <Image
+                    src={URL.createObjectURL(file)}
+                    alt={`Uploaded ${index + 1}`}
+                    width={600}
+                    height={600}
+                  />
+                  <RemoveButton onClick={() => handleRemoveImage(index)}>
+                    X
+                  </RemoveButton>
+                </ImageWrapper>
+              </TransformComponent>
+            </TransformWrapper>
+          ))}
+          {images.length < MAX_IMAGES && (
+            <ImageBox>
+              <Label htmlFor="imageInput">
+                <BsFillCameraFill size={50} />
+                <span style={{ fontSize: '1rem' }}>이미지 추가</span>
+              </Label>
+              <ImageInput
+                id="imageInput"
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                multiple
+              />
+            </ImageBox>
+          )}
+        </SlideshowWrapper>
+        <ArrowButton
+          className="next"
+          onClick={() => changeSlide('next')}
+          disabled={
+            currentSlide ===
+            (images.length < MAX_IMAGES ? images.length : images.length - 1)
+          }
+        >
+          &#10095;
+        </ArrowButton>
+      </ImagesContainer>
     </>
   );
 };
