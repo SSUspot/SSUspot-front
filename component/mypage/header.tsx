@@ -80,7 +80,7 @@ const Container = styled.div`
   box-sizing: border-box;
 
   @media (max-width: 735px) {
-    padding: 2vh;
+    padding: 4vh 2vh 2vh 0;
     flex-direction: column;
     gap: 2vh;
   }
