@@ -35,19 +35,20 @@ const SettingPage: React.FC = () => {
   };
 
   const handleComplete = async () => {
+    let updatedProfileImageLink = profileImageLink;
     if (uploadedImage) {
       const formData = new FormData();
       formData.append('image', uploadedImage);
       const response = await axiosInstance.post('/api/images', formData);
       console.log('/api/images', response.data[0].imageUrl);
-      setProfileImageLink(response.data[0].imageUrl);
+      updatedProfileImageLink = response.data[0].imageUrl;
     }
     await axiosInstance
       .patch('/api/users', {
         userName: userName,
         nickname: nickname,
         profileMessage: profileMessage,
-        profileImageLink: profileImageLink,
+        profileImageLink: updatedProfileImageLink,
       })
       .then((response) => {
         console.log('/api/users', response);

@@ -48,8 +48,7 @@ const MyPageHeader: React.FC<{ userInfo: User; postLength: number }> = ({
     <Container>
       <ProfileContainer>
         <ProfileImage
-          // src={userInfo.profileImageLink}
-          src={Tempimage}
+          src={userInfo.profileImageLink}
           alt='Profile Image'
           width={300}
           height={300}
