@@ -10,6 +10,10 @@ import axiosInstance from '../../utils/axiosInstance';
 
 import Spot from '../../type/spot';
 
+import axiosInstance from '../../utils/axiosInstance';
+
+import Spot from '../../type/spot';
+
 const MapMain: NextPage = () => {
   const [spots, setSopts] = useState<Spot[]>([]);
 
@@ -29,7 +33,7 @@ const MapMain: NextPage = () => {
     <>
       <Head>
         <title>SSUspot</title>
-        <link rel="icon" href="/favicon.png" />
+        <link rel='icon' href='/favicon.png' />
       </Head>
 
       <Header />

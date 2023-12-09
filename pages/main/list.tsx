@@ -28,7 +28,7 @@ const ListPage: React.FC = () => {
     <>
       <Head>
         <title>SSUspot</title>
-        <link rel="icon" href="/favicon.png" />
+        <link rel='icon' href='/favicon.png' />
       </Head>
 
       <Header />
