@@ -8,7 +8,7 @@ import List from '../../public/navigation/list.png';
 import Group from '../../public/navigation/group.png';
 import Like from '../../public/navigation/like.png';
 import Post from '../../public/navigation/post.png';
-import Chat from '../../public/navigation/chat.png';
+import Setting from '../../public/navigation/setting.png';
 import Mypage from '../../public/navigation/mypage.png';
 
 const Navigation: React.FC = () => {
@@ -44,7 +44,7 @@ const Navigation: React.FC = () => {
     <>
       <Container onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <NavigationBox className={isHovered ? 'hovered' : ''}>
-          <ItemButton>
+          <ItemButton onClick={() => handleRoute('/main/list')}>
             <Image src={Home} alt='Home' width={25} height={25} />
             <p> 홈 </p>
           </ItemButton>
@@ -73,8 +73,8 @@ const Navigation: React.FC = () => {
             <p> 글 작성 </p>
           </ItemButton>
           <ItemButton>
-            <Image src={Chat} alt='Chat' width={25} height={25} />
-            <p> 채팅 </p>
+            <Image src={Setting} alt='Setting' width={25} height={25} />
+            <p> 설정 </p>
           </ItemButton>
           <ItemButton onClick={() => handleRoute('/mypage')}>
             <Image src={Mypage} alt='Mypage' width={25} height={25} />

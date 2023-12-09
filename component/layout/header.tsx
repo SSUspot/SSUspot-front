@@ -10,7 +10,7 @@ const Header: React.FC = () => {
   const router = useRouter();
 
   const handleMain = () => {
-    router.push('/');
+    router.push('/main/list');
   };
 
   return (
