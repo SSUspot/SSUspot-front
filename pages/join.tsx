@@ -15,7 +15,9 @@ const JoinPage: React.FC = () => {
   const [password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
   const [profileMessage, setProfileMessage] = useState('');
-  const [profileImageLink, setProfileImageLink] = useState('');
+  // const [profileImageLink, setProfileImageLink] = useState<File | null>(null);
+  const defaultImageLink =
+    'https://user-images.githubusercontent.com/17202261/101670093-195d9180-3a96-11eb-9bd4-9f31cbe44aea.png';
   const router = useRouter();
 
   useEffect(() => {
@@ -25,10 +27,40 @@ const JoinPage: React.FC = () => {
     }
   }, []);
 
-  // profileImageLink 서버에 업로드 & 서버에서 url 및 경로 반환하는 로직 추가
+  // const handleFileUpload = (e: any) => {
+  //   const file = e.target.files[0];
+  //   setProfileImageLink(file);
+  // };
+
+  // const uploadImage = async (file: File) => {
+  //   const formData = new FormData();
+  //   formData.append('image', file);
+
+  //   try {
+  //     const response = await axios.post(
+  //       'http://ssuspot.online/api/images',
+  //       formData,
+  //       {
+  //         headers: {
+  //           'Content-Type': 'multipart/form-data',
+  //         },
+  //       }
+  //     );
+  //     console.log(response.data.url);
+  //     return response.data.url;
+  //   } catch (error) {
+  //     console.error('이미지 업로드 에러:', error);
+  //     return '';
+  //   }
+  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // let uploadedImageUrl = '';
+    // if (profileImageLink) {
+    //   uploadedImageUrl = await uploadImage(profileImageLink); // 이미지 업로드 함수 호출
+    // }
 
     try {
       const apiUrl = 'http://ssuspot.online/api/users/register';
@@ -39,7 +71,7 @@ const JoinPage: React.FC = () => {
         userName: userName,
         nickname: nickname,
         profileMessage: profileMessage,
-        profileImageLink: profileImageLink,
+        profileImageLink: defaultImageLink,
       });
       router.push('/login');
       console.log('회원가입 성공');
@@ -89,14 +121,13 @@ const JoinPage: React.FC = () => {
             value={profileMessage}
             onChange={(e) => setProfileMessage(e.target.value)}
           ></Input>
-
+          {/* 
           <Input
             type="file"
             placeholder="Profile Image"
             accept="image/png, image/jpeg"
-            value={profileImageLink}
-            onChange={(e) => setProfileImageLink(e.target.value)}
-          ></Input>
+            onChange={handleFileUpload}
+          ></Input> */}
 
           <Button type="submit" onClick={handleSubmit}>
             회원가입
