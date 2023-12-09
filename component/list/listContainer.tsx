@@ -58,7 +58,7 @@ const Container = styled.div`
 
 const SpotFrame = styled.div`
   width: 25%;
-  height: 25%;
+  aspect-ratio: 1;
   padding-top: 2vh;
   padding-bottom: 2vh;
   padding-left: 0.5vh;
