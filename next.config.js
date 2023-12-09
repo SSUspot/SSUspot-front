@@ -4,13 +4,7 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    domains: [
-      'ibb.co',
-      'i.ibb.co',
-      'velog.velcdn.com',
-      'ssuspot.s3.ap-northeast-2.amazonaws.com',
-      'upload.wikimedia.org',
-    ],
+    domains: ['ibb.co', 'i.ibb.co'],
   },
   reactStrictMode: false,
   swcMinify: true,

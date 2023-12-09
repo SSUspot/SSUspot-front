@@ -13,22 +13,28 @@ const ListPage: React.FC = () => {
   const [spots, setSopts] = useState<Spot[]>([]);
 
   useEffect(() => {
-    axiosInstance
-      .get('/api/spots')
-      .then((response) => {
-        console.log('/api/spots', response.data);
-        setSopts(response.data);
-      })
-      .catch((error) => {
-        console.log('/api/spots error', error);
-      });
-  }, []);
+    if (spots.length === 0) {
+      handleGetSopts();
+    }
+    console.log(spots);
+  });
+
+  const handleGetSopts = async () => {
+    try {
+      const apiUrl = 'http://ssuspot.online/api/spots';
+      const response = await axios.get(apiUrl);
+      console.log(response);
+      setSpots(response.data);
+    } catch (error) {
+      console.error('에러:', error);
+    }
+  };
 
   return (
     <>
       <Head>
         <title>SSUspot</title>
-        <link rel='icon' href='/favicon.png' />
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <Header />
