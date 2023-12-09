@@ -31,7 +31,7 @@ export default ImageSlider;
 const ImageSliderContainer = styled.div`
   position: relative;
   width: 100%;
-  padding-top: 75%;
+  padding-top: 100%;
   height: 0;
   overflow: hidden;
 `;
@@ -44,6 +44,7 @@ const ArrowButton = styled.button`
   cursor: pointer;
   font-size: 24px;
   z-index: 1;
+  color: #d9d9d9;
 
   &:focus {
     outline: none;
@@ -73,6 +74,8 @@ const PostImage = styled.img`
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  aspect-ratio: 1;
+  object-fit: cover;
   object-position: center;
+  border-radius: 5px;
 `;

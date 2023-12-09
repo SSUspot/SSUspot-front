@@ -47,6 +47,7 @@ const Container = styled.div`
   }
 
   @media (max-width: 735px) {
+    height: 40px;
     .mobile-hidden {
       display: none;
     }

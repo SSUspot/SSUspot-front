@@ -4,9 +4,8 @@ import styled from 'styled-components';
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Header from '../../component/layout/header';
-import Filter from '../../component/layout/filter';
 import Navigation from '../../component/layout/navigation';
-import PostThread from '../../component/thread/postThread';
+import PostCard from '../../component/thread/postCard';
 import axiosInstance from '../../utils/axiosInstance';
 
 import Spot from '../../type/spot';
@@ -56,25 +55,25 @@ const SpotPage = () => {
       </Head>
 
       <Header />
-      <Filter />
       <Navigation />
 
       <Container>
         {selectedSpot && (
           <SpotFrame>
-            <SpotName> [ {selectedSpot.spotName} ]</SpotName>
-            <SpotInfo>{selectedSpot.spotInfo}</SpotInfo>
             <SpotImage
               src={selectedSpot.spotThumbnailImageLink}
               alt={selectedSpot.spotName}
-              width={1600}
-              height={1200}
             />
+            <SpotInfoFrame>
+              <SpotName> {selectedSpot.spotName}</SpotName>
+              <SpotInfo>{selectedSpot.spotInfo}</SpotInfo>
+            </SpotInfoFrame>
           </SpotFrame>
         )}
         <DivisionBar />
-        <PostsInfo> 게시글 </PostsInfo>
-        <PostThread posts={spotPosts} />
+        <PostsInfo> 특별한 순간들을 공유한 게시물들을 확인해보세요. </PostsInfo>
+        <PostsSubInfo>놀라운 이야기들이 여러분을 기다리고 있어요! 📸✨ </PostsSubInfo>
+        <PostCard posts={spotPosts} />
       </Container>
     </>
   );
@@ -92,23 +91,30 @@ const Container = styled.div`
 `;
 
 const SpotFrame = styled.div`
-  width: 100%;
+  width: 90%;
   height: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   margin-top: 5vh;
-  gap: 2vh;
   box-sizing: border-box;
 
   @media (max-width: 735px) {
     margin-top: 3vh;
-    gap: 1vh;
   }
 `;
 
+const SpotInfoFrame = styled.div`
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
 const SpotName = styled.div`
+  width: 90%;
   font-family: 'GmarketSansBold';
   font-size: 6vh;
   margin-bottom: 2vh;
@@ -119,13 +125,12 @@ const SpotName = styled.div`
   }
 `;
 
-const SpotImage = styled(Image)`
+const SpotImage = styled.img`
   width: 50%;
-  height: 50%;
+  aspect-ratio: 4 / 3;
   object-fit: cover;
-  object-position: center center;
-  top: 0;
-  left: 0;
+  object-position: center;
+  border-radius: 10px;
 
   @media (max-width: 735px) {
     width: 70%;
@@ -133,7 +138,7 @@ const SpotImage = styled(Image)`
 `;
 
 const SpotInfo = styled.div`
-  width: 50%;
+  width: 90%;
   display: flex;
   font-family: 'GmarketSansMedium';
   font-size: 2vh;
@@ -158,10 +163,27 @@ const DivisionBar = styled.div`
 `;
 
 const PostsInfo = styled.div`
-  width: 55%;
+  width: 100%;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'GmarketSansBold';
+  font-size: 4vh;
+  margin-bottom: 2vh;
+
+  @media (max-width: 735px) {
+    width: 70%;
+    font-size: 1vh;
+  }
+`;
+
+const PostsSubInfo = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: 'GmarketSansMedium';
-  font-size: 3vh;
+  font-size: 2vh;
   margin-bottom: 4vh;
 
   @media (max-width: 735px) {
