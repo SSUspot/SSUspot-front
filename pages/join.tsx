@@ -26,6 +26,11 @@ const JoinPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // let uploadedImageUrl = '';
+    // if (profileImageLink) {
+    //   uploadedImageUrl = await uploadImage(profileImageLink); // 이미지 업로드 함수 호출
+    // }
+
     try {
       const apiUrl = 'http://ssuspot.online/api/users/register';
 
