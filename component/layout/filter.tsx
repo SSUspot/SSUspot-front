@@ -10,11 +10,11 @@ const Filter: React.FC = () => {
         <ItemButton> 부산 </ItemButton>
         <ItemButton> 대구 </ItemButton>
         <ItemButton> 제주 </ItemButton>
-        <ItemButton> 광주 </ItemButton>
-        <ItemButton> 목포 </ItemButton>
-        <ItemButton> 여수 </ItemButton>
+        <ItemButton> 경주 </ItemButton>
+        <ItemButton className='mobile-hidden'> 목포 </ItemButton>
+        <ItemButton className='mobile-hidden'> 여수 </ItemButton>
         <FilterButton>
-          <Image src={filterAlt} alt="filter" width={22} height={22} />
+          <Image src={filterAlt} alt='filter' width={22} height={22} />
         </FilterButton>
       </Container>
     </>
@@ -30,7 +30,7 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 55px;
-  font-size: 13px;
+  font-size: 2vw;
   position: sticky;
   top: 80px;
   background: #ffffff;
@@ -45,6 +45,12 @@ const Container = styled.div`
     height: 1px;
     background-color: #4f4c4c33;
   }
+
+  @media (max-width: 735px) {
+    .mobile-hidden {
+      display: none;
+    }
+  }
 `;
 
 const ItemButton = styled.button`
@@ -52,10 +58,15 @@ const ItemButton = styled.button`
   height: 30px;
   border: none;
   background-color: #ffffff;
+  font-family: 'GmarketSansMedium';
 
   &:hover {
     font-weight: bold;
     color: #4f4c4c;
+  }
+
+  @media (max-width: 735px) {
+    width: 50px;
   }
 `;
 
@@ -70,4 +81,9 @@ const FilterButton = styled.div`
   padding: 0;
   margin: 0;
   border-radius: 20px;
+
+  @media (max-width: 735px) {
+    width: 50px;
+    height: 25px;
+  }
 `;

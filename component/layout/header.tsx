@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import logo from '../../public/logo.png';
+import Mlogo from '../../public/favicon.png';
 import bell from '../../public/bell.png';
 import search from '../../public/search.png';
 import { useRouter } from 'next/router';
@@ -18,7 +19,7 @@ const Header: React.FC = () => {
       <Container>
         <Items>
           <Logo onClick={handleMain}>
-            <Image src={logo} alt='Logo' width={120} height={22} />
+            <LogoImage src={require('../../public/logo.png')} alt='Logo' />
           </Logo>
           <InputContainer>
             <Image src={search} alt='Search' width={22} height={22} />
@@ -77,6 +78,24 @@ const Logo = styled.div`
   padding: 0;
   margin: 0;
   cursor: pointer;
+
+  @media (max-width: 735px) {
+    content: url(${Mlogo.src});
+    width: 27px;
+    height: 25px;
+    padding-left: 4vw;
+  }
+`;
+
+const LogoImage = styled(Image)`
+  width: 120px;
+  height: 20px;
+
+  @media (max-width: 735px) {
+    content: url(${Mlogo.src});
+    width: 22px;
+    height: 20px;
+  }
 `;
 
 const InputContainer = styled.div`
@@ -90,6 +109,12 @@ const InputContainer = styled.div`
   padding: 0 10px;
   margin: 0;
   border-radius: 40px;
+
+  @media (max-width: 735px) {
+    width: 60%;
+    padding: 0 5px;
+    border-radius: 20px;
+  }
 `;
 
 const InputBox = styled.input`
@@ -110,4 +135,8 @@ const Bell = styled.div`
   padding: 0;
   margin: 0;
   border-radius: 20px;
+
+  @media (max-width: 735px) {
+    width: 40px;
+  }
 `;
