@@ -46,7 +46,7 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   background: #ffffff;
-  z-index: 1;
+  z-index: 5;
 
   &::after {
     content: '';

@@ -6,14 +6,17 @@ import { useRouter } from 'next/router';
 import Header from '../../component/layout/header';
 import Filter from '../../component/layout/filter';
 import Navigation from '../../component/layout/navigation';
+import PostThread from '../../component/thread/postThread';
 import axiosInstance from '../../utils/axiosInstance';
 
 import Spot from '../../type/spot';
+import Post from '../../type/post';
 
 const SpotPage = () => {
   const router = useRouter();
   const { spotId } = router.query;
   const [spots, setSopts] = useState<Spot[]>([]);
+  const [spotPosts, setSpotPosts] = useState<Post[]>([]);
   const selectedSpot = spots.find((spot) => spot.id === Number(spotId));
 
   useEffect(() => {
@@ -26,7 +29,24 @@ const SpotPage = () => {
       .catch((error) => {
         console.log('/api/spots error', error);
       });
-  }, []);
+
+    if (spotId) {
+      axiosInstance
+        .get(`/api/posts/spots/${spotId}`, {
+          params: {
+            page: 1,
+            size: 10,
+          },
+        })
+        .then((response) => {
+          console.log('/api/posts/spots/${spotId}', response.data);
+          setSpotPosts(response.data);
+        })
+        .catch((error) => {
+          console.log('/api/posts/spots/${spotId}', error);
+        });
+    }
+  }, [spotId]);
 
   return (
     <>
@@ -52,6 +72,9 @@ const SpotPage = () => {
             />
           </SpotFrame>
         )}
+        <DivisionBar />
+        <PostsInfo> 게시글 </PostsInfo>
+        <PostThread posts={spotPosts} />
       </Container>
     </>
   );
@@ -61,7 +84,7 @@ export default SpotPage;
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -69,7 +92,7 @@ const Container = styled.div`
 `;
 
 const SpotFrame = styled.div`
-  width: 90%;
+  width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -77,6 +100,7 @@ const SpotFrame = styled.div`
   justify-content: center;
   margin-top: 5vh;
   gap: 2vh;
+  box-sizing: border-box;
 
   @media (max-width: 735px) {
     margin-top: 3vh;
@@ -96,7 +120,7 @@ const SpotName = styled.div`
 `;
 
 const SpotImage = styled(Image)`
-  width: 60%;
+  width: 50%;
   height: 50%;
   object-fit: cover;
   object-position: center center;
@@ -104,19 +128,44 @@ const SpotImage = styled(Image)`
   left: 0;
 
   @media (max-width: 735px) {
-    width: 80%;
+    width: 70%;
   }
 `;
 
 const SpotInfo = styled.div`
-  width: 60%;
+  width: 50%;
   display: flex;
   font-family: 'GmarketSansMedium';
   font-size: 2vh;
   line-height: 200%;
 
   @media (max-width: 735px) {
-    width: 80%;
+    width: 70%;
+    font-size: 1vh;
+  }
+`;
+
+const DivisionBar = styled.div`
+  width: 80%;
+  border: 4px solid rgba(194, 186, 186, 0.4);
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+
+  @media (max-width: 735px) {
+    margin-top: 3vh;
+    margin-bottom: 0;
+  }
+`;
+
+const PostsInfo = styled.div`
+  width: 55%;
+  display: flex;
+  font-family: 'GmarketSansMedium';
+  font-size: 3vh;
+  margin-bottom: 4vh;
+
+  @media (max-width: 735px) {
+    width: 70%;
     font-size: 1vh;
   }
 `;
