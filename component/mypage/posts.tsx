@@ -9,6 +9,10 @@ import Post from '../../type/post';
 const MyPagePosts: React.FC<{ userPosts: Post[] }> = ({ userPosts }) => {
   const [hoveredPost, setHoveredPost] = useState<number | null>(null);
 
+  const handlerPost = (postId: number) => {
+    Router.push(`/post/${postId}`);
+  };
+
   return (
     <Container>
       {userPosts.length === 0 ? (
@@ -20,7 +24,7 @@ const MyPagePosts: React.FC<{ userPosts: Post[] }> = ({ userPosts }) => {
               key={post.id}
               onMouseEnter={() => setHoveredPost(index)}
               onMouseLeave={() => setHoveredPost(null)}
-              isHovered={hoveredPost === index}
+              onClick={() => handlerPost(post.id)}
             >
               {hoveredPost === index && (
                 <Overlay>
