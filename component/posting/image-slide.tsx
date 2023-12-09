@@ -13,37 +13,28 @@ interface ImageSlideProps {
 
 const ImageSlide: React.FC<ImageSlideProps> = ({ images, setImages }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedImages = e.target.files;
-    if (selectedImages) {
-      if (selectedImages.length + images.length > MAX_IMAGES) {
-        alert(`이미지는 최대 ${MAX_IMAGES}개까지만 업로드 가능합니다.`);
-        return;
-      }
+    if (selectedImages && selectedImages.length + images.length <= MAX_IMAGES) {
       setImages([...images, ...Array.from(selectedImages)]);
+    } else {
+      alert(`이미지는 최대 ${MAX_IMAGES}개까지만 업로드 가능합니다.`);
     }
   };
 
   const handleRemoveImage = (index: number) => {
-    const updatedImages = [...images];
-    if (index < images.length - 1) {
-      setCurrentSlide(index);
-    } else {
-      setCurrentSlide(index - 1);
-    }
+    const updatedImages = images.filter((_, i) => i !== index);
     setImages(updatedImages);
+    setCurrentSlide((prev) => (index === prev ? Math.max(prev - 1, 0) : prev));
   };
 
-  const handleNextSlide = () => {
-    if (currentSlide < images.length - 1) {
-      setCurrentSlide(currentSlide + 1);
-    }
-  };
-
-  const handlePrevSlide = () => {
-    if (currentSlide > 0) {
-      setCurrentSlide(currentSlide - 1);
-    }
+  const changeSlide = (direction: 'next' | 'prev') => {
+    setCurrentSlide((prev) =>
+      direction === 'next'
+        ? Math.min(prev + 1, images.length - 1)
+        : Math.max(prev - 1, 0)
+    );
   };
 
   return (
@@ -65,15 +56,13 @@ const ImageSlide: React.FC<ImageSlideProps> = ({ images, setImages }) => {
         <ImagesContainer>
           <ArrowButton
             className="prev"
-            onClick={handlePrevSlide}
+            onClick={() => changeSlide('prev')}
             disabled={currentSlide === 0}
           >
             &#10094; {/* Left arrow */}
           </ArrowButton>
           <SlideshowWrapper
-            style={{
-              transform: `translateX(-${currentSlide * 600}px)`,
-            }}
+            style={{ transform: `translateX(-${currentSlide * 600}px)` }}
           >
             {images.map((file, index) => (
               <TransformWrapper
@@ -81,27 +70,25 @@ const ImageSlide: React.FC<ImageSlideProps> = ({ images, setImages }) => {
                 limitToBounds={true}
                 panning={{ disabled: false }}
               >
-                <React.Fragment>
-                  <TransformComponent>
-                    <ImageWrapper>
-                      <Image
-                        src={URL.createObjectURL(file)}
-                        alt={`Uploaded ${index + 1}`}
-                        layout="fill"
-                        objectFit="cover"
-                      />
-                      <RemoveButton onClick={() => handleRemoveImage(index)}>
-                        X
-                      </RemoveButton>
-                    </ImageWrapper>
-                  </TransformComponent>
-                </React.Fragment>
+                <TransformComponent>
+                  <ImageWrapper>
+                    <Image
+                      src={URL.createObjectURL(file)}
+                      alt={`Uploaded ${index + 1}`}
+                      width={600}
+                      height={600}
+                    />
+                    <RemoveButton onClick={() => handleRemoveImage(index)}>
+                      X
+                    </RemoveButton>
+                  </ImageWrapper>
+                </TransformComponent>
               </TransformWrapper>
             ))}
           </SlideshowWrapper>
           <ArrowButton
             className="next"
-            onClick={handleNextSlide}
+            onClick={() => changeSlide('next')}
             disabled={currentSlide === images.length - 1}
           >
             &#10095; {/* Right arrow */}

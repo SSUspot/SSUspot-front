@@ -30,6 +30,7 @@ const Posting: React.FC = () => {
   const [uploadedImageUrls, setUploadedImageUrls] = useState<string[]>([]);
   const [hashTags, setHashTags] = useState<string[]>([]);
   const router = useRouter();
+
   useEffect(() => {
     // User;
     axiosInstance
@@ -67,24 +68,31 @@ const Posting: React.FC = () => {
           const formData = new FormData();
           formData.append('image', image);
 
-          const response = await axiosInstance.post('/api/images', formData);
-          return response.data.imageUrl;
+          const response = await axiosInstance.post('/api/images', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+          console.log(response.data[0].imageUrl);
+          return response.data[0].imageUrl;
         })
       );
-      setUploadedImageUrls(urls);
+      return urls;
     } catch (error) {
       console.error('Error uploading images:', error);
+      throw error;
     }
   };
 
   const handleSubmit = async () => {
     try {
-      await uploadImages();
+      const uploadedUrls = await uploadImages();
+
       const postData = {
         title,
         content,
         tags: hashTags,
-        imageUrls: uploadedImageUrls,
+        imageUrls: uploadedUrls,
         spotId,
       };
 
