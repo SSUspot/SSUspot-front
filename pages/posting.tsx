@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { UserInfo } from '../states/state';
 import axios from 'axios';
 import Header from '../component/layout/header';
 import styled from 'styled-components';
+import axiosInstance from '../utils/axiosInstance';
 import ImageSlide from '../component/posting/image-slide';
 import HashTag from '../component/posting/hash-tag';
+
+import User from '../type/user';
 interface Place {
   id: number;
   spotName: string;
@@ -15,7 +17,7 @@ interface Place {
 }
 
 const Posting: React.FC = () => {
-  const [user, setUser] = useState<UserInfo | null>(null);
+  const [userInfo, setUserInfo] = useState<User>();
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [spotId, setSpotId] = useState<number>(1);
@@ -27,42 +29,27 @@ const Posting: React.FC = () => {
   const [hashTags, setHashTags] = useState<string[]>([]);
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const accessToken = localStorage.getItem('accessToken');
-        const response = await axios.get('http://ssuspot.online/api/users', {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+    // User;
+    axiosInstance
+      .get('/api/users')
+      .then((response) => {
+        console.log('/api/users', response.data);
+        setUserInfo(response.data);
+      })
+      .catch((error) => {
+        console.log('/api/users error', error);
+      });
 
-        if (response && response.data) {
-          console.log(response.data);
-          setUser(response.data);
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    };
-
-    fetchUser();
-  }, []);
-
-  useEffect(() => {
-    const fetchPlaces = async () => {
-      try {
-        const response = await axios.get<Place[]>(
-          'http://ssuspot.online/api/spots'
-        );
-        if (response && response.data) {
-          setPlaces(response.data);
-        }
-        console.log(response);
-      } catch (error) {
-        console.error('Error fetching places:', error);
-      }
-    };
-    fetchPlaces();
+    // places
+    axiosInstance
+      .get('/api/spots')
+      .then((response) => {
+        console.log('api/spots', response.data);
+        setPlaces(response.data);
+      })
+      .catch((error) => {
+        console.log('/api/spots error', error);
+      });
   }, []);
 
   const handlePlaceClick = (place: { id: number; spotName: string }) => {
@@ -78,17 +65,7 @@ const Posting: React.FC = () => {
           const formData = new FormData();
           formData.append('image', image);
 
-          const accessToken = localStorage.getItem('accessToken');
-          const response = await axios.post(
-            'http://ssuspot.online/api/images',
-            formData,
-            {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-                Authorization: `Bearer ${accessToken}`,
-              },
-            }
-          );
+          const response = await axiosInstance.post('/api/images', formData);
           return response.data.imageUrl;
         })
       );
@@ -108,17 +85,8 @@ const Posting: React.FC = () => {
         imageUrls: uploadedImageUrls,
         spotId,
       };
-      const accessToken = localStorage.getItem('accessToken');
 
-      const response = await axios.post(
-        'http://ssuspot.online/api/posts',
-        postData,
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
+      const response = await axiosInstance.post('/api/posts', postData);
 
       if (response.status === 200) {
         console.log(response);
@@ -140,15 +108,15 @@ const Posting: React.FC = () => {
         </Column>
         <Column>
           <Info>
-            {user?.profileImageLink && (
+            {userInfo?.profileImageLink && (
               <StyledImage
-                src={user.profileImageLink}
+                src={userInfo.profileImageLink}
                 alt=""
                 width={50}
                 height={50}
               ></StyledImage>
             )}
-            {user?.nickname}
+            {userInfo?.nickname}
           </Info>
           <InputWrapper>
             <Label>제목</Label>
