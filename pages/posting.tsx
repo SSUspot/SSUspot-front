@@ -26,12 +26,25 @@ const Posting: React.FC = () => {
   const [hashTags, setHashTags] = useState<string[]>([]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedUser = localStorage.getItem('user');
-      if (storedUser) {
-        setUser(JSON.parse(storedUser));
+    const fetchUser = async () => {
+      try {
+        const accessToken = localStorage.getItem('accessToken');
+        const response = await axios.get('http://ssuspot.online/api/users', {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+
+        if (response && response.data) {
+          console.log(response.data);
+          setUser(response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching user data:', error);
       }
-    }
+    };
+
+    fetchUser();
   }, []);
 
   useEffect(() => {
