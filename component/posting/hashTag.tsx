@@ -97,7 +97,7 @@ const DeleteButton = styled.span`
 
 const Input = styled.input`
   display: block;
-  width: 40vw;
+  width: 80vh;
   border: none;
   outline: none;
   padding: 1.5vh;

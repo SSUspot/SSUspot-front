@@ -111,13 +111,11 @@ const Posting: React.FC = () => {
     <>
       <Header />
       <Container>
-        <Column>
+        <LeftColumn>
           <ImageSlide images={images} setImages={setImages} />
-        </Column>
-        <Column>
-          <DivisionBar />
-        </Column>
-        <Column>
+        </LeftColumn>
+        <DivisionBar />
+        <RightColumn>
           <Info>
             {userInfo?.profileImageLink && (
               <StyledImage
@@ -178,7 +176,7 @@ const Posting: React.FC = () => {
             )}
           </InputWrapper>
           {!showDropdown && <Button onClick={handleSubmit}>게시하기</Button>}
-        </Column>
+        </RightColumn>
       </Container>
     </>
   );
@@ -187,17 +185,33 @@ const Posting: React.FC = () => {
 export default Posting;
 
 const Container = styled.div`
+  width: 100%;
+  height: 100%;
   display: grid;
-  grid-template-columns: 1fr 1px 1fr;
+  grid-template-columns: 50vw 1px 50vw;
   align-items: center;
-  justify-items: center;
-  padding-top: 50px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+
+  @media (max-width: 735px) {
+    display: block;
+    padding-top: 1vh;
+  }
 `;
 
 const DivisionBar = styled.div`
-  width: 2px;
-  height: 100%;
+  width: 0.1vw;
+  height: 80vh;
   background-color: rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 735px) {
+    width: 100%;
+    height: 2px;
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
 `;
 
 const Column = styled.div`
@@ -205,42 +219,55 @@ const Column = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow: hidden;
+`;
 
-  &:nth-child(1) {
-    padding-top: 20px;
+const LeftColumn = styled(Column)`
+  padding-top: 2vh;
+
+  @media (max-width: 735px) {
+    padding-top: 1vh;
   }
+`;
 
-  &:nth-child(3) {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+const RightColumn = styled(Column)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5vh;
+
+  @media (max-width: 735px) {
+    padding-top: 3vh;
   }
 `;
 
 const Info = styled.div`
-  width: 600px;
-  height: 50px;
-  padding: 0px 10px;
+  width: 80%;
+  height: 10vh;
+  padding: 0px 1vh;
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
+  gap: 2vh;
+
+  @media (max-width: 735px) {
+    width: 95%;
+  }
 `;
 
 const StyledImage = styled.img`
-  border-radius: 25px;
+  border-radius: 50%;
 `;
 
 const Input = styled.input`
   display: block;
-  width: 550px;
+  width: 80%;
   border: none;
   outline: none;
-  padding: 10px;
-  margin-top: 5px;
-  font-size: 16px;
+  padding: 1vh;
+  margin-top: 2vh;
+  font-size: 2vh;
   border-bottom: solid 1px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
 
@@ -248,16 +275,20 @@ const Input = styled.input`
     border: solid 1px #999;
     border-radius: 3px;
   }
+
+  @media (max-width: 735px) {
+    width: 95%;
+  }
 `;
 
 const Button = styled.div`
   cursor: pointer;
   display: flex;
-  width: 100px;
-  height: 30px;
+  width: 15vh;
+  height: 4vh;
   background-color: rgba(50, 80, 210, 0.7);
-  border-radius: 15px;
-  font-size: 16px;
+  border-radius: 3vh;
+  font-size: 2vh;
   border: none;
   text-align: center;
   align-items: center;
@@ -271,48 +302,56 @@ const Button = styled.div`
 
 const InputWrapper = styled.div`
   position: relative;
-  width: 600px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  width: 80%;
+  margin-top: 2vh;
+  margin-bottom: 3vh;
+
+  @media (max-width: 735px) {
+    width: 95%;
   }
 `;
 
 const TextArea = styled.textarea`
   display: block;
-  width: 550px;
+  width: 80%;
   border: none;
   outline: none;
-  padding: 10px;
-  margin-top: 5px;
-  font-size: 16px;
+  padding: 1vh;
+  margin-top: 2vh;
+  font-size: 2vh;
   border: solid 1px rgba(0, 0, 0, 0.2);
   border-radius: 3px;
   box-sizing: border-box;
   resize: none;
+
   &:focus {
     border: solid 1px #999;
     border-radius: 3px;
+  }
+
+  @media (max-width: 735px) {
+    width: 95%;
   }
 `;
 
 const Label = styled.label`
   display: block;
-  font-size: 18px;
+  font-size: 2.5vh;
   font-weight: 500;
-  padding-left: 5px;
+  padding-left: 0.5vh;
 `;
 
 const Dropdown = styled.div`
   position: relative;
-  width: 550px;
+  width: 80vh;
   border: 1px solid #999;
-  border-radius: 5px;
-  max-height: 100px;
+  border-radius: 3px;
+  max-height: 20vh;
   overflow-y: auto;
 `;
 
 const PlaceItem = styled.div`
-  padding: 10px;
+  padding: 1.5vh;
   cursor: pointer;
   &:hover {
     background-color: #f5f5f5;

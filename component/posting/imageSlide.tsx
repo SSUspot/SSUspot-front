@@ -11,6 +11,10 @@ interface ImageSlideProps {
   setImages: React.Dispatch<React.SetStateAction<File[]>>;
 }
 
+interface SlideshowWrapperProps {
+  currentSlide: number;
+}
+
 const ImageSlide: React.FC<ImageSlideProps> = ({ images, setImages }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -49,9 +53,7 @@ const ImageSlide: React.FC<ImageSlideProps> = ({ images, setImages }) => {
         >
           &#10094; {/* Left arrow */}
         </ArrowButton>
-        <SlideshowWrapper
-          style={{ transform: `translateX(-${currentSlide * 600}px)` }}
-        >
+        <SlideshowWrapper currentSlide={currentSlide}>
           {images.map((file, index) => (
             <TransformWrapper
               key={index}
@@ -63,8 +65,8 @@ const ImageSlide: React.FC<ImageSlideProps> = ({ images, setImages }) => {
                   <Image
                     src={URL.createObjectURL(file)}
                     alt={`Uploaded ${index + 1}`}
-                    width={600}
-                    height={600}
+                    layout="fill"
+                    objectFit="contatin"
                   />
                   <RemoveButton onClick={() => handleRemoveImage(index)}>
                     X
@@ -106,18 +108,39 @@ const ImageSlide: React.FC<ImageSlideProps> = ({ images, setImages }) => {
 
 export default ImageSlide;
 
+const ImagesContainer = styled.div`
+  width: 80vh;
+  height: 80vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  margin: 3vh;
+
+  @media (max-width: 735px) {
+    width: 95vw;
+    height: 95vw;
+  }
+`;
+
 const ImageBox = styled.div`
-  width: 600px;
-  height: 600px;
+  width: 80vh;
+  height: 80vh;
   background-color: #d9d9d9;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 2vw;
 
   &:hover {
     border-color: #2146c7;
+  }
+
+  @media (max-width: 735px) {
+    width: 95vw;
+    height: 95vw;
+    font-size: 4vw;
   }
 `;
 
@@ -131,19 +154,14 @@ const ImageInput = styled.input`
   cursor: pointer;
 `;
 
-const ImagesContainer = styled.div`
-  width: 600px;
-  height: 600px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  overflow: hidden;
-  border: 2px solid #ccc;
-`;
-
-const SlideshowWrapper = styled.div`
+const SlideshowWrapper = styled.div<SlideshowWrapperProps>`
   display: flex;
   transition: transform 0.3s ease;
+  transform: translateX(-${(props) => props.currentSlide * 80}vh);
+
+  @media (max-width: 735px) {
+    transform: translateX(-${(props) => props.currentSlide * 95}vw);
+  }
 `;
 
 const ArrowButton = styled.button`
@@ -154,8 +172,8 @@ const ArrowButton = styled.button`
   color: #fff;
   border: none;
   cursor: pointer;
-  padding: 10px;
-  font-size: 24px;
+  padding: 1vh;
+  font-size: 16px;
   z-index: 1;
 
   &:hover {
@@ -163,32 +181,45 @@ const ArrowButton = styled.button`
   }
 
   &.prev {
-    left: 10px;
+    left: 1vh;
   }
 
   &.next {
-    right: 10px;
+    right: 1vh;
+  }
+
+  @media (max-width: 735px) {
+    top: auto;
+    bottom: 40%;
+    font-size: 6vw;
   }
 `;
 
 const ImageWrapper = styled.div`
-  width: 600px;
-  height: 600px;
-  min-width: 600px;
-  min-height: 600px;
+  width: 80vh;
+  height: 80vh;
   position: relative;
   overflow: hidden;
+
+  @media (max-width: 735px) {
+    width: 95vw;
+    height: 95vw;
+  }
 `;
 
 const RemoveButton = styled.button`
   position: absolute;
-  top: 5px;
-  right: 5px;
+  top: 10px;
+  right: 10px;
   background-color: transparent;
   border: none;
   color: white;
-  padding: 5px;
+  padding: 0.5vh;
   cursor: pointer;
   font-size: 16px;
-  text-shadow: 1px 1px rgba(0, 0, 0, 0.3);
+  text-shadow: 0.1vh 0.1vh rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 735px) {
+    font-size: 6vw;
+  }
 `;
