@@ -235,7 +235,7 @@ const RightColumn = styled(Column)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1.5vh;
+  gap: 1vh;
 
   @media (max-width: 735px) {
     padding-top: 3vh;
@@ -243,7 +243,7 @@ const RightColumn = styled(Column)`
 `;
 
 const Info = styled.div`
-  width: 80%;
+  width: 90%;
   height: 10vh;
   padding: 0px 1vh;
   display: flex;
@@ -262,7 +262,7 @@ const StyledImage = styled.img`
 
 const Input = styled.input`
   display: block;
-  width: 80%;
+  width: 90%;
   border: none;
   outline: none;
   padding: 1vh;
@@ -302,7 +302,7 @@ const Button = styled.div`
 
 const InputWrapper = styled.div`
   position: relative;
-  width: 80%;
+  width: 90%;
   margin-top: 2vh;
   margin-bottom: 3vh;
 
@@ -313,7 +313,7 @@ const InputWrapper = styled.div`
 
 const TextArea = styled.textarea`
   display: block;
-  width: 80%;
+  width: 90%;
   border: none;
   outline: none;
   padding: 1vh;
@@ -343,15 +343,20 @@ const Label = styled.label`
 
 const Dropdown = styled.div`
   position: relative;
-  width: 80vh;
+  width: 90%;
   border: 1px solid #999;
   border-radius: 3px;
   max-height: 20vh;
   overflow-y: auto;
+
+  @media (max-width: 735px) {
+    width: 95%;
+  }
 `;
 
 const PlaceItem = styled.div`
   padding: 1.5vh;
+  font-size: 1.8vh;
   cursor: pointer;
   &:hover {
     background-color: #f5f5f5;

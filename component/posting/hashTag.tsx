@@ -85,7 +85,7 @@ const HashTagItem = styled.div`
   background-color: rgba(48, 55, 205, 0.7);
   color: #fff;
   border-radius: 4px;
-  font-size: 2vh;
+  font-size: 1.5vh;
   cursor: pointer;
 `;
 
@@ -97,7 +97,7 @@ const DeleteButton = styled.span`
 
 const Input = styled.input`
   display: block;
-  width: 80vh;
+  width: 90%;
   border: none;
   outline: none;
   padding: 1.5vh;
@@ -112,6 +112,7 @@ const Input = styled.input`
   }
 
   @media (max-width: 735px) {
+    width: 95%;
     font-size: 0.9rem;
     padding: 0.5rem;
   }

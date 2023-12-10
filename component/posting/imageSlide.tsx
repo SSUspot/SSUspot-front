@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { BsFillCameraFill } from 'react-icons/bs';
@@ -17,6 +17,17 @@ interface SlideshowWrapperProps {
 
 const ImageSlide: React.FC<ImageSlideProps> = ({ images, setImages }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
+
+  useEffect(() => {
+    imageUrls.forEach((url) => URL.revokeObjectURL(url));
+    const newImageUrls = images.map((file) => URL.createObjectURL(file));
+    setImageUrls(newImageUrls);
+
+    return () => {
+      newImageUrls.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [images]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedImages = e.target.files;
@@ -63,7 +74,7 @@ const ImageSlide: React.FC<ImageSlideProps> = ({ images, setImages }) => {
               <TransformComponent>
                 <ImageWrapper>
                   <Image
-                    src={URL.createObjectURL(file)}
+                    src={imageUrls[index]}
                     alt={`Uploaded ${index + 1}`}
                     layout="fill"
                     objectFit="contatin"
