@@ -1,28 +1,51 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import Image from 'next/image';
-import axiosInstance from '../../utils/axiosInstance';
 import Header from '../../component/layout/header';
 import Navigation from '../../component/layout/navigation';
+import axiosInstance from '../../utils/axiosInstance';
+import PhotoLayout from '../../component/post/photoLayout';
+import ContentLayout from '../../component/post/contentLayout';
 
 import User from '../../type/user';
 import Post from '../../type/post';
 
-const MyPage: React.FC = () => {
+const PostDetail: React.FC = () => {
   const router = useRouter();
   const { postId } = router.query;
+  const [postInfo, setPostInfo] = useState<Post>();
+
+  useEffect(() => {
+    if (postId) {
+      axiosInstance
+        .get(`/api/posts/${postId}`)
+        .then((response) => {
+          console.log(`/api/posts/${postId}`, response.data);
+          setPostInfo(response.data);
+        })
+        .catch((error) => {
+          console.log(`/api/posts/${postId}`, error);
+        });
+    }
+  }, [postId]);
+
+  if (!postInfo) {
+    return <Container>Loading...</Container>;
+  }
 
   return (
-    <>
+    <Container>
       <Header />
       <Navigation />
-      <Container>게시물입니다.</Container>
-    </>
+      <Content>
+        <PhotoLayout postInfo={postInfo} />
+        <ContentLayout postInfo={postInfo} postId={postId} />
+      </Content>
+    </Container>
   );
 };
 
-export default MyPage;
+export default PostDetail;
 
 const Container = styled.div`
   width: 100vw;
@@ -30,4 +53,17 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
+`;
+
+const Content = styled.div`
+  width: 80%;
+  height: 75%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5vh;
+  box-sizing: border-box;
+  border: 1px solid;
 `;

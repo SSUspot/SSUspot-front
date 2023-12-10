@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/router';
+import Router from 'next/router';
 import styled from 'styled-components';
 import Image from 'next/image';
 import axiosInstance from '../../utils/axiosInstance';
@@ -12,13 +12,17 @@ import User from '../../type/user';
 import Post from '../../type/post';
 
 const PostCard: React.FC<{ posts: Post[] }> = ({ posts }) => {
-  const router = useRouter();
+  const [hoveredPost, setHoveredPost] = useState<number | null>(null);
+
+  const handlerPost = (postId: number) => {
+    Router.push(`/post/${postId}`);
+  };
 
   return (
     <Container>
       <PostGrid>
         {posts.map((post, index) => (
-          <PostFrame>
+          <PostFrame onClick={() => handlerPost(post.id)}>
             <PostInfoFrame>
               <PostUserImage src={post.user.profileImageLink} alt='profileImage' />
               {post.user.nickname}
