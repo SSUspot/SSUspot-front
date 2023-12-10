@@ -81,6 +81,10 @@ const Input = styled.input.attrs({ required: true })`
   &:focus {
     outline: none;
   }
+
+  @media (max-width: 735px) {
+    width: 100%;
+  }
 `;
 
 const ButtonFrame = styled.div`
@@ -103,8 +107,4 @@ const ProfileImage = styled.img`
   object-fit: cover;
   object-position: center;
   border-radius: 50%;
-
-  @media (max-width: 735px) {
-    width: 20%;
-  }
 `;

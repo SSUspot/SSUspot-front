@@ -68,4 +68,9 @@ const Frame = styled.div`
   align-items: flex-start;
   padding: 2%;
   box-sizing: border-box;
+
+  @media (max-width: 735px) {
+    width: 90%;
+    height: auto;
+  }
 `;

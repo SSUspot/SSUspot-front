@@ -62,6 +62,10 @@ const Container = styled.div`
   height: 85%;
   overflow: scroll;
   box-sizing: border-box;
+
+  @media (max-width: 735px) {
+    height: auto;
+  }
 `;
 
 const PostInfoFrame = styled.div`
@@ -83,11 +87,11 @@ const PostInfoFrame = styled.div`
   }
 
   @media (max-width: 735px) {
-    font-size: 1vh;
+    font-size: 1.5vh;
 
     img {
-      width: 10px;
-      height: 10px;
+      width: 15px;
+      height: 15px;
     }
   }
 `;
@@ -101,7 +105,7 @@ const PostTtile = styled.div`
   margin: 1vw 0;
 
   @media (max-width: 735px) {
-    font-size: 3vw;
+    font-size: 4vw;
   }
 `;
 
@@ -112,7 +116,7 @@ const PostContent = styled.div`
   line-height: 120%;
 
   @media (max-width: 735px) {
-    font-size: 2vw;
+    font-size: 3vw;
   }
 `;
 
@@ -124,7 +128,7 @@ const PostDate = styled.div`
   color: rgba(79, 76, 76, 0.4);
 
   @media (max-width: 735px) {
-    font-size: 2vw;
+    font-size: 2.5vw;
   }
 `;
 
@@ -139,6 +143,10 @@ const CommentFrame = styled.div`
   padding: 3% 0;
   box-sizing: border-box;
   gap: 1vw;
+
+  @media (max-width: 735px) {
+    font-size: 3vw;
+  }
 `;
 
 const ButtonFrame = styled.div`
@@ -161,10 +169,6 @@ const ProfileImage = styled.img`
   object-fit: cover;
   object-position: center;
   border-radius: 50%;
-
-  @media (max-width: 735px) {
-    width: 20%;
-  }
 `;
 
 const CommentText = styled.div`

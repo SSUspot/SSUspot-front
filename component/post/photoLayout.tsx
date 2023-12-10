@@ -44,6 +44,12 @@ const ImageFrame = styled.div`
   align-items: center;
   justify-content: center;
   margin-right: 1vw;
+
+  @media (max-width: 735px) {
+    margin-right: 0;
+    margin-bottom: 2vh;
+    width: 90%;
+  }
 `;
 
 const ImageSliderContainer = styled.div`
@@ -53,6 +59,7 @@ const ImageSliderContainer = styled.div`
   height: 0;
   overflow: hidden;
 `;
+
 const ArrowButton = styled.button`
   position: absolute;
   top: 50%;

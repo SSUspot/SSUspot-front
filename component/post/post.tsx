@@ -64,6 +64,7 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  box-sizing: border-box;
   z-index: 99;
 `;
 
@@ -79,5 +80,12 @@ const Content = styled.div`
   border: 1px solid #e3e3e3;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0.25, 0, 0.25);
-  box-sizing: border-box;
+
+  @media (max-width: 735px) {
+    width: 90%;
+    height: 80%;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: auto;
+  }
 `;
