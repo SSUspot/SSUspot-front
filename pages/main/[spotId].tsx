@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import Header from '../../component/layout/header';
 import Navigation from '../../component/layout/navigation';
 import PostCard from '../../component/thread/postCard';
+import PostDetail from '../../component/post/post';
 import axiosInstance from '../../utils/axiosInstance';
 
 import Spot from '../../type/spot';
@@ -17,6 +18,21 @@ const SpotPage = () => {
   const [spots, setSopts] = useState<Spot[]>([]);
   const [spotPosts, setSpotPosts] = useState<Post[]>([]);
   const selectedSpot = spots.find((spot) => spot.id === Number(spotId));
+
+  // post modal
+  const [openPost, setOpenPost] = useState<boolean>(false);
+  const [hoveredPost, setHoveredPost] = useState<number | null>(null);
+
+  const handlerPost = (postId: number) => {
+    console.log('open Modal', postId);
+    setHoveredPost(postId);
+    setOpenPost(true);
+    // Router.push(`/post/${postId}`);
+  };
+
+  const handleCloseModal = () => {
+    setOpenPost(false);
+  };
 
   useEffect(() => {
     axiosInstance
@@ -70,8 +86,9 @@ const SpotPage = () => {
         <DivisionBar />
         <PostsInfo> 특별한 순간들을 공유한 게시물들을 확인해보세요. </PostsInfo>
         <PostsSubInfo>놀라운 이야기들이 여러분을 기다리고 있어요! 📸✨ </PostsSubInfo>
-        <PostCard posts={spotPosts} />
+        <PostCard posts={spotPosts} handlerPost={handlerPost} />
       </Container>
+      {openPost && <PostDetail postId={hoveredPost} handleCloseModal={handleCloseModal} />}
     </>
   );
 };

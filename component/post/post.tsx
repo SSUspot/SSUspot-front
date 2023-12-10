@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import Header from '../../component/layout/header';
-import Navigation from '../../component/layout/navigation';
+import Header from '../layout/header';
+import Navigation from '../layout/navigation';
 import axiosInstance from '../../utils/axiosInstance';
-import PhotoLayout from '../../component/post/photoLayout';
-import ContentLayout from '../../component/post/contentLayout';
+import PhotoLayout from './photoLayout';
+import ContentLayout from './contentLayout';
 
 import User from '../../type/user';
 import Post from '../../type/post';
 
-const PostDetail: React.FC = () => {
+const PostDetail: React.FC<{ postId: number; handleCloseModal: () => void }> = ({
+  postId,
+  handleCloseModal,
+}) => {
   const router = useRouter();
-  const { postId } = router.query;
+  // const { postId } = router.query;
   const [postInfo, setPostInfo] = useState<Post>();
 
   useEffect(() => {
@@ -29,14 +32,18 @@ const PostDetail: React.FC = () => {
     }
   }, [postId]);
 
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      handleCloseModal();
+    }
+  };
+
   if (!postInfo) {
     return <Container>Loading...</Container>;
   }
 
   return (
-    <Container>
-      <Header />
-      <Navigation />
+    <Container onClick={handleOverlayClick}>
       <Content>
         <PhotoLayout postInfo={postInfo} />
         <ContentLayout postInfo={postInfo} postId={postId} />
@@ -48,22 +55,29 @@ const PostDetail: React.FC = () => {
 export default PostDetail;
 
 const Container = styled.div`
+  position: fixed;
   width: 100vw;
   height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.2);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
+  z-index: 99;
 `;
 
 const Content = styled.div`
   width: 80%;
-  height: 75%;
+  height: 85%;
+  background-color: white;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  margin-top: 5vh;
   box-sizing: border-box;
-  border: 1px solid;
+  border: 1px solid #e3e3e3;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0.25, 0, 0.25);
+  box-sizing: border-box;
 `;

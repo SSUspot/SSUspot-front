@@ -43,7 +43,7 @@ const ContentLayout: React.FC<{ postInfo: Post; postId: number }> = ({ postInfo,
           console.log('/api/posts/${postId}/comments error', error);
         });
     }
-  },[]);
+  });
 
   return (
     <Frame>
@@ -62,7 +62,7 @@ export default ContentLayout;
 
 const Frame = styled.div`
   width: 40%;
-  height: 100%;
+  height: 90%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

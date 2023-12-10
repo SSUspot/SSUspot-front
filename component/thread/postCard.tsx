@@ -11,13 +11,10 @@ import comment from '../../public/comment.png';
 import User from '../../type/user';
 import Post from '../../type/post';
 
-const PostCard: React.FC<{ posts: Post[] }> = ({ posts }) => {
-  const [hoveredPost, setHoveredPost] = useState<number | null>(null);
-
-  const handlerPost = (postId: number) => {
-    Router.push(`/post/${postId}`);
-  };
-
+const PostCard: React.FC<{ posts: Post[]; handlerPost: (postId: number) => void }> = ({
+  posts,
+  handlerPost,
+}) => {
   return (
     <Container>
       <PostGrid>
