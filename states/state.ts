@@ -1,4 +1,4 @@
-import { atom } from "recoil";
+import { atom } from 'recoil';
 
 interface AccessTokenInfo {
   accessToken: string | null;
@@ -8,7 +8,7 @@ interface AccessTokenInfo {
 }
 
 export const accessTokenState = atom<AccessTokenInfo>({
-  key: "accessTokenState",
+  key: 'accessTokenState',
   default: {
     accessToken: null,
     accessTokenExpiredIn: null,
