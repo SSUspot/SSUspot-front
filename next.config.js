@@ -11,6 +11,7 @@ const nextConfig = {
       'ssuspot.s3.ap-northeast-2.amazonaws.com',
       'upload.wikimedia.org',
       'img.mlbstatic.com',
+      'user-images.githubusercontent.com',
     ],
   },
   reactStrictMode: false,
