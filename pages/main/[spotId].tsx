@@ -87,7 +87,7 @@ const SpotPage = () => {
         <PostsSubInfo>놀라운 이야기들이 여러분을 기다리고 있어요! 📸✨ </PostsSubInfo>
         <PostCard posts={spotPosts} handlerPost={handlerPost} />
       </Container>
-      {openPost && <PostDetail postId={hoveredPost} handleCloseModal={handleCloseModal} />}
+      {openPost && <PostDetail postId={hoveredPost!} handleCloseModal={handleCloseModal} />}
     </>
   );
 };

@@ -109,7 +109,7 @@ export default JoinPage;
 const P = styled.p`
   font-weight: 700;
   font-size: 2rem;
-  color: #4f4f4f);
+  color: #4f4f4f;
   margin-bottom: 4%;
 `;
 

@@ -53,7 +53,7 @@ const ContentLayout: React.FC<{ postInfo: Post; postId: number }> = ({ postInfo,
         comments={comments}
         commentsLength={comments.length}
       />
-      <FooterContainer userInfo={userInfo} postId={postId} />
+      <FooterContainer userInfo={userInfo!} postId={postId} />
     </Frame>
   );
 };

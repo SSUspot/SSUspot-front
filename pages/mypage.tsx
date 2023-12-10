@@ -2,7 +2,6 @@ import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
-import Modal from '../component/common/modal';
 import Navigation from '../component/layout/navigation';
 import axiosInstance from '../utils/axiosInstance';
 import Header from '../component/layout/header';
@@ -69,11 +68,11 @@ const MyPage: React.FC = () => {
       <Header />
       <Navigation />
       <Container>
-        <MyPageHeader userInfo={userInfo} postLength={userPosts.length} />
+        <MyPageHeader userInfo={userInfo!} postLength={userPosts.length} />
         <DivisionBar />
         <MyPagePosts userPosts={userPosts} handlerPost={handlerPost} />
       </Container>
-      {openPost && <PostDetail postId={hoveredPost} handleCloseModal={handleCloseModal} />}
+      {openPost && <PostDetail postId={hoveredPost!} handleCloseModal={handleCloseModal} />}
     </>
   );
 };

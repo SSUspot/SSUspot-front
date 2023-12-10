@@ -10,10 +10,6 @@ import axiosInstance from '../../utils/axiosInstance';
 
 import Spot from '../../type/spot';
 
-import axiosInstance from '../../utils/axiosInstance';
-
-import Spot from '../../type/spot';
-
 const MapMain: NextPage = () => {
   const [spots, setSopts] = useState<Spot[]>([]);
 
