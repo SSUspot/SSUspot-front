@@ -12,6 +12,7 @@ const LoginPage: React.FC = () => {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -39,7 +40,11 @@ const LoginPage: React.FC = () => {
       localStorage.setItem('accessToken', response.data?.accessToken);
       router.push('/');
     } catch (error) {
-      console.error('에러:', error);
+      if (axios.isAxiosError(error) && error.response?.status === 400) {
+        setErrorMessage('가입되지 않은 사용자입니다. 계정을 생성해 주세요!');
+      } else {
+        console.error('에러:', error);
+      }
     }
   };
 
@@ -70,6 +75,7 @@ const LoginPage: React.FC = () => {
           <Button type="submit" onClick={handleSubmit}>
             로그인
           </Button>
+          {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
           <LinkContainer>
             <span
               style={{ color: '#4f4c4c', fontWeight: 400, marginRight: 10 }}
@@ -181,4 +187,9 @@ const StyledLink = styled(Link)`
   &:hover {
     text-decoration: underline;
   }
+`;
+
+const ErrorMessage = styled.div`
+  color: red;
+  margin-bottom: 1rem;
 `;
