@@ -27,7 +27,6 @@ const SpotPage = () => {
     console.log('open Modal', postId);
     setHoveredPost(postId);
     setOpenPost(true);
-    // Router.push(`/post/${postId}`);
   };
 
   const handleCloseModal = () => {

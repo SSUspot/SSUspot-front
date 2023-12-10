@@ -8,6 +8,7 @@ import axiosInstance from '../utils/axiosInstance';
 import Header from '../component/layout/header';
 import MyPageHeader from '../component/mypage/header';
 import MyPagePosts from '../component/mypage/posts';
+import PostDetail from '../component/post/post';
 
 import User from '../type/user';
 import Post from '../type/post';
@@ -15,6 +16,20 @@ import Post from '../type/post';
 const MyPage: React.FC = () => {
   const [userInfo, setUserInfo] = useState<User>();
   const [userPosts, setUserPosts] = useState<Post[]>([]);
+
+  // post modal
+  const [openPost, setOpenPost] = useState<boolean>(false);
+  const [hoveredPost, setHoveredPost] = useState<number | null>(null);
+
+  const handlerPost = (postId: number) => {
+    console.log('open Modal', postId);
+    setHoveredPost(postId);
+    setOpenPost(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenPost(false);
+  };
 
   useEffect(() => {
     // User;
@@ -56,8 +71,9 @@ const MyPage: React.FC = () => {
       <Container>
         <MyPageHeader userInfo={userInfo} postLength={userPosts.length} />
         <DivisionBar />
-        <MyPagePosts userPosts={userPosts} />
+        <MyPagePosts userPosts={userPosts} handlerPost={handlerPost} />
       </Container>
+      {openPost && <PostDetail postId={hoveredPost} handleCloseModal={handleCloseModal} />}
     </>
   );
 };

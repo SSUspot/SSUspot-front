@@ -6,12 +6,11 @@ import axiosInstance from '../../utils/axiosInstance';
 
 import Post from '../../type/post';
 
-const MyPagePosts: React.FC<{ userPosts: Post[] }> = ({ userPosts }) => {
+const MyPagePosts: React.FC<{ userPosts: Post[]; handlerPost: (postId: number) => void }> = ({
+  userPosts,
+  handlerPost,
+}) => {
   const [hoveredPost, setHoveredPost] = useState<number | null>(null);
-
-  const handlerPost = (postId: number) => {
-    Router.push(`/post/${postId}`);
-  };
 
   return (
     <Container>
