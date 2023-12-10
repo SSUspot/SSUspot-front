@@ -1,13 +1,14 @@
+import Head from 'next/head';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import Modal from '../component/common/modal';
 import Navigation from '../component/layout/navigation';
-import Router from 'next/router';
 import axiosInstance from '../utils/axiosInstance';
 import Header from '../component/layout/header';
 import MyPageHeader from '../component/mypage/header';
 import MyPagePosts from '../component/mypage/posts';
+import PostDetail from '../component/post/post';
 
 import User from '../type/user';
 import Post from '../type/post';
@@ -15,6 +16,20 @@ import Post from '../type/post';
 const MyPage: React.FC = () => {
   const [userInfo, setUserInfo] = useState<User>();
   const [userPosts, setUserPosts] = useState<Post[]>([]);
+
+  // post modal
+  const [openPost, setOpenPost] = useState<boolean>(false);
+  const [hoveredPost, setHoveredPost] = useState<number | null>(null);
+
+  const handlerPost = (postId: number) => {
+    console.log('open Modal', postId);
+    setHoveredPost(postId);
+    setOpenPost(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenPost(false);
+  };
 
   useEffect(() => {
     // User;
@@ -46,13 +61,19 @@ const MyPage: React.FC = () => {
 
   return (
     <>
+      <Head>
+        <title>SSUspot</title>
+        <link rel='icon' href='/favicon.png' />
+      </Head>
+
       <Header />
       <Navigation />
       <Container>
         <MyPageHeader userInfo={userInfo} postLength={userPosts.length} />
         <DivisionBar />
-        <MyPagePosts userPosts={userPosts} />
+        <MyPagePosts userPosts={userPosts} handlerPost={handlerPost} />
       </Container>
+      {openPost && <PostDetail postId={hoveredPost} handleCloseModal={handleCloseModal} />}
     </>
   );
 };
@@ -70,9 +91,9 @@ const Container = styled.div`
 const DivisionBar = styled.div`
   width: 85%;
   border: 0.5px solid rgba(79, 76, 76, 0.4);
-  margin-bottom: 3vh;
+  margin-bottom: 5vh;
 
   @media (max-width: 735px) {
-    margin-bottom: 2vh;
+    margin-bottom: 3vh;
   }
 `;

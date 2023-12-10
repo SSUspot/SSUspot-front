@@ -76,7 +76,7 @@ const SpotFrame = styled.div`
 
   @media (max-width: 735px) {
     width: 50%;
-    height: 50%;
+    aspect-ratio: 1;
     padding-top: 1vh;
     padding-bottom: 1vh;
   }

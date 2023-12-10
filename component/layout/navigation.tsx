@@ -8,7 +8,7 @@ import List from '../../public/navigation/list.png';
 import Group from '../../public/navigation/group.png';
 import Like from '../../public/navigation/like.png';
 import Post from '../../public/navigation/post.png';
-import Chat from '../../public/navigation/chat.png';
+import Setting from '../../public/navigation/setting.png';
 import Mypage from '../../public/navigation/mypage.png';
 
 const Navigation: React.FC = () => {
@@ -33,6 +33,9 @@ const Navigation: React.FC = () => {
     } else if (currentURL.includes('/main/list')) {
       setIsMap(true);
       setIsList(false);
+    } else {
+      setIsMap(false);
+      setIsList(true);
     }
   }, []);
 
@@ -44,41 +47,37 @@ const Navigation: React.FC = () => {
     <>
       <Container onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
         <NavigationBox className={isHovered ? 'hovered' : ''}>
-          <ItemButton>
+          <ItemButton onClick={() => handleRoute('/main/list')}>
             <Image src={Home} alt='Home' width={25} height={25} />
-            <p> 홈 </p>
+            <MobileText> 홈 </MobileText>
           </ItemButton>
           {ismap && (
             <ItemButton onClick={() => handleRoute('/main/map')}>
               <Image src={Map} alt='Map' width={25} height={25} />
-              <p> 지도 보기 </p>
+              <MobileText> 지도 보기 </MobileText>
             </ItemButton>
           )}
           {isList && (
             <ItemButton onClick={() => handleRoute('/main/list')}>
               <Image src={List} alt='List' width={25} height={25} />
-              <p> 리스트 보기 </p>
+              <MobileText> 리스트 보기 </MobileText>
             </ItemButton>
           )}
           <ItemButton>
             <Image src={Group} alt='Group' width={25} height={25} />
-            <p> 팔로잉 피드 </p>
+            <MobileText> 팔로잉 피드 </MobileText>
           </ItemButton>
-          <ItemButton>
-            <Image src={Like} alt='Like' width={25} height={25} />
-            <p> 좋아요한 스팟 </p>
-          </ItemButton>
-          <ItemButton>
+          <ItemButton onClick={() => handleRoute('/posting')}>
             <Image src={Post} alt='Post' width={25} height={25} />
-            <p> 글 작성 </p>
+            <MobileText> 글 작성 </MobileText>
           </ItemButton>
-          <ItemButton>
-            <Image src={Chat} alt='Chat' width={25} height={25} />
-            <p> 채팅 </p>
+          <ItemButton onClick={() => handleRoute('/setting')}>
+            <Image src={Setting} alt='Setting' width={25} height={25} />
+            <MobileText> 설정 </MobileText>
           </ItemButton>
           <ItemButton onClick={() => handleRoute('/mypage')}>
             <Image src={Mypage} alt='Mypage' width={25} height={25} />
-            <p> 마이페이지 </p>
+            <MobileText> 마이페이지 </MobileText>
           </ItemButton>
         </NavigationBox>
       </Container>
@@ -98,6 +97,11 @@ const Container = styled.div`
   height: 100px;
   top: calc(100% - 100px);
   z-index: 99;
+
+  @media (max-width: 735px) {
+    height: 70px;
+    top: calc(100% - 70px);
+  }
 `;
 
 const NavigationBox = styled.div`
@@ -105,7 +109,7 @@ const NavigationBox = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  width: 50%;
+  width: 40%;
   height: 60px;
   background: #2f2f2f;
   border-radius: 100px;
@@ -114,6 +118,11 @@ const NavigationBox = styled.div`
 
   &.hovered {
     opacity: 1;
+  }
+
+  @media (max-width: 735px) {
+    width: 60%;
+    height: 40px;
   }
 `;
 
@@ -145,5 +154,11 @@ const ItemButton = styled.button`
     height: 2px;
     width: 30%;
     background-color: #f3f3f399;
+  }
+`;
+
+const MobileText = styled.p`
+  @media (max-width: 735px) {
+    display: none;
   }
 `;

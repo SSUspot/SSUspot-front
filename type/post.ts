@@ -5,12 +5,11 @@ interface Post {
   title: string;
   content: string;
   user: User;
-  nickname: string;
   imageUrls: string[];
   tags: string[];
   spotId: number;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   hasLiked: boolean;
 }
 
