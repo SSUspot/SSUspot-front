@@ -52,51 +52,49 @@ const JoinPage: React.FC = () => {
         <LoginContainer onSubmit={handleSubmit}>
           <P>JOIN</P>
           <Input
-            type="text"
-            placeholder="Email"
+            type='text'
+            placeholder='Email'
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Input>
 
           <Input
-            type="text"
-            placeholder="Nickname"
+            type='text'
+            placeholder='Nickname'
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
           ></Input>
 
           <Input
-            type="password"
-            placeholder="Password"
+            type='password'
+            placeholder='Password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           ></Input>
 
           <Input
-            type="text"
-            placeholder="Name"
+            type='text'
+            placeholder='Name'
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
           ></Input>
 
           <Input
-            type="text"
-            placeholder="status message"
+            type='text'
+            placeholder='status message'
             value={profileMessage}
             onChange={(e) => setProfileMessage(e.target.value)}
           ></Input>
 
-          <Button type="submit" onClick={handleSubmit}>
+          <Button type='submit' onClick={handleSubmit}>
             회원가입
           </Button>
 
           <LinkContainer>
-            <span
-              style={{ color: '#4f4c4c', fontWeight: 400, marginRight: 10 }}
-            >
+            <span style={{ color: '#4f4c4c', fontWeight: 400, marginRight: 10 }}>
               계정이 있다면
             </span>
-            <StyledLink href="/login">로그인</StyledLink>
+            <StyledLink href='/login'>로그인</StyledLink>
           </LinkContainer>
         </LoginContainer>
       </Container>
@@ -120,6 +118,7 @@ const Container = styled.div`
   width: 100%;
   height: 80vh;
   padding: 2%;
+  box-sizing: border-box;
 `;
 
 const LoginContainer = styled.form`

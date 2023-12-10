@@ -106,6 +106,7 @@ const Container = styled.div`
   width: 100%;
   height: 80vh;
   padding: 4%;
+  box-sizing: border-box;
 `;
 
 const LoginContainer = styled.form`
