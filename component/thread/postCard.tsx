@@ -15,6 +15,27 @@ const PostCard: React.FC<{ posts: Post[]; handlerPost: (postId: number) => void 
   posts,
   handlerPost,
 }) => {
+  const [commentCounts, setCommentCounts] = useState<number[]>([]);
+
+  const fetchCommentCount = async (postId: number) => {
+    try {
+      const response = await axiosInstance.get(`/api/posts/${postId}/comments`);
+      return response.data.length;
+    } catch (error) {
+      console.error(`/api/posts/${postId}/comments error`, error);
+      return 0;
+    }
+  };
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      const counts = await Promise.all(posts.map((post) => fetchCommentCount(post.id)));
+      setCommentCounts(counts);
+    };
+
+    fetchComments();
+  }, [posts]);
+
   return (
     <Container>
       <PostGrid>
@@ -29,7 +50,7 @@ const PostCard: React.FC<{ posts: Post[]; handlerPost: (postId: number) => void 
               <PostIcon src={like} alt='like' />
               <p> 0 </p>
               <PostIcon src={comment} alt='comment' />
-              <p> 0 </p>
+              <p> {commentCounts[index]} </p>
             </PostIconFrame>
             <PostTtile> {post.title} </PostTtile>
             <PostContent> {post.content} </PostContent>
