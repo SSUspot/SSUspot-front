@@ -63,7 +63,7 @@ const Navigation: React.FC = () => {
               <MobileText> 리스트 보기 </MobileText>
             </ItemButton>
           )}
-          <ItemButton>
+          <ItemButton onClick={() => handleRoute('/thread/following')}>
             <Image src={Group} alt='Group' width={25} height={25} />
             <MobileText> 팔로잉 피드 </MobileText>
           </ItemButton>
