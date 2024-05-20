@@ -25,7 +25,7 @@ const LoginPage: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const apiUrl = 'http://ssuspot.online/api/users/login';
+      const apiUrl = 'http://localhost:8080/api/users/login';
 
       const response = await axios.post(apiUrl, {
         email: email,

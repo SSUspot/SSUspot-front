@@ -71,9 +71,9 @@ const Navigation: React.FC = () => {
             <Image src={Post} alt='Post' width={25} height={25} />
             <MobileText> 글 작성 </MobileText>
           </ItemButton>
-          <ItemButton onClick={() => handleRoute('/setting')}>
-            <Image src={Setting} alt='Setting' width={25} height={25} />
-            <MobileText> 설정 </MobileText>
+          <ItemButton onClick={() => handleRoute('/spot')}>
+            <Image src={Setting} alt='AddSpot' width={25} height={25} />
+            <MobileText> 스팟 추가 </MobileText>
           </ItemButton>
           <ItemButton onClick={() => handleRoute('/mypage')}>
             <Image src={Mypage} alt='Mypage' width={25} height={25} />

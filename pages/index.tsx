@@ -19,8 +19,8 @@ const Home: NextPage = () => {
       </Head>
 
       <PageContainer>
-        <Quote>“사진을 찍기 위한 최적의 장소를 찾아보세요!”</Quote>
-        <Source> - SSUSPOT - </Source>
+        <Quote>“MEOW!!!!!!!!!”</Quote>
+        <Source> - MeowFarm - </Source>
         <Button onClick={handlerButton}> Go SSUSPOT </Button>
       </PageContainer>
     </>

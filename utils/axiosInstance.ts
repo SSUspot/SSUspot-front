@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: 'http://ssuspot.online',
+  baseURL: 'http://localhost:8080',
   headers: {
     Authorization: '',
   },

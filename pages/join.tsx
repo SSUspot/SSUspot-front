@@ -27,7 +27,7 @@ const JoinPage: React.FC = () => {
     e.preventDefault();
 
     try {
-      const apiUrl = 'http://ssuspot.online/api/users/register';
+      const apiUrl = 'http://localhost:8080/api/users/register';
 
       const response = await axios.post(apiUrl, {
         email: email,
