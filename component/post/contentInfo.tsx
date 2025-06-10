@@ -6,6 +6,7 @@ import axiosInstance from '../../utils/axiosInstance';
 import setting from '../../public/setting.png';
 import like from '../../public/like.png';
 import commentIcon from '../../public/comment.png';
+import CommentItem from '../comment/CommentItem';
 
 import User from '../../type/user';
 import Post from '../../type/post';
@@ -15,7 +16,10 @@ const ContentInfoContainer: React.FC<{
   postInfo: Post;
   comments: Comment[];
   commentsLength: number;
-}> = ({ postInfo, comments, commentsLength }) => {
+  currentUser: User | null;
+  onCommentUpdate: (updatedComment: Comment) => void;
+  onCommentDelete: (commentId: number) => void;
+}> = ({ postInfo, comments, commentsLength, currentUser, onCommentUpdate, onCommentDelete }) => {
   const dateTimeString = postInfo.createdAt.split('[')[0];
   const date = new Date(dateTimeString);
   const formattedDate = date.toLocaleString('en-US', {
@@ -38,20 +42,18 @@ const ContentInfoContainer: React.FC<{
         <PostIcon src={commentIcon} alt='comment' />
         <p>{commentsLength}</p>
       </PostInfoFrame>
-      {comments.map((comment, index) => (
-        <CommentFrame>
-          <ButtonFrame>
-            <ProfileImage src={comment.user.profileImageLink} alt='Profile Image' />
-          </ButtonFrame>
-          <CommentText>
-            <Nickname> {comment.user.nickname} &nbsp; </Nickname>
-            <ContentText> {comment.content} </ContentText>
-          </CommentText>
-          <ButtonFrame>
-            <ButtonImage src={setting} alt='setting' />
-          </ButtonFrame>
-        </CommentFrame>
-      ))}
+      <CommentsSection>
+        {comments.map((comment) => (
+          <CommentItem
+            key={comment.id}
+            comment={comment}
+            currentUser={currentUser}
+            postId={postInfo.id}
+            onUpdate={onCommentUpdate}
+            onDelete={onCommentDelete}
+          />
+        ))}
+      </CommentsSection>
     </Container>
   );
 };
@@ -186,4 +188,10 @@ const Nickname = styled.span`
 
 const ContentText = styled.span`
   font-family: 'GmarketSansMedium';
+`;
+
+const CommentsSection = styled.div`
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid #e0e0e0;
 `;

@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "postId": 1,
+    "user": {
+      "id": 2,
+      "email": "user2@ssu.ac.kr",
+      "nickname": "testuser2",
+      "userName": "테스트유저2",
+      "profileMessage": "안녕하세요",
+      "profileImageLink": "https://example.com/profile2.jpg"
+    },
+    "content": "좋은 게시물이네요!",
+    "createdAt": 1704067200000,
+    "updatedAt": 1704067200000
+  },
+  {
+    "id": 2,
+    "postId": 1,
+    "user": {
+      "id": 3,
+      "email": "user3@ssu.ac.kr",
+      "nickname": "testuser3",
+      "userName": "테스트유저3",
+      "profileMessage": "반갑습니다",
+      "profileImageLink": "https://example.com/profile3.jpg"
+    },
+    "content": "정보 감사합니다.",
+    "createdAt": 1704070800000,
+    "updatedAt": 1704070800000
+  },
+  {
+    "id": 3,
+    "postId": 1,
+    "user": {
+      "id": 1,
+      "email": "test@ssu.ac.kr",
+      "nickname": "testuser",
+      "userName": "테스트유저",
+      "profileMessage": "테스트 프로필",
+      "profileImageLink": "https://example.com/profile1.jpg"
+    },
+    "content": "제가 작성한 댓글입니다.",
+    "createdAt": 1704074400000,
+    "updatedAt": 1704074400000
+  }
+]

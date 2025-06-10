@@ -6,14 +6,31 @@ import send from '../../public/send.png';
 import like from '../../public/like.png';
 import commentIcon from '../../public/comment.png';
 import axiosInstance from '../../utils/axiosInstance';
+import { useToast } from '../common/ToastProvider';
+import { handleApiError } from '../../utils/errorHandler';
 
 import User from '../../type/user';
+import Comment from '../../type/comment';
 
-const FooterContainer: React.FC<{ userInfo: User; postId: number }> = ({ userInfo, postId }) => {
+interface FooterContainerProps {
+  userInfo: User;
+  postId: number;
+  onCommentAdd?: (comment: Comment) => void;
+}
+
+const FooterContainer: React.FC<FooterContainerProps> = ({ userInfo, postId, onCommentAdd }) => {
   const [comment, setComment] = useState('');
+  const [loading, setLoading] = useState(false);
+  const { showError } = useToast();
 
   const sendComment = () => {
-    if (postId) {
+    if (!comment.trim()) {
+      showError('댓글 내용을 입력해주세요.');
+      return;
+    }
+
+    if (postId && !loading) {
+      setLoading(true);
       axiosInstance
         .post(`/api/posts/${postId}/comments`, {
           content: comment,
@@ -21,9 +38,16 @@ const FooterContainer: React.FC<{ userInfo: User; postId: number }> = ({ userInf
         .then((response) => {
           console.log('/api/posts/${postId}/comments', response.data);
           setComment('');
+          if (onCommentAdd) {
+            onCommentAdd(response.data);
+          }
         })
         .catch((error) => {
           console.log('/api/posts/${postId}/comments error', error);
+          showError(handleApiError(error));
+        })
+        .finally(() => {
+          setLoading(false);
         });
     }
   };
@@ -45,9 +69,11 @@ const FooterContainer: React.FC<{ userInfo: User; postId: number }> = ({ userInf
         value={comment}
         onChange={(e) => setComment(e.target.value)}
         onKeyPress={handleKeyPress}
+        disabled={loading}
+        data-testid="comment-input"
       />
       <ButtonFrame onClick={sendComment}>
-        <ButtonImage src={send} alt='send' />
+        <ButtonImage src={send} alt='send' data-testid="comment-submit" />
       </ButtonFrame>
     </InputFrame>
   );

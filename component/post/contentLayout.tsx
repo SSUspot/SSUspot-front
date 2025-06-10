@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import send from '../../public/send.png';
 import axiosInstance from '../../utils/axiosInstance';
+import CommentItem from '../comment/CommentItem';
+import { useToast } from '../common/ToastProvider';
+import { handleApiError } from '../../utils/errorHandler';
 
 import HeaderContainer from './header';
 import ContentInfoContainer from './contentInfo';
@@ -14,8 +17,9 @@ import Post from '../../type/post';
 import Comment from '../../type/comment';
 
 const ContentLayout: React.FC<{ postInfo: Post; postId: number }> = ({ postInfo, postId }) => {
-  const [userInfo, setUserInfo] = useState<User>();
+  const [userInfo, setUserInfo] = useState<User | null>(null);
   const [comments, setComments] = useState<Comment[]>([]);
+  const { showError } = useToast();
 
   useEffect(() => {
     // User;
@@ -41,9 +45,26 @@ const ContentLayout: React.FC<{ postInfo: Post; postId: number }> = ({ postInfo,
         })
         .catch((error) => {
           console.log('/api/posts/${postId}/comments error', error);
+          showError(handleApiError(error));
         });
     }
-  });
+  }, [postId]);
+
+  const handleCommentUpdate = (updatedComment: Comment) => {
+    setComments(prev => 
+      prev.map(comment => 
+        comment.id === updatedComment.id ? updatedComment : comment
+      )
+    );
+  };
+
+  const handleCommentDelete = (commentId: number) => {
+    setComments(prev => prev.filter(comment => comment.id !== commentId));
+  };
+
+  const handleCommentAdd = (newComment: Comment) => {
+    setComments(prev => [...prev, newComment]);
+  };
 
   return (
     <Frame>
@@ -52,8 +73,15 @@ const ContentLayout: React.FC<{ postInfo: Post; postId: number }> = ({ postInfo,
         postInfo={postInfo}
         comments={comments}
         commentsLength={comments.length}
+        currentUser={userInfo}
+        onCommentUpdate={handleCommentUpdate}
+        onCommentDelete={handleCommentDelete}
       />
-      <FooterContainer userInfo={userInfo!} postId={postId} />
+      <FooterContainer 
+        userInfo={userInfo!} 
+        postId={postId}
+        onCommentAdd={handleCommentAdd}
+      />
     </Frame>
   );
 };
