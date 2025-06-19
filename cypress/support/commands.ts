@@ -53,7 +53,7 @@ Cypress.Commands.add('createTestUser', () => {
 
 // API 응답 모킹
 Cypress.Commands.add('mockApiResponse', (method: string, url: string, response: any, status = 200) => {
-  cy.intercept(method, url, {
+  cy.intercept(method as any, url, {
     statusCode: status,
     body: response
   });

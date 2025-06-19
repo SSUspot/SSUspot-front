@@ -20,7 +20,7 @@ export const commentService = {
         size: params.size || 10,
       }
     });
-    return transformComments(response.data);
+    return transformComments(response.data, postId);
   },
 
   /**
@@ -36,7 +36,7 @@ export const commentService = {
    */
   async createComment(postId: number, data: CreateCommentRequest): Promise<Comment> {
     const response = await axiosInstance.post(`/api/posts/${postId}/comments`, data);
-    return transformComment(response.data);
+    return transformComment(response.data, postId);
   },
 
   /**

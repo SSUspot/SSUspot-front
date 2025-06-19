@@ -55,7 +55,6 @@ const CommentItem: React.FC<CommentItemProps> = ({
     setLoading(true);
     try {
       const updatedComment = await commentService.updateComment(
-        postId,
         comment.id,
         { content: editContent }
       );
@@ -72,7 +71,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const handleDelete = async () => {
     setLoading(true);
     try {
-      await commentService.deleteComment(postId, comment.id);
+      await commentService.deleteComment(comment.id);
       onDelete(comment.id);
       showSuccess('댓글이 삭제되었습니다.');
     } catch (error) {

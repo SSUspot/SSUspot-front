@@ -33,9 +33,10 @@ export const transformPost = (postResponse: PostResponse): Post => {
 /**
  * Backend CommentResponse를 Frontend Comment 타입으로 변환
  */
-export const transformComment = (commentResponse: CommentResponse): Comment => {
+export const transformComment = (commentResponse: CommentResponse, postId?: number): Comment => {
   return {
     id: commentResponse.id,
+    postId: postId || 0, // postId는 별도로 전달받거나 기본값 사용
     content: commentResponse.content,
     user: {
       id: commentResponse.user.id,
@@ -60,6 +61,6 @@ export const transformPosts = (postResponses: PostResponse[]): Post[] => {
 /**
  * Comment 배열 변환
  */
-export const transformComments = (commentResponses: CommentResponse[]): Comment[] => {
-  return commentResponses.map(transformComment);
+export const transformComments = (commentResponses: CommentResponse[], postId?: number): Comment[] => {
+  return commentResponses.map(comment => transformComment(comment, postId));
 };

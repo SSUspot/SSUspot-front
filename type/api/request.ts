@@ -37,6 +37,7 @@ export interface UpdatePostRequest {
   title?: string;
   content?: string;
   tags?: string[];
+  imageUrls?: string[];
 }
 
 export interface CreateCommentRequest {

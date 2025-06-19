@@ -5,6 +5,8 @@ interface Comment {
   postId: number;
   user: User;
   content: string;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export default Comment;

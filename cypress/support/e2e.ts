@@ -19,7 +19,8 @@ beforeEach(() => {
 // 테스트 실패 시 스크린샷 저장
 Cypress.on('fail', (error, runnable) => {
   // 스크린샷 저장
-  cy.screenshot(`failed-${runnable.parent.title}-${runnable.title}`);
+  const parentTitle = runnable.parent?.title || 'unknown';
+  cy.screenshot(`failed-${parentTitle}-${runnable.title}`);
   
   // 에러 재발생
   throw error;

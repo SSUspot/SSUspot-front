@@ -57,7 +57,6 @@ const EditPostModal: React.FC<EditPostModalProps> = ({ post, spots, onClose, onU
       const updatedPost = await postService.updatePost(post.id, {
         title: formData.title,
         content: formData.content,
-        spotId: formData.spotId,
         tags: formData.tags.split(',').map(tag => tag.trim()).filter(tag => tag),
         imageUrls: formData.imageUrls
       });
